@@ -34,7 +34,7 @@ const Home = () => {
           </div>
         </div>
         
-        <CommandTerminal />
+        <SimplePieBot />
         
         <section className="my-12">
           <h2 className="text-2xl font-semibold mb-6 text-center dark:text-white">

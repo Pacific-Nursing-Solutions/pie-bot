@@ -21,40 +21,44 @@ const SimplePieBot = () => {
     if (!input.trim()) return;
 
     // Add user message
-    const userMessage = { role: 'user', content: input };
+    const userMessage: Message = { role: 'user', content: input };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
     try {
+      // Convert Messages to appropriate format for OpenAI API
+      const apiMessages = [
+        {
+          role: "system",
+          content: "You are Pie Bot, an expert financial assistant for startup equity management. Help users understand equity concepts, calculate valuations, and provide guidance on equity distribution and financial planning."
+        },
+        ...messages.map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'assistant',
+          content: msg.content
+        })),
+        { role: "user", content: input }
+      ];
+
       // Process command with OpenAI
       const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-          { 
-            role: "system", 
-            content: "You are Pie Bot, an expert financial assistant for startup equity management. Help users understand equity concepts, calculate valuations, and provide guidance on equity distribution and financial planning."
-          } as any,
-          ...messages.map(msg => ({
-            role: msg.role,
-            content: msg.content
-          } as any)),
-          { role: "user", content: input } as any
-        ],
+        model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+        messages: apiMessages,
       });
 
       // Add bot response
-      const botResponse = { 
+      const botResponse: Message = { 
         role: 'assistant', 
         content: response.choices[0].message.content || "I'm having trouble processing that request."
       };
       setMessages(prev => [...prev, botResponse]);
     } catch (error) {
       console.error('Error with OpenAI API:', error);
-      setMessages(prev => [...prev, { 
+      const errorMessage: Message = { 
         role: 'assistant', 
         content: "I'm having trouble connecting to my knowledge base. Please try again later."
-      }]);
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
