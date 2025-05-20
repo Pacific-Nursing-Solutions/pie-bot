@@ -1,8 +1,24 @@
-import type { Express } from "express";
+import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
+
+// Extend Express Request to include session
+declare module "express-session" {
+  interface SessionData {
+    userId: number;
+  }
+}
+
+// Helper function to handle Zod validation errors
+function handleZodError(error: unknown) {
+  if (error instanceof z.ZodError) {
+    return { message: fromZodError(error).message };
+  }
+  console.error("Server error:", error);
+  return { message: "Internal server error" };
+}
 import {
   insertCompanySchema,
   insertStakeholderSchema,

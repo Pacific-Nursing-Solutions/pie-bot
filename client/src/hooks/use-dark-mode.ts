@@ -37,10 +37,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+  // This is a TS file, not TSX, so we need to avoid JSX syntax
+  return React.createElement(
+    ThemeContext.Provider,
+    { value: { theme, toggleTheme } },
+    children
   );
 };
 
