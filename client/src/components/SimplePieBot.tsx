@@ -1,10 +1,40 @@
 import { useState } from 'react';
-import openai from '@/lib/openai';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
+
+// Sample responses for common equity questions
+const sampleResponses: Record<string, string> = {
+  'default': "I'm Pie Bot, your equity management assistant. I can help with understanding equity concepts, valuation methods, and financial planning for startups. What specific question do you have?",
+  'equity': "When distributing equity among founders, consider these key principles:\n\n1. Fair allocation based on contributions (past and future)\n2. Vesting schedules (typically 4 years with a 1-year cliff)\n3. Clear documentation of ownership\n4. Reserve 10-20% for future employees (option pool)\n\nThe most common split for 2 equal co-founders would be 45-45 with 10% reserved for employees.",
+  'valuation': "Startup valuation methods include:\n\n1. Comparable analysis - Looking at similar companies that have raised funding\n2. Discounted Cash Flow (DCF) - Less common for early-stage companies\n3. Berkus method - Assigns value to achievements like prototype, team quality\n4. Venture Capital method - Based on expected exit value\n\nPre-revenue startups often use the comparable approach or raise via convertible notes/SAFEs without fixed valuations.",
+  'vesting': "Vesting schedules control when founders and employees earn their equity over time. The standard is 4 years with a 1-year cliff, meaning:\n\n- No equity is earned until 1 year (the cliff)\n- At the 1-year mark, 25% vests immediately\n- The remaining 75% vests monthly or quarterly over 3 more years\n\nThis protects companies if someone leaves early while rewarding long-term commitment.",
+  'runway': "To calculate your startup's runway:\n\n1. Add up all cash/liquid assets\n2. Calculate monthly burn rate (expenses minus revenue)\n3. Divide cash by monthly burn rate\n\nFor example: $500,000 cash ÷ $50,000 monthly burn = 10 months runway\n\nIt's advisable to maintain at least 12-18 months of runway and start fundraising when you have 6-9 months remaining.",
+  'cap table': "A cap table (capitalization table) tracks ownership percentages, equity types, and dilution over funding rounds. Essential components include:\n\n1. Common stock (typically held by founders/employees)\n2. Preferred stock (investors with special rights)\n3. Option pool (reserved for future employees)\n4. Convertible securities (notes, SAFEs)\n\nMaintain your cap table meticulously with each equity grant or funding round."
+};
+
+// Function to find the most relevant response based on keywords
+const findResponse = (input: string): string => {
+  const lowercaseInput = input.toLowerCase();
+  
+  // Check for keyword matches
+  if (lowercaseInput.includes('equity') && (lowercaseInput.includes('distribute') || lowercaseInput.includes('split'))) {
+    return sampleResponses['equity'];
+  } else if (lowercaseInput.includes('valuation') || lowercaseInput.includes('value') || lowercaseInput.includes('worth')) {
+    return sampleResponses['valuation'];
+  } else if (lowercaseInput.includes('vesting') || lowercaseInput.includes('schedule')) {
+    return sampleResponses['vesting'];
+  } else if (lowercaseInput.includes('runway') || lowercaseInput.includes('burn rate')) {
+    return sampleResponses['runway'];
+  } else if (lowercaseInput.includes('cap table') || lowercaseInput.includes('capitalization')) {
+    return sampleResponses['cap table'];
+  }
+  
+  // Default response
+  return "I understand you're asking about " + input.split(' ').slice(0, 3).join(' ') + "... To provide better equity management guidance, I'd need to connect to my AI knowledge base. For now, I can answer basic questions about equity distribution, valuations, vesting schedules, and runway calculations.";
+};
 
 const SimplePieBot = () => {
   const [input, setInput] = useState('');
@@ -22,43 +52,33 @@ const SimplePieBot = () => {
 
     // Add user message
     const userMessage: Message = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prevMessages => [...prevMessages, userMessage]);
     setInput('');
     setIsLoading(true);
 
     try {
-      // Convert Messages to appropriate format for OpenAI API
-      const apiMessages = [
-        {
-          role: "system",
-          content: "You are Pie Bot, an expert financial assistant for startup equity management. Help users understand equity concepts, calculate valuations, and provide guidance on equity distribution and financial planning."
-        },
-        ...messages.map(msg => ({
-          role: msg.role === 'user' ? 'user' : 'assistant',
-          content: msg.content
-        })),
-        { role: "user", content: input }
-      ];
-
-      // Process command with OpenAI
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-        messages: apiMessages,
-      });
-
+      // In our simplified version, we're using predefined responses instead of OpenAI
+      // This allows the demo to work without API connection issues
+      
+      // Small delay to simulate "thinking"
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Generate response based on input
+      const responseContent = findResponse(input);
+      
       // Add bot response
       const botResponse: Message = { 
         role: 'assistant', 
-        content: response.choices[0].message.content || "I'm having trouble processing that request."
+        content: responseContent
       };
-      setMessages(prev => [...prev, botResponse]);
+      setMessages(prevMessages => [...prevMessages, botResponse]);
     } catch (error) {
-      console.error('Error with OpenAI API:', error);
+      console.error('Error processing message:', error);
       const errorMessage: Message = { 
         role: 'assistant', 
-        content: "I'm having trouble connecting to my knowledge base. Please try again later."
+        content: "I'm having trouble processing that request. Please try again with a question about equity distribution, valuations, vesting, or runway calculations."
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages(prevMessages => [...prevMessages, errorMessage]);
     } finally {
       setIsLoading(false);
     }

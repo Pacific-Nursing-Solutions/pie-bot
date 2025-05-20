@@ -24,14 +24,14 @@ const Header = () => {
         
         {/* Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/dashboard">
-            <a className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">Dashboard</a>
+          <Link href="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">
+            Dashboard
           </Link>
-          <Link href="/documentation">
-            <a className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">Documentation</a>
+          <Link href="/documentation" className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">
+            Documentation
           </Link>
-          <Link href="/settings">
-            <a className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">Settings</a>
+          <Link href="/settings" className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">
+            Settings
           </Link>
           <Button className="flex items-center space-x-1">
             <span className="material-icons text-sm">account_circle</span>
@@ -58,14 +58,14 @@ const Header = () => {
       {/* Mobile menu */}
       <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-4 py-3 space-y-3 bg-white dark:bg-[#293145] shadow-inner">
-          <Link href="/dashboard">
-            <a className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">Dashboard</a>
+          <Link href="/dashboard" className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">
+            Dashboard
           </Link>
-          <Link href="/documentation">
-            <a className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">Documentation</a>
+          <Link href="/documentation" className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">
+            Documentation
           </Link>
-          <Link href="/settings">
-            <a className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">Settings</a>
+          <Link href="/settings" className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition">
+            Settings
           </Link>
           <Button className="flex items-center space-x-1">
             <span className="material-icons text-sm">account_circle</span>
