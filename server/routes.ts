@@ -32,6 +32,7 @@ import {
 import { generatePDF } from "./utils/pdfGenerator";
 import { signDocument } from "./utils/docusign";
 import { calculateValuation } from "./utils/valuationCalculator";
+import { generateEquityAgreement } from "./utils/openai";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // AUTH ROUTES
@@ -503,8 +504,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         stakeholderId,
         title: `Equity Agreement - ${stakeholder.name}`,
         content: agreementText.toString(),
-        type: "equity_agreement",
-        signed: false
+        type: "equity_agreement"
       });
       
       return res.status(201).json(document);
