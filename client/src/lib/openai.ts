@@ -2,7 +2,8 @@ import OpenAI from "openai";
 
 // Initialize OpenAI with API key
 const openai = new OpenAI({ 
-  apiKey: "***REMOVED***"
+  apiKey: "***REMOVED***",
+  dangerouslyAllowBrowser: true // Allowing browser usage for this demo
 });
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user

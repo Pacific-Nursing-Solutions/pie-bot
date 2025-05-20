@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import openai from '@/lib/openai';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-// Sample responses for common equity questions
+// Sample responses for common equity questions (fallback if API fails)
 const sampleResponses: Record<string, string> = {
   'default': "I'm Pie Bot, your equity management assistant. I can help with understanding equity concepts, valuation methods, and financial planning for startups. What specific question do you have?",
   'equity': "When distributing equity among founders, consider these key principles:\n\n1. Fair allocation based on contributions (past and future)\n2. Vesting schedules (typically 4 years with a 1-year cliff)\n3. Clear documentation of ownership\n4. Reserve 10-20% for future employees (option pool)\n\nThe most common split for 2 equal co-founders would be 45-45 with 10% reserved for employees.",
