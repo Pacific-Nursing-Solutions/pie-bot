@@ -57,21 +57,43 @@ const SimplePieBot = () => {
     setIsLoading(true);
 
     try {
-      // In our simplified version, we're using predefined responses instead of OpenAI
-      // This allows the demo to work without API connection issues
-      
-      // Small delay to simulate "thinking"
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Generate response based on input
-      const responseContent = findResponse(input);
-      
-      // Add bot response
-      const botResponse: Message = { 
-        role: 'assistant', 
-        content: responseContent
-      };
-      setMessages(prevMessages => [...prevMessages, botResponse]);
+      // Create message array for OpenAI API
+      const apiMessages = [
+        {
+          role: "system",
+          content: "You are Pie Bot, an expert financial assistant for startup equity management. Help users understand equity concepts, calculate valuations, and provide guidance on equity distribution and financial planning. Give concise and practical answers."
+        },
+        ...messages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        })),
+        { role: "user", content: input }
+      ];
+
+      // Call OpenAI API
+      try {
+        const response = await openai.chat.completions.create({
+          model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024
+          messages: apiMessages as any, // Type casting to avoid TypeScript errors
+        });
+        
+        // Add bot response from OpenAI
+        const botResponse: Message = { 
+          role: 'assistant', 
+          content: response.choices[0].message.content || "I'm having trouble processing that request."
+        };
+        setMessages(prevMessages => [...prevMessages, botResponse]);
+      } catch (apiError) {
+        console.error('Error with OpenAI API:', apiError);
+        
+        // Fallback to keyword-based responses if API fails
+        const responseContent = findResponse(input);
+        const fallbackResponse: Message = { 
+          role: 'assistant', 
+          content: responseContent
+        };
+        setMessages(prevMessages => [...prevMessages, fallbackResponse]);
+      }
     } catch (error) {
       console.error('Error processing message:', error);
       const errorMessage: Message = { 
