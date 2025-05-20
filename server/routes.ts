@@ -437,7 +437,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const valuation = calculateValuation(company, financialData, method, params || {});
       
       // Update company with new valuation
-      const updatedCompany = await storage.updateCompanyValuation(companyId, valuation);
+      const updatedCompany = await storage.updateCompanyValuation(companyId, valuation.toString());
       
       return res.json({ 
         company: updatedCompany,
@@ -493,7 +493,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           stakeholder.name, 
           stakeholder.shares, 
           stakeholder.equityType, 
-          parseFloat(stakeholder.ownershipPercentage), 
+          stakeholder.ownershipPercentage, 
           stakeholder.vestingSchedule || undefined
         )
       );

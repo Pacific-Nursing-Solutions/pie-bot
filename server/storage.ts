@@ -171,10 +171,10 @@ export class MemStorage implements IStorage {
     // Create sample financial data
     const finData: FinancialDataType = {
       id: this.currentFinancialDataId++,
-      cashBalance: 595000,
-      burnRate: 42500,
-      revenue: 120000,
-      expenses: 162500,
+      cashBalance: "595000",
+      burnRate: "42500",
+      revenue: "120000",
+      expenses: "162500",
       companyId: company.id,
       createdAt: new Date()
     };

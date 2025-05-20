@@ -2,7 +2,7 @@ import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import CommandTerminal from '@/components/CommandTerminal';
+import SimplePieBot from '@/components/SimplePieBot';
 
 const Home = () => {
   return (
