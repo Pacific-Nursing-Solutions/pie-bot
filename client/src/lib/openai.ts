@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 
-// Initialize OpenAI with API key from environment variables
+// Initialize OpenAI with API key
 const openai = new OpenAI({ 
   apiKey: "***REMOVED***"
 });

@@ -118,7 +118,7 @@ export class MemStorage implements IStorage {
       name: 'TechFusion, Inc.',
       entityType: 'Delaware C Corporation',
       founded: new Date(2023, 0, 15), // January 15, 2023
-      valuation: 4750000,
+      valuation: "4750000",
       authorizedShares: 10000000,
       userId: user.id,
       createdAt: new Date()
