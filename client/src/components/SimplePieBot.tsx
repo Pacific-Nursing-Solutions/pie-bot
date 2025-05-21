@@ -165,14 +165,17 @@ const SimplePieBot = () => {
       // Example pattern detection - would be more sophisticated in production
       const newConfig: EquityConfiguration = {
         stateOfIncorporation: 'Delaware',
+        legalStructure: lastMessageContent.includes('llc') ? 'LLC' : 'C-Corporation',
         trackingMethod: lastMessageContent.includes('token') ? 'Blockchain Tokens' : 'Database',
         expectedPartners: 3,
         expectedEmployees: lastMessageContent.includes('employees') ? 
           parseInt(lastMessageContent.match(/(\d+)\s+employees?/)?.[1] || '5') : 5,
         hasDebtContributions: lastMessageContent.includes('debt'),
         hasCapitalContributions: true,
-        contributionValuationMethod: lastMessageContent.includes('slicing pie') ? 'Slicing Pie' : 'FMV',
-        riskCoefficient: 2
+        contributionValuationMethod: lastMessageContent.includes('dynamic') || lastMessageContent.includes('risk adjusted') ? 
+          'Dynamic Risk Adjusted' : 'FMV',
+        riskCoefficient: 2,
+        capitalMultiplier: lastMessageContent.includes('capital') ? 4 : 2
       };
       
       handleUpdateEquityConfig(newConfig);

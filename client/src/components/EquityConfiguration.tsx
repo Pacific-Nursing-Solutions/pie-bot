@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-export type ContributionFormula = 'FMV' | 'Slicing Pie' | 'Custom';
+export type ContributionFormula = 'FMV' | 'Dynamic Risk Adjusted' | 'Custom';
 
 export interface EquityConfiguration {
   stateOfIncorporation: string;
+  legalStructure: 'LLC' | 'C-Corporation' | 'S-Corporation' | 'Partnership' | 'Other';
   trackingMethod: 'Database' | 'Blockchain Tokens';
   expectedPartners: number;
   expectedEmployees: number;
   hasDebtContributions: boolean;
   hasCapitalContributions: boolean;
   contributionValuationMethod: ContributionFormula;
-  riskCoefficient: number; // For Slicing Pie formula
+  riskCoefficient: number; // Risk adjustment multiplier
+  capitalMultiplier: number; // Specific multiplier for capital contributions
 }
 
 export interface EquitySplit {
@@ -30,7 +32,7 @@ interface EquityConfigurationProps {
 
 const formulaDescriptions = {
   'FMV': 'Fair Market Value: Values contributions at their current market value, as defined by IRS regulations. This approach uses objective external benchmarks to determine contribution worth.',
-  'Slicing Pie': 'Dynamic allocation based on relative value of contributions with risk adjustment. Uses a "Grunt Fund" model where contributions are valued at 2x for cash and market rates for time, adjusted by a risk coefficient.',
+  'Dynamic Risk Adjusted': 'Dynamic allocation based on relative value of contributions with advanced risk adjustments. Time contributions are valued with a risk coefficient multiplier, while capital can be valued up to 4x or higher based on your custom settings.',
   'Custom': 'Fully customizable formula with user-defined weights for different contribution types and custom risk adjustments.'
 };
 
@@ -42,13 +44,15 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
   const [isConfiguring, setIsConfiguring] = useState(false);
   const [formState, setFormState] = useState<EquityConfiguration>({
     stateOfIncorporation: 'Delaware',
+    legalStructure: 'LLC',
     trackingMethod: 'Database',
     expectedPartners: 3,
     expectedEmployees: 5,
     hasDebtContributions: false,
     hasCapitalContributions: true,
     contributionValuationMethod: 'FMV',
-    riskCoefficient: 2
+    riskCoefficient: 2,
+    capitalMultiplier: 1
   });
   
   // When config changes, update the form state
@@ -75,21 +79,43 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
           
           <form onSubmit={handleFormSubmit}>
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  State of Incorporation
-                </label>
-                <select 
-                  value={formState.stateOfIncorporation}
-                  onChange={(e) => setFormState({...formState, stateOfIncorporation: e.target.value})}
-                  className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                >
-                  <option value="Delaware">Delaware</option>
-                  <option value="California">California</option>
-                  <option value="New York">New York</option>
-                  <option value="Wyoming">Wyoming</option>
-                  <option value="Nevada">Nevada</option>
-                </select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    State of Incorporation
+                  </label>
+                  <select 
+                    value={formState.stateOfIncorporation}
+                    onChange={(e) => setFormState({...formState, stateOfIncorporation: e.target.value})}
+                    className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  >
+                    <option value="Delaware">Delaware</option>
+                    <option value="California">California</option>
+                    <option value="New York">New York</option>
+                    <option value="Wyoming">Wyoming</option>
+                    <option value="Nevada">Nevada</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Legal Structure
+                  </label>
+                  <select 
+                    value={formState.legalStructure}
+                    onChange={(e) => setFormState({
+                      ...formState, 
+                      legalStructure: e.target.value as EquityConfiguration['legalStructure']
+                    })}
+                    className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  >
+                    <option value="LLC">LLC</option>
+                    <option value="C-Corporation">C-Corporation</option>
+                    <option value="S-Corporation">S-Corporation</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
               </div>
               
               <div>
@@ -184,7 +210,7 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
                   className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 >
                   <option value="FMV">Fair Market Value (FMV)</option>
-                  <option value="Slicing Pie">Slicing Pie Model</option>
+                  <option value="Dynamic Risk Adjusted">Dynamic Risk Adjusted</option>
                   <option value="Custom">Custom Formula</option>
                 </select>
                 
@@ -194,24 +220,52 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
                 </div>
               </div>
               
-              {formState.contributionValuationMethod === 'Slicing Pie' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Risk Coefficient (1-5)
-                  </label>
-                  <input 
-                    type="range" 
-                    min="1" 
-                    max="5" 
-                    step="0.5"
-                    value={formState.riskCoefficient}
-                    onChange={(e) => setFormState({...formState, riskCoefficient: parseFloat(e.target.value)})}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-xs">
-                    <span>1x (Low Risk)</span>
-                    <span>{formState.riskCoefficient}x</span>
-                    <span>5x (High Risk)</span>
+              {formState.contributionValuationMethod === 'Dynamic Risk Adjusted' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Risk Coefficient for Time & IP (1-6x)
+                    </label>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="6" 
+                      step="0.5"
+                      value={formState.riskCoefficient}
+                      onChange={(e) => setFormState({...formState, riskCoefficient: parseFloat(e.target.value)})}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs">
+                      <span>1x (Low Risk)</span>
+                      <span>{formState.riskCoefficient}x</span>
+                      <span>6x (High Risk)</span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      Higher values give more equity to time and intellectual property contributions
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Capital Multiplier (1-8x)
+                    </label>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="8" 
+                      step="0.5"
+                      value={formState.capitalMultiplier}
+                      onChange={(e) => setFormState({...formState, capitalMultiplier: parseFloat(e.target.value)})}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs">
+                      <span>1x (FMV)</span>
+                      <span>{formState.capitalMultiplier}x</span>
+                      <span>8x (Highly Valued)</span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      Higher values give more equity to cash and capital contributions
+                    </p>
                   </div>
                 </div>
               )}
@@ -273,13 +327,13 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
           split.ipContribution +
           split.debtContribution
         );
-      case 'Slicing Pie':
-        // Apply risk coefficient to non-cash contributions
+      case 'Dynamic Risk Adjusted':
+        // Apply risk coefficient to non-cash contributions and capital multiplier to cash
         return (
           (split.timeContribution * 100 * config.riskCoefficient) + // Time with risk multiplier
-          (split.capitalContribution * 2) + // Cash valued at 2x in Slicing Pie
+          (split.capitalContribution * config.capitalMultiplier) + // Cash with capital multiplier
           (split.ipContribution * config.riskCoefficient) +
-          (split.debtContribution * 1.5) // Debt at 1.5x (typical Slicing Pie)
+          (split.debtContribution * (config.capitalMultiplier * 0.75)) // Debt at 75% of capital multiplier
         );
       case 'Custom':
         // Placeholder for custom formula
