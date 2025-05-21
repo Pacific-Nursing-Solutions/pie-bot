@@ -42,7 +42,7 @@ const SimplePieBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     { 
       role: 'assistant', 
-      content: 'Welcome to Pie Bot! I\'m a legal expert in entity creation and dynamic equity management. I specialize in helping founders implement dynamic equity splits that automatically adjust based on contributions and convert traditional equity into blockchain tokens. How can I assist you with your equity tokenization or dynamic split needs today?' 
+      content: 'Welcome to Pie Bot! I\'m a legal expert in entity creation and dynamic equity management. Here\'s what I can help you with:\n\n• Draft founders\' agreements and promissory notes customized to your specific needs\n• Recognize and track capital and debt contributions for equity calculations\n• Suggest additional legal agreements needed based on your business model\n• Integrate with time-tracking tools like Hubstaff to reward equity based on work contributions\n• Explain the benefits of dynamic equity splitting for startup companies\n• Tokenize traditional equity on blockchain for transparent and automated management\n\n💡 Try asking: "Can you explain how dynamic equity splits would work for three co-founders with different time commitments?" or "Walk me through the process of setting up a tokenized equity structure."' 
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
