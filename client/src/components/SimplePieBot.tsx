@@ -47,6 +47,10 @@ const SimplePieBot = () => {
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Sample equity configuration and splits for demo
+  const [equityConfig, setEquityConfig] = useState<EquityConfiguration | null>(null);
+  const [equitySplits, setEquitySplits] = useState<EquitySplit[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,7 +88,12 @@ const SimplePieBot = () => {
           role: 'assistant', 
           content: response.choices[0].message.content || "I'm having trouble processing that request."
         };
-        setMessages(prevMessages => [...prevMessages, botResponse]);
+        setMessages(prevMessages => {
+          const updatedMessages = [...prevMessages, botResponse];
+          // Check if the messages contain equity configuration instructions
+          parseMessages(updatedMessages);
+          return updatedMessages;
+        });
       } catch (apiError) {
         console.error('Error with OpenAI API:', apiError);
         
@@ -108,8 +117,86 @@ const SimplePieBot = () => {
     }
   };
 
+  // Function to handle updating the equity configuration
+  const handleUpdateEquityConfig = (newConfig: EquityConfiguration) => {
+    setEquityConfig(newConfig);
+    
+    // If this is our first configuration setup, add some sample equity splits
+    if (!equityConfig) {
+      setEquitySplits([
+        {
+          partnerName: "Founder 1",
+          timeContribution: 500, // 500 hours
+          capitalContribution: 10000, // $10,000
+          ipContribution: 5000, // $5,000 value
+          debtContribution: 0,
+          equityPercentage: 40
+        },
+        {
+          partnerName: "Founder 2",
+          timeContribution: 300, // 300 hours
+          capitalContribution: 25000, // $25,000
+          ipContribution: 0,
+          debtContribution: 0,
+          equityPercentage: 35
+        },
+        {
+          partnerName: "Advisor",
+          timeContribution: 100, // 100 hours
+          capitalContribution: 0,
+          ipContribution: 15000, // $15,000 value (IP)
+          debtContribution: 0,
+          equityPercentage: 25
+        }
+      ]);
+    }
+  };
+  
+  // Parse messages to detect equity configuration commands
+  const parseMessages = (messages: Message[]) => {
+    const lastMessageContent = messages[messages.length - 1]?.content?.toLowerCase() || '';
+    
+    // If the assistant's response suggests setting up equity configuration
+    if (lastMessageContent.includes('setup') && 
+        lastMessageContent.includes('equity') && 
+        lastMessageContent.includes('delaware') &&
+        !equityConfig) {
+      
+      // Example pattern detection - would be more sophisticated in production
+      const newConfig: EquityConfiguration = {
+        stateOfIncorporation: 'Delaware',
+        trackingMethod: lastMessageContent.includes('token') ? 'Blockchain Tokens' : 'Database',
+        expectedPartners: 3,
+        expectedEmployees: lastMessageContent.includes('employees') ? 
+          parseInt(lastMessageContent.match(/(\d+)\s+employees?/)?.[1] || '5') : 5,
+        hasDebtContributions: lastMessageContent.includes('debt'),
+        hasCapitalContributions: true,
+        contributionValuationMethod: lastMessageContent.includes('slicing pie') ? 'Slicing Pie' : 'FMV',
+        riskCoefficient: 2
+      };
+      
+      handleUpdateEquityConfig(newConfig);
+    }
+  };
+  
+  // Add a demo configuration
+  const setupDemoConfig = () => {
+    const demoConfig: EquityConfiguration = {
+      stateOfIncorporation: 'Delaware',
+      trackingMethod: 'Blockchain Tokens',
+      expectedPartners: 3,
+      expectedEmployees: 5,
+      hasDebtContributions: true,
+      hasCapitalContributions: true,
+      contributionValuationMethod: 'Slicing Pie',
+      riskCoefficient: 2
+    };
+    
+    handleUpdateEquityConfig(demoConfig);
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <div className="max-w-5xl mx-auto p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Pie Bot - Equity Management Assistant</h1>
       
       <div className="h-96 overflow-y-auto mb-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
@@ -176,8 +263,22 @@ const SimplePieBot = () => {
           >
             Tokenized equity setup
           </button>
+          <button
+            onClick={setupDemoConfig}
+            className="px-3 py-2 text-sm bg-green-100 dark:bg-green-900 hover:bg-green-200 dark:hover:bg-green-800 rounded-md text-green-800 dark:text-green-200 transition-colors"
+            disabled={isLoading}
+          >
+            Show Demo Equity Structure
+          </button>
         </div>
       </div>
+
+      {/* Equity Configuration Panel */}
+      <EquityConfigurationPanel
+        config={equityConfig}
+        equitySplits={equitySplits}
+        onUpdateConfig={handleUpdateEquityConfig}
+      />
     </div>
   );
 };
