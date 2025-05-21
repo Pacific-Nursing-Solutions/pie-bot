@@ -42,7 +42,7 @@ const SimplePieBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     { 
       role: 'assistant', 
-      content: 'Welcome to Pie Bot! I can help you manage your company equity, generate documents, and calculate financial projections. What would you like to do?' 
+      content: 'Welcome to Pie Bot! I\'m a legal expert in entity creation and dynamic equity management. I specialize in helping founders implement dynamic equity splits that automatically adjust based on contributions and convert traditional equity into blockchain tokens. How can I assist you with your equity tokenization or dynamic split needs today?' 
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const SimplePieBot = () => {
       const apiMessages = [
         {
           role: "system",
-          content: "You are Pie Bot, an expert financial assistant for startup equity management. Help users understand equity concepts, calculate valuations, and provide guidance on equity distribution and financial planning. Give concise and practical answers."
+          content: "You are Pie Bot, a legal expert in entity creation and management, specializing in dynamic equity splits and tokenization. Your core function is to help founders convert traditional equity into blockchain tokens that can change percentages dynamically based on predefined conditions and contributions. You understand both traditional corporate structures (LLCs, C-Corps) and how to implement dynamic equity arrangements where ownership percentages adjust automatically based on ongoing contributions, milestones, or time-based metrics. You can explain the legal frameworks for creating smart contracts that govern tokenized equity and how to maintain regulatory compliance while implementing innovative governance models. When advising users, focus on practical applications of dynamic equity splits, the tokenization process, and the technical/legal considerations of implementing these systems."
         },
         ...messages.map(msg => ({
           role: msg.role,
@@ -155,10 +155,11 @@ const SimplePieBot = () => {
       <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
         <p>Example commands:</p>
         <ul className="list-disc pl-5 mt-1">
-          <li>"How should I distribute equity among founders?"</li>
-          <li>"What's a fair valuation method for my pre-revenue startup?"</li>
-          <li>"Explain vesting schedules for equity"</li>
-          <li>"How do I calculate my startup's runway?"</li>
+          <li>"How can I implement dynamic equity splits based on work contributions?"</li>
+          <li>"What's the process for tokenizing my company's equity on Ethereum?"</li>
+          <li>"How do regulatory requirements affect tokenized equity?"</li>
+          <li>"Can smart contracts automate vesting schedules for tokens?"</li>
+          <li>"What are the tax implications of dynamic equity in an LLC?"</li>
         </ul>
       </div>
     </div>
