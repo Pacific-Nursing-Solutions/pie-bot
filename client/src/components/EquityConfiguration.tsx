@@ -522,8 +522,8 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
       </div>
       
       <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded text-sm text-blue-800 dark:text-blue-200">
-        <p className="font-medium">Formula: {config.contributionValuationMethod}</p>
-        <p>{formulaDescriptions[config.contributionValuationMethod]}</p>
+        <p className="font-medium">Dynamic Contribution Valuation</p>
+        <p>Multipliers adjust contribution value based on risk and timing, rewarding early-stage contributions.</p>
       </div>
       
       {equitySplits.length > 0 ? (
