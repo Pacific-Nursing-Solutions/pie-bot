@@ -9,6 +9,7 @@ export interface EquityConfiguration {
   hasDebtContributions: boolean;
   hasCapitalContributions: boolean;
   capitalMultiplier: number; // Multiplier for capital contributions (relative to FMV)
+  debtMultiplier: number; // Multiplier for debt contributions
   timeMultiplier: number; // Multiplier for time contributions
   ipMultiplier: number; // Multiplier for intellectual property
   propertyMultiplier: number; // Multiplier for used property/equipment
@@ -51,6 +52,7 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
     hasDebtContributions: false,
     hasCapitalContributions: true,
     capitalMultiplier: 4.0,
+    debtMultiplier: 3.0,
     timeMultiplier: 2.0,
     ipMultiplier: 3.0,
     propertyMultiplier: 1.5
@@ -199,9 +201,19 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
               </div>
               
               <div>
-                <h3 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-3 border-b pb-2">
-                  Contribution Valuation Multipliers
-                </h3>
+                <div className="flex items-center mb-3 border-b pb-2">
+                  <h3 className="text-md font-medium text-gray-800 dark:text-gray-200">
+                    Contribution Valuation Multipliers
+                  </h3>
+                  <div className="relative ml-2 group">
+                    <div className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 cursor-help font-medium text-xs">
+                      i
+                    </div>
+                    <div className="absolute left-0 bottom-full mb-2 w-64 p-2 bg-gray-900 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
+                      Risk multipliers in dynamic equity differ from standard accounting practices by rewarding early contributions with higher equity value. This approach recognizes the increased risk taken by early contributors.
+                    </div>
+                  </div>
+                </div>
                 <p className="text-sm mb-4 text-gray-700 dark:text-gray-300">
                   Set how much to value each type of contribution relative to its Fair Market Value (FMV).
                   Higher multipliers give more equity weight to that contribution type.
@@ -230,6 +242,31 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
                     </div>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                       {contributionDescriptions.capital}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Debt Multiplier (1-6x)
+                      </label>
+                      <span className="font-bold text-blue-600 dark:text-blue-400">{formState.debtMultiplier}x</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="6" 
+                      step="0.5"
+                      value={formState.debtMultiplier}
+                      onChange={(e) => setFormState({...formState, debtMultiplier: parseFloat(e.target.value)})}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs mt-1">
+                      <span>1x (FMV)</span>
+                      <span>6x (Highly Valued)</span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      Loans, promissory notes, and other debt contributions to the company.
                     </p>
                   </div>
                   
@@ -368,8 +405,8 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
       // IP contributions multiplied by IP multiplier
       (split.ipContribution * config.ipMultiplier) +
       
-      // Debt contributions - using 75% of capital multiplier as default
-      (split.debtContribution * (config.capitalMultiplier * 0.75))
+      // Debt contributions using their own specific multiplier
+      (split.debtContribution * config.debtMultiplier)
     );
   };
   
@@ -432,8 +469,18 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
                 {config.hasDebtContributions ? 'Yes' : 'No'}
               </span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Valuation Method:</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <span className="text-gray-600 dark:text-gray-400">Valuation Method:</span>
+                <div className="relative ml-1 group">
+                  <div className="flex items-center justify-center w-4 h-4 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 cursor-help font-medium text-xs">
+                    i
+                  </div>
+                  <div className="absolute left-0 bottom-full mb-2 w-64 p-2 bg-gray-900 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
+                    Risk multipliers differ from standard accounting by valuing early-stage contributions more highly to account for the increased risk.
+                  </div>
+                </div>
+              </div>
               <span className="font-medium text-gray-900 dark:text-gray-100">
                 Dynamic Multipliers
               </span>
@@ -444,6 +491,14 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
                 {config.capitalMultiplier}x
               </span>
             </div>
+            {config.hasDebtContributions && (
+              <div className="flex justify-between">
+                <span className="text-gray-600 dark:text-gray-400">Debt Multiplier:</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100">
+                  {config.debtMultiplier}x
+                </span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-gray-600 dark:text-gray-400">Time Multiplier:</span>
               <span className="font-medium text-gray-900 dark:text-gray-100">

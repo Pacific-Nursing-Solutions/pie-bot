@@ -43,7 +43,7 @@ const SimplePieBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     { 
       role: 'assistant', 
-      content: 'Welcome to Pie Bot! I\'m a legal expert in entity creation and dynamic equity management. Here\'s what I can help you with:\n\n• Draft founders\' agreements and promissory notes customized to your specific needs\n• Recognize and track capital and debt contributions for equity calculations\n• Suggest additional legal agreements needed based on your business model\n• Integrate with time-tracking tools like Hubstaff to reward equity based on work contributions\n• Explain the benefits of dynamic equity splitting for startup companies\n• Tokenize traditional equity on blockchain for transparent and automated management' 
+      content: 'Welcome to Pie Bot! I\'m a legal expert in entity creation and dynamic equity management. Here\'s what I can help you with:\n\n• Founders\' agreements\n• Promissory notes\n• Capital/debt contributions\n• Legal agreements\n• Time-based equity rewards\n• Dynamic equity splitting\n• Equity tokenization' 
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -173,6 +173,7 @@ const SimplePieBot = () => {
         hasDebtContributions: lastMessageContent.includes('debt'),
         hasCapitalContributions: true,
         capitalMultiplier: lastMessageContent.includes('capital') ? 4 : 2,
+        debtMultiplier: lastMessageContent.includes('debt') ? 3 : 2,
         timeMultiplier: lastMessageContent.includes('time') ? 3 : 2,
         ipMultiplier: lastMessageContent.includes('ip') ? 3 : 2,
         propertyMultiplier: 1.5
@@ -193,6 +194,7 @@ const SimplePieBot = () => {
       hasDebtContributions: true,
       hasCapitalContributions: true,
       capitalMultiplier: 4.0,
+      debtMultiplier: 3.0,
       timeMultiplier: 3.0,
       ipMultiplier: 3.5,
       propertyMultiplier: 1.5
