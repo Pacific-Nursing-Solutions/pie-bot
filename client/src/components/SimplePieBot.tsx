@@ -186,13 +186,15 @@ const SimplePieBot = () => {
   const setupDemoConfig = () => {
     const demoConfig: EquityConfiguration = {
       stateOfIncorporation: 'Delaware',
+      legalStructure: 'LLC',
       trackingMethod: 'Blockchain Tokens',
       expectedPartners: 3,
       expectedEmployees: 5,
       hasDebtContributions: true,
       hasCapitalContributions: true,
-      contributionValuationMethod: 'Slicing Pie',
-      riskCoefficient: 2
+      contributionValuationMethod: 'Dynamic Risk Adjusted',
+      riskCoefficient: 3,
+      capitalMultiplier: 4
     };
     
     handleUpdateEquityConfig(demoConfig);

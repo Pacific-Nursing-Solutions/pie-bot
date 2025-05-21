@@ -408,13 +408,21 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
                 {config.contributionValuationMethod}
               </span>
             </div>
-            {config.contributionValuationMethod === 'Slicing Pie' && (
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Risk Coefficient:</span>
-                <span className="font-medium text-gray-900 dark:text-gray-100">
-                  {config.riskCoefficient}x
-                </span>
-              </div>
+            {config.contributionValuationMethod === 'Dynamic Risk Adjusted' && (
+              <>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">Risk Coefficient:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">
+                    {config.riskCoefficient}x
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">Capital Multiplier:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">
+                    {config.capitalMultiplier}x
+                  </span>
+                </div>
+              </>
             )}
           </div>
         </div>
