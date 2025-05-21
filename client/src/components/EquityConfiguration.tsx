@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-export type ContributionFormula = 'FMV' | 'Dynamic Risk Adjusted' | 'Custom';
-
 export interface EquityConfiguration {
   stateOfIncorporation: string;
   legalStructure: 'LLC' | 'C-Corporation' | 'S-Corporation' | 'Partnership' | 'Other';
@@ -10,9 +8,10 @@ export interface EquityConfiguration {
   expectedEmployees: number;
   hasDebtContributions: boolean;
   hasCapitalContributions: boolean;
-  contributionValuationMethod: ContributionFormula;
-  riskCoefficient: number; // Risk adjustment multiplier
-  capitalMultiplier: number; // Specific multiplier for capital contributions
+  capitalMultiplier: number; // Multiplier for capital contributions (relative to FMV)
+  timeMultiplier: number; // Multiplier for time contributions
+  ipMultiplier: number; // Multiplier for intellectual property
+  propertyMultiplier: number; // Multiplier for used property/equipment
 }
 
 export interface EquitySplit {
@@ -30,10 +29,11 @@ interface EquityConfigurationProps {
   onUpdateConfig: (config: EquityConfiguration) => void;
 }
 
-const formulaDescriptions = {
-  'FMV': 'Fair Market Value: Values contributions at their current market value, as defined by IRS regulations. This approach uses objective external benchmarks to determine contribution worth.',
-  'Dynamic Risk Adjusted': 'Dynamic allocation based on relative value of contributions with advanced risk adjustments. Time contributions are valued with a risk coefficient multiplier, while capital can be valued up to 4x or higher based on your custom settings.',
-  'Custom': 'Fully customizable formula with user-defined weights for different contribution types and custom risk adjustments.'
+const contributionDescriptions = {
+  capital: 'Cash investments and direct monetary contributions to the company.',
+  time: 'Hours worked on the company, valued relative to market rate for the type of work.',
+  ip: 'Patents, copyrights, trademarks, trade secrets, and other intellectual property.',
+  property: 'Equipment, hardware, software licenses, or other physical assets contributed.'
 };
 
 const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({ 
@@ -50,9 +50,10 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
     expectedEmployees: 5,
     hasDebtContributions: false,
     hasCapitalContributions: true,
-    contributionValuationMethod: 'FMV',
-    riskCoefficient: 2,
-    capitalMultiplier: 1
+    capitalMultiplier: 4.0,
+    timeMultiplier: 2.0,
+    ipMultiplier: 3.0,
+    propertyMultiplier: 1.5
   });
   
   // When config changes, update the form state
@@ -198,57 +199,22 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Contribution Valuation Method
-                </label>
-                <select 
-                  value={formState.contributionValuationMethod}
-                  onChange={(e) => setFormState({
-                    ...formState, 
-                    contributionValuationMethod: e.target.value as ContributionFormula
-                  })}
-                  className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                >
-                  <option value="FMV">Fair Market Value (FMV)</option>
-                  <option value="Dynamic Risk Adjusted">Dynamic Risk Adjusted</option>
-                  <option value="Custom">Custom Formula</option>
-                </select>
+                <h3 className="text-md font-medium text-gray-800 dark:text-gray-200 mb-3 border-b pb-2">
+                  Contribution Valuation Multipliers
+                </h3>
+                <p className="text-sm mb-4 text-gray-700 dark:text-gray-300">
+                  Set how much to value each type of contribution relative to its Fair Market Value (FMV).
+                  Higher multipliers give more equity weight to that contribution type.
+                </p>
                 
-                <div className="mt-2 p-3 bg-gray-100 dark:bg-gray-700 rounded text-sm">
-                  <p className="font-medium mb-1">{formState.contributionValuationMethod}</p>
-                  <p>{formulaDescriptions[formState.contributionValuationMethod]}</p>
-                </div>
-              </div>
-              
-              {formState.contributionValuationMethod === 'Dynamic Risk Adjusted' && (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Risk Coefficient for Time & IP (1-6x)
-                    </label>
-                    <input 
-                      type="range" 
-                      min="1" 
-                      max="6" 
-                      step="0.5"
-                      value={formState.riskCoefficient}
-                      onChange={(e) => setFormState({...formState, riskCoefficient: parseFloat(e.target.value)})}
-                      className="w-full"
-                    />
-                    <div className="flex justify-between text-xs">
-                      <span>1x (Low Risk)</span>
-                      <span>{formState.riskCoefficient}x</span>
-                      <span>6x (High Risk)</span>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Capital Multiplier (1-8x)
+                      </label>
+                      <span className="font-bold text-blue-600 dark:text-blue-400">{formState.capitalMultiplier}x</span>
                     </div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      Higher values give more equity to time and intellectual property contributions
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Capital Multiplier (1-8x)
-                    </label>
                     <input 
                       type="range" 
                       min="1" 
@@ -258,17 +224,91 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
                       onChange={(e) => setFormState({...formState, capitalMultiplier: parseFloat(e.target.value)})}
                       className="w-full"
                     />
-                    <div className="flex justify-between text-xs">
+                    <div className="flex justify-between text-xs mt-1">
                       <span>1x (FMV)</span>
-                      <span>{formState.capitalMultiplier}x</span>
                       <span>8x (Highly Valued)</span>
                     </div>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      Higher values give more equity to cash and capital contributions
+                      {contributionDescriptions.capital}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Time Multiplier (1-6x)
+                      </label>
+                      <span className="font-bold text-blue-600 dark:text-blue-400">{formState.timeMultiplier}x</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="6" 
+                      step="0.5"
+                      value={formState.timeMultiplier}
+                      onChange={(e) => setFormState({...formState, timeMultiplier: parseFloat(e.target.value)})}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs mt-1">
+                      <span>1x (FMV)</span>
+                      <span>6x (Highly Valued)</span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      {contributionDescriptions.time}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        IP Multiplier (1-7x)
+                      </label>
+                      <span className="font-bold text-blue-600 dark:text-blue-400">{formState.ipMultiplier}x</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="7" 
+                      step="0.5"
+                      value={formState.ipMultiplier}
+                      onChange={(e) => setFormState({...formState, ipMultiplier: parseFloat(e.target.value)})}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs mt-1">
+                      <span>1x (FMV)</span>
+                      <span>7x (Highly Valued)</span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      {contributionDescriptions.ip}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Property Multiplier (1-4x)
+                      </label>
+                      <span className="font-bold text-blue-600 dark:text-blue-400">{formState.propertyMultiplier}x</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="4" 
+                      step="0.5"
+                      value={formState.propertyMultiplier}
+                      onChange={(e) => setFormState({...formState, propertyMultiplier: parseFloat(e.target.value)})}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs mt-1">
+                      <span>1x (FMV)</span>
+                      <span>4x (Highly Valued)</span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      {contributionDescriptions.property}
                     </p>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
             
             <div className="mt-6 flex justify-end space-x-3">
@@ -315,32 +355,22 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
     );
   }
   
-  // Function to calculate equity based on the selected formula
+  // Function to calculate equity with multipliers for each contribution type
   const calculateEquity = (split: EquitySplit, config: EquityConfiguration): number => {
-    // This is a simplified calculation - would be more complex in production
-    switch (config.contributionValuationMethod) {
-      case 'FMV':
-        // Simple Fair Market Value - sum of all contributions
-        return (
-          split.timeContribution * 100 + // Simplified: value time at $100/hr
-          split.capitalContribution +
-          split.ipContribution +
-          split.debtContribution
-        );
-      case 'Dynamic Risk Adjusted':
-        // Apply risk coefficient to non-cash contributions and capital multiplier to cash
-        return (
-          (split.timeContribution * 100 * config.riskCoefficient) + // Time with risk multiplier
-          (split.capitalContribution * config.capitalMultiplier) + // Cash with capital multiplier
-          (split.ipContribution * config.riskCoefficient) +
-          (split.debtContribution * (config.capitalMultiplier * 0.75)) // Debt at 75% of capital multiplier
-        );
-      case 'Custom':
-        // Placeholder for custom formula
-        return split.equityPercentage;
-      default:
-        return 0;
-    }
+    // Apply multipliers to each contribution type
+    return (
+      // Time contributions (valued at $100/hr base rate) multiplied by time multiplier
+      (split.timeContribution * 100 * config.timeMultiplier) + 
+      
+      // Cash/capital contributions multiplied by capital multiplier
+      (split.capitalContribution * config.capitalMultiplier) + 
+      
+      // IP contributions multiplied by IP multiplier
+      (split.ipContribution * config.ipMultiplier) +
+      
+      // Debt contributions - using 75% of capital multiplier as default
+      (split.debtContribution * (config.capitalMultiplier * 0.75))
+    );
   };
   
   // Calculate total value of all contributions
@@ -403,27 +433,35 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Valuation Formula:</span>
+              <span className="text-gray-600 dark:text-gray-400">Valuation Method:</span>
               <span className="font-medium text-gray-900 dark:text-gray-100">
-                {config.contributionValuationMethod}
+                Dynamic Multipliers
               </span>
             </div>
-            {config.contributionValuationMethod === 'Dynamic Risk Adjusted' && (
-              <>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Risk Coefficient:</span>
-                  <span className="font-medium text-gray-900 dark:text-gray-100">
-                    {config.riskCoefficient}x
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Capital Multiplier:</span>
-                  <span className="font-medium text-gray-900 dark:text-gray-100">
-                    {config.capitalMultiplier}x
-                  </span>
-                </div>
-              </>
-            )}
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Capital Multiplier:</span>
+              <span className="font-medium text-gray-900 dark:text-gray-100">
+                {config.capitalMultiplier}x
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Time Multiplier:</span>
+              <span className="font-medium text-gray-900 dark:text-gray-100">
+                {config.timeMultiplier}x
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-400">IP Multiplier:</span>
+              <span className="font-medium text-gray-900 dark:text-gray-100">
+                {config.ipMultiplier}x
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Property Multiplier:</span>
+              <span className="font-medium text-gray-900 dark:text-gray-100">
+                {config.propertyMultiplier}x
+              </span>
+            </div>
           </div>
         </div>
       </div>

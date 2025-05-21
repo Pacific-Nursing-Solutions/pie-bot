@@ -172,10 +172,10 @@ const SimplePieBot = () => {
           parseInt(lastMessageContent.match(/(\d+)\s+employees?/)?.[1] || '5') : 5,
         hasDebtContributions: lastMessageContent.includes('debt'),
         hasCapitalContributions: true,
-        contributionValuationMethod: lastMessageContent.includes('dynamic') || lastMessageContent.includes('risk adjusted') ? 
-          'Dynamic Risk Adjusted' : 'FMV',
-        riskCoefficient: 2,
-        capitalMultiplier: lastMessageContent.includes('capital') ? 4 : 2
+        capitalMultiplier: lastMessageContent.includes('capital') ? 4 : 2,
+        timeMultiplier: lastMessageContent.includes('time') ? 3 : 2,
+        ipMultiplier: lastMessageContent.includes('ip') ? 3 : 2,
+        propertyMultiplier: 1.5
       };
       
       handleUpdateEquityConfig(newConfig);
@@ -192,9 +192,10 @@ const SimplePieBot = () => {
       expectedEmployees: 5,
       hasDebtContributions: true,
       hasCapitalContributions: true,
-      contributionValuationMethod: 'Dynamic Risk Adjusted',
-      riskCoefficient: 3,
-      capitalMultiplier: 4
+      capitalMultiplier: 4.0,
+      timeMultiplier: 3.0,
+      ipMultiplier: 3.5,
+      propertyMultiplier: 1.5
     };
     
     handleUpdateEquityConfig(demoConfig);
