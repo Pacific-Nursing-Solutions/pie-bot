@@ -42,7 +42,7 @@ const SimplePieBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     { 
       role: 'assistant', 
-      content: 'Welcome to Pie Bot! I\'m a legal expert in entity creation and dynamic equity management. Here\'s what I can help you with:\n\n• Draft founders\' agreements and promissory notes customized to your specific needs\n• Recognize and track capital and debt contributions for equity calculations\n• Suggest additional legal agreements needed based on your business model\n• Integrate with time-tracking tools like Hubstaff to reward equity based on work contributions\n• Explain the benefits of dynamic equity splitting for startup companies\n• Tokenize traditional equity on blockchain for transparent and automated management\n\n💡 Try asking: "Can you explain how dynamic equity splits would work for three co-founders with different time commitments?" or "Walk me through the process of setting up a tokenized equity structure."' 
+      content: 'Welcome to Pie Bot! I\'m a legal expert in entity creation and dynamic equity management. Here\'s what I can help you with:\n\n• Draft founders\' agreements and promissory notes customized to your specific needs\n• Recognize and track capital and debt contributions for equity calculations\n• Suggest additional legal agreements needed based on your business model\n• Integrate with time-tracking tools like Hubstaff to reward equity based on work contributions\n• Explain the benefits of dynamic equity splitting for startup companies\n• Tokenize traditional equity on blockchain for transparent and automated management' 
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -140,7 +140,7 @@ const SimplePieBot = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-1 p-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-          placeholder="Ask about equity, valuations, or company formation..."
+          placeholder="Ask about equity, valuations, or tokenization..."
           disabled={isLoading}
         />
         <button
@@ -152,15 +152,30 @@ const SimplePieBot = () => {
         </button>
       </form>
       
-      <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-        <p>Example commands:</p>
-        <ul className="list-disc pl-5 mt-1">
-          <li>"How can I implement dynamic equity splits based on work contributions?"</li>
-          <li>"What's the process for tokenizing my company's equity on Ethereum?"</li>
-          <li>"How do regulatory requirements affect tokenized equity?"</li>
-          <li>"Can smart contracts automate vesting schedules for tokens?"</li>
-          <li>"What are the tax implications of dynamic equity in an LLC?"</li>
-        </ul>
+      <div className="mt-4">
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Try a demo question:</p>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => {
+              setInput("How would dynamic equity splits work for three co-founders with different time commitments?");
+              handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+            }}
+            className="px-3 py-2 text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md text-gray-800 dark:text-gray-200 transition-colors"
+            disabled={isLoading}
+          >
+            Dynamic splits for co-founders
+          </button>
+          <button
+            onClick={() => {
+              setInput("Walk me through the process of setting up a tokenized equity structure.");
+              handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+            }}
+            className="px-3 py-2 text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md text-gray-800 dark:text-gray-200 transition-colors"
+            disabled={isLoading}
+          >
+            Tokenized equity setup
+          </button>
+        </div>
       </div>
     </div>
   );
