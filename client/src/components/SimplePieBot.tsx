@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import openai from '@/lib/openai';
+import EquityConfigurationPanel, { EquityConfiguration, EquitySplit } from './EquityConfiguration';
 
 interface Message {
   role: 'user' | 'assistant';
