@@ -117,7 +117,7 @@ const Companies = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <div className="flex items-center">
-              <Building2 className="w-8 h-8 text-blue-600 mr-3" />
+              <Building2 className="w-8 h-8 text-orange-600 mr-3" />
               <div>
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Companies</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -129,7 +129,7 @@ const Companies = () => {
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <div className="flex items-center">
-              <TrendingUp className="w-8 h-8 text-green-600 mr-3" />
+              <TrendingUp className="w-8 h-8 text-orange-600 mr-3" />
               <div>
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Portfolio Value</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -141,7 +141,7 @@ const Companies = () => {
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <div className="flex items-center">
-              <Users className="w-8 h-8 text-purple-600 mr-3" />
+              <Users className="w-8 h-8 text-orange-600 mr-3" />
               <div>
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Investments</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
