@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { TrendingUp, Building2, Users, FileText, DollarSign, Percent, ChevronRight, Plus } from 'lucide-react';
+import { TrendingUp, Building2, Users, FileText, DollarSign, Percent, ChevronRight, Plus, Bell, ChevronDown, ChevronUp } from 'lucide-react';
 import SimplePieBot from '../components/SimplePieBot';
 
 interface CompanyPosition {
@@ -34,6 +34,9 @@ interface PoolPosition {
 }
 
 const UserDashboard = () => {
+  const [isHeaderMinimized, setIsHeaderMinimized] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  
   const [companyPositions] = useState<CompanyPosition[]>([
     {
       id: 1,
@@ -105,86 +108,184 @@ const UserDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
+      {/* Compact Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                Investment Dashboard
-              </h1>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Your complete portfolio overview and management center
-              </p>
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-6">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  Investment Dashboard
+                </h1>
+              </div>
+              
+              {/* Navigation Icons */}
+              <div className="flex items-center space-x-2">
+                <Link href="/company-positions">
+                  <button className="p-3 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors" title="Company Positions">
+                    <Building2 className="w-5 h-5" />
+                  </button>
+                </Link>
+                <Link href="/pools">
+                  <button className="p-3 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors" title="Pool Positions">
+                    <Users className="w-5 h-5" />
+                  </button>
+                </Link>
+                <Link href="/fundraising">
+                  <button className="p-3 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-200 dark:hover:bg-green-800 transition-colors" title="Fundraising">
+                    <TrendingUp className="w-5 h-5" />
+                  </button>
+                </Link>
+                <Link href="/documents">
+                  <button className="p-3 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" title="Documents">
+                    <FileText className="w-5 h-5" />
+                  </button>
+                </Link>
+              </div>
             </div>
-            <div className="flex space-x-3">
-              <Link href="/company-positions">
-                <button className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
-                  Company Positions
+
+            <div className="flex items-center space-x-3">
+              {/* Notifications Bell */}
+              <div className="relative">
+                <button 
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="p-3 bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-400 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-800 transition-colors relative"
+                  title="Notifications"
+                >
+                  <Bell className="w-5 h-5" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
                 </button>
-              </Link>
-              <Link href="/fundraising">
-                <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                  Fundraising
-                </button>
-              </Link>
-              <Link href="/documents">
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                  Documents
-                </button>
-              </Link>
+                
+                {/* Notifications Dropdown */}
+                {showNotifications && (
+                  <div className="absolute right-0 top-full mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                    <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">🔔 Notifications & To-Do</h3>
+                    </div>
+                    <div className="p-4 max-h-96 overflow-y-auto space-y-3">
+                      <div className="flex items-start space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-400">
+                        <div className="flex-shrink-0">
+                          <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                            Review Series A documents for TechStart Inc.
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            Due: May 30, 2024 • Priority: High
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-400">
+                        <div className="flex-shrink-0">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                            AI/ML Syndicate quarterly update available
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            New: May 22, 2024 • Action: Review performance
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-400">
+                        <div className="flex-shrink-0">
+                          <div className="w-2 h-2 bg-green-400 rounded-full mt-2"></div>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                            FinTech Startup board meeting invitation
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            June 5, 2024 • Action: Confirm attendance
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start space-x-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-400">
+                        <div className="flex-shrink-0">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                            Update equity distribution calculations
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            Task: Use Pie Bot to recalculate equity splits
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Minimize/Expand Button */}
+              <button 
+                onClick={() => setIsHeaderMinimized(!isHeaderMinimized)}
+                className="p-3 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                title={isHeaderMinimized ? "Expand Portfolio Summary" : "Minimize Portfolio Summary"}
+              >
+                {isHeaderMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+              </button>
             </div>
           </div>
+
+          {/* Portfolio Summary - Collapsible */}
+          {!isHeaderMinimized && (
+            <div className="pb-4">
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex items-center">
+                    <DollarSign className="w-5 h-5 text-green-600 mr-2" />
+                    <div>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Total Net Worth</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                        ${totalNetWorth.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <Building2 className="w-5 h-5 text-blue-600 mr-2" />
+                    <div>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Company Equity</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                        ${totalPortfolioValue.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <Users className="w-5 h-5 text-purple-600 mr-2" />
+                    <div>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Pool Returns</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                        ${totalPoolValue.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <TrendingUp className="w-5 h-5 text-orange-600 mr-2" />
+                    <div>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Companies</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                        {companyPositions.length}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Portfolio Summary Header */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
-          <div className="px-6 py-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="flex items-center">
-                <DollarSign className="w-6 h-6 text-green-600 mr-3" />
-                <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Total Net Worth</p>
-                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                    ${totalNetWorth.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <Building2 className="w-6 h-6 text-blue-600 mr-3" />
-                <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Company Equity</p>
-                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                    ${totalPortfolioValue.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <Users className="w-6 h-6 text-purple-600 mr-3" />
-                <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Pool Returns</p>
-                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                    ${totalPoolValue.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <TrendingUp className="w-6 h-6 text-orange-600 mr-3" />
-                <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Companies</p>
-                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                    {companyPositions.length}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Pie Bot Command Center - Star of the Show */}
         <div className="mb-8">
@@ -199,135 +300,54 @@ const UserDashboard = () => {
           <SimplePieBot />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Notifications & To-Do Activities */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                🔔 Notifications & To-Do
-              </h2>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-400">
-                  <div className="flex-shrink-0">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      Review Series A documents for TechStart Inc.
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      Due: May 30, 2024 • Priority: High
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-400">
-                  <div className="flex-shrink-0">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      AI/ML Syndicate quarterly update available
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      New: May 22, 2024 • Action: Review performance
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-400">
-                  <div className="flex-shrink-0">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2"></div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      FinTech Startup board meeting invitation
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      June 5, 2024 • Action: Confirm attendance
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-400">
-                  <div className="flex-shrink-0">
-                    <div className="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      Update equity distribution calculations
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      Task: Use Pie Bot to recalculate equity splits
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                  View all notifications →
-                </button>
-              </div>
-            </div>
+        {/* Pool Positions Summary */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              Recent Pool Activity
+            </h2>
+            <Link href="/pools">
+              <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
+                View All Pools <ChevronRight className="w-4 h-4 ml-1" />
+              </button>
+            </Link>
           </div>
-
-          {/* Pool Positions */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Pool Positions
-              </h2>
-              <Link href="/pools">
-                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                  View All <ChevronRight className="w-4 h-4 ml-1" />
-                </button>
-              </Link>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {poolPositions.map((pool) => (
-                  <Link key={pool.id} href={`/pool/${pool.id}`}>
-                    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-                            {pool.name}
-                          </h3>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            {pool.type} • {pool.companies} companies
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-green-600">
-                            ${pool.returns.toLocaleString()}
-                          </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Returns
-                          </p>
-                        </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {poolPositions.slice(0, 2).map((pool) => (
+                <Link key={pool.id} href={`/pool/${pool.id}`}>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                          {pool.name}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {pool.type} • {pool.companies} companies
+                        </p>
                       </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <span className="text-gray-500 dark:text-gray-400">Committed:</span>
-                          <span className="ml-2 font-medium">${pool.totalCommitted.toLocaleString()}</span>
-                        </div>
-                        <div>
-                          <span className="text-gray-500 dark:text-gray-400">Deployed:</span>
-                          <span className="ml-2 font-medium">${pool.deployed.toLocaleString()}</span>
-                        </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-green-600">
+                          ${pool.returns.toLocaleString()}
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          Returns
+                        </p>
                       </div>
                     </div>
-                  </Link>
-                ))}
-              </div>
-              
-              <button className="w-full mt-4 px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500 transition-colors flex items-center justify-center">
-                <Plus className="w-4 h-4 mr-2" />
-                Join New Pool
-              </button>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-500 dark:text-gray-400">Committed:</span>
+                        <span className="ml-2 font-medium">${pool.totalCommitted.toLocaleString()}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500 dark:text-gray-400">Deployed:</span>
+                        <span className="ml-2 font-medium">${pool.deployed.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
