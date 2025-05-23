@@ -2,6 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* Pie Bot Brand Colors - Professional Finance Theme */
+    --primary: 215 100% 50%;          /* Deep Blue - Trust & Stability */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 210 40% 94%;         /* Light Blue-Gray */
+    --secondary-foreground: 215 25% 27%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 168 76% 42%;            /* Teal - Growth & Success */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 215 100% 50%;
+    --background: 0 0% 100%;
+    --foreground: 215 25% 27%;
+    --chart-1: 215 100% 50%;          /* Primary Blue */
+    --chart-2: 168 76% 42%;           /* Success Teal */
+    --chart-3: 45 93% 58%;            /* Warning Amber */
+    --chart-4: 262 52% 47%;           /* Purple Accent */
+    --chart-5: 173 58% 39%;           /* Dark Teal */
+    
+    /* Custom Brand Variables */
+    --brand-primary: 215 100% 50%;     /* Deep Blue */
+    --brand-secondary: 168 76% 42%;    /* Teal */
+    --brand-accent: 45 93% 58%;        /* Amber */
+    --brand-neutral: 215 16% 47%;      /* Blue-Gray */
+    --brand-success: 152 69% 31%;      /* Forest Green */
+    --brand-warning: 38 92% 50%;       /* Orange */
+    --brand-danger: 0 84% 60%;         /* Red */
+  }
+
+  .dark {
+    --primary: 215 100% 50%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 215 19% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 215 19% 16%;
+    --muted-foreground: 215 16% 65%;
+    --accent: 168 76% 42%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 19% 27%;
+    --input: 215 19% 27%;
+    --ring: 215 100% 50%;
+    --background: 215 28% 9%;
+    --foreground: 0 0% 98%;
+    --chart-1: 215 100% 50%;
+    --chart-2: 168 76% 42%;
+    --chart-3: 45 93% 58%;
+    --chart-4: 262 52% 47%;
+    --chart-5: 173 58% 39%;
+  }
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 20 14.3% 4.1%;
