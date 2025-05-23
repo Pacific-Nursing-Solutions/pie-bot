@@ -118,6 +118,11 @@ const UserDashboard = () => {
               </p>
             </div>
             <div className="flex space-x-3">
+              <Link href="/company-positions">
+                <button className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
+                  Company Positions
+                </button>
+              </Link>
               <Link href="/fundraising">
                 <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
                   Fundraising
@@ -181,66 +186,90 @@ const UserDashboard = () => {
           </div>
         </div>
 
+        {/* Pie Bot Command Center - Star of the Show */}
+        <div className="mb-8">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              🥧 Pie Bot Command Center
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Your AI-powered investment assistant - ask about anything in your portfolio
+            </p>
+          </div>
+          <SimplePieBot />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Company Positions */}
+          {/* Notifications & To-Do Activities */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Company Positions
+                🔔 Notifications & To-Do
               </h2>
-              <Link href="/companies">
-                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                  View All <ChevronRight className="w-4 h-4 ml-1" />
-                </button>
-              </Link>
             </div>
             <div className="p-6">
               <div className="space-y-4">
-                {companyPositions.map((company) => (
-                  <Link key={company.id} href={`/company/${company.id}/dashboard`}>
-                    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-                            {company.name}
-                          </h3>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            {company.entityType}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-gray-900 dark:text-gray-100">
-                            {company.userEquityPercentage}%
-                          </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            ${company.userEquityValue.toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <span className="text-gray-500 dark:text-gray-400">Market Cap:</span>
-                          <span className="ml-2 font-medium">${company.marketCap.toLocaleString()}</span>
-                        </div>
-                        {company.userDebtPosition > 0 && (
-                          <div>
-                            <span className="text-gray-500 dark:text-gray-400">Debt Position:</span>
-                            <span className="ml-2 font-medium">${company.userDebtPosition.toLocaleString()}</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="mt-3">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Stock Classes:</div>
-                        {company.stockClasses.map((stockClass, idx) => (
-                          <div key={idx} className="text-xs flex justify-between">
-                            <span>{stockClass.class}: {stockClass.shares.toLocaleString()} shares</span>
-                            <span>{stockClass.percentage}% (${stockClass.value.toLocaleString()})</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                <div className="flex items-start space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-400">
+                  <div className="flex-shrink-0">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                      Review Series A documents for TechStart Inc.
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      Due: May 30, 2024 • Priority: High
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-400">
+                  <div className="flex-shrink-0">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                      AI/ML Syndicate quarterly update available
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      New: May 22, 2024 • Action: Review performance
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-400">
+                  <div className="flex-shrink-0">
+                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2"></div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                      FinTech Startup board meeting invitation
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      June 5, 2024 • Action: Confirm attendance
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-400">
+                  <div className="flex-shrink-0">
+                    <div className="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                      Update equity distribution calculations
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      Task: Use Pie Bot to recalculate equity splits
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                  View all notifications →
+                </button>
               </div>
             </div>
           </div>
@@ -303,10 +332,7 @@ const UserDashboard = () => {
           </div>
         </div>
 
-        {/* Pie Bot Command Center */}
-        <div className="mt-8">
-          <SimplePieBot />
-        </div>
+
       </div>
     </div>
   );

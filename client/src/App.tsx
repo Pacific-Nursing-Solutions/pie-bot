@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
+import CompanyPositions from "@/pages/CompanyPositions";
 import Pools from "@/pages/Pools";
 import Fundraising from "@/pages/Fundraising";
 import Documents from "@/pages/Documents";
@@ -19,6 +20,7 @@ function Router() {
     <Switch>
       <Route path="/" component={UserDashboard} />
       <Route path="/companies" component={Companies} />
+      <Route path="/company-positions" component={CompanyPositions} />
       <Route path="/pools" component={Pools} />
       <Route path="/fundraising" component={Fundraising} />
       <Route path="/documents" component={Documents} />
