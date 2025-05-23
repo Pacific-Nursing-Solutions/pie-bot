@@ -122,22 +122,22 @@ const UserDashboard = () => {
               {/* Navigation Icons */}
               <div className="flex items-center space-x-2">
                 <Link href="/company-positions">
-                  <button className="p-3 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors" title="Company Positions">
+                  <button className="p-3 bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition-colors" title="Company Positions">
                     <Building2 className="w-5 h-5" />
                   </button>
                 </Link>
                 <Link href="/pools">
-                  <button className="p-3 bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400 rounded-lg hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors" title="Pool Positions">
+                  <button className="p-3 bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-900 transition-colors" title="Pool Positions">
                     <Users className="w-5 h-5" />
                   </button>
                 </Link>
                 <Link href="/fundraising">
-                  <button className="p-3 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900 transition-colors" title="Fundraising">
+                  <button className="p-3 bg-yellow-50 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-400 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900 transition-colors" title="Fundraising">
                     <TrendingUp className="w-5 h-5" />
                   </button>
                 </Link>
                 <Link href="/documents">
-                  <button className="p-3 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="Documents">
+                  <button className="p-3 bg-stone-50 dark:bg-stone-800 text-stone-600 dark:text-stone-400 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors" title="Documents">
                     <FileText className="w-5 h-5" />
                   </button>
                 </Link>
@@ -149,11 +149,11 @@ const UserDashboard = () => {
               <div className="relative">
                 <button 
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-3 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-900 transition-colors relative"
+                  className="p-3 bg-orange-100 dark:bg-orange-950 text-orange-600 dark:text-orange-400 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-900 transition-colors relative"
                   title="Notifications"
                 >
                   <Bell className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 rounded-full"></span>
                 </button>
                 
                 {/* Notifications Dropdown */}
@@ -226,7 +226,7 @@ const UserDashboard = () => {
               {/* Minimize/Expand Button */}
               <button 
                 onClick={() => setIsHeaderMinimized(!isHeaderMinimized)}
-                className="p-3 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                className="p-3 bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-400 rounded-lg hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors"
                 title={isHeaderMinimized ? "Expand Portfolio Summary" : "Minimize Portfolio Summary"}
               >
                 {isHeaderMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
@@ -237,43 +237,43 @@ const UserDashboard = () => {
           {/* Portfolio Summary - Collapsible */}
           {!isHeaderMinimized && (
             <div className="pb-4">
-              <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4">
+              <div className="bg-orange-50 dark:bg-orange-950/50 rounded-lg p-4 border border-orange-100 dark:border-orange-900">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="flex items-center">
-                    <DollarSign className="w-5 h-5 text-emerald-600 mr-2" />
+                    <DollarSign className="w-5 h-5 text-green-700 mr-2" />
                     <div>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Total Net Worth</p>
-                      <p className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Total Net Worth</p>
+                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
                         ${totalNetWorth.toLocaleString()}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center">
-                    <Building2 className="w-5 h-5 text-blue-600 mr-2" />
+                    <Building2 className="w-5 h-5 text-orange-600 mr-2" />
                     <div>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Company Equity</p>
-                      <p className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Company Equity</p>
+                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
                         ${totalPortfolioValue.toLocaleString()}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center">
-                    <Users className="w-5 h-5 text-teal-600 mr-2" />
+                    <Users className="w-5 h-5 text-amber-600 mr-2" />
                     <div>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Pool Returns</p>
-                      <p className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Pool Returns</p>
+                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
                         ${totalPoolValue.toLocaleString()}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center">
-                    <TrendingUp className="w-5 h-5 text-amber-600 mr-2" />
+                    <TrendingUp className="w-5 h-5 text-yellow-600 mr-2" />
                     <div>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Companies</p>
-                      <p className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Companies</p>
+                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
                         {companyPositions.length}
                       </p>
                     </div>

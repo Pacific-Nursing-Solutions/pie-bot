@@ -4,59 +4,59 @@
 
 @layer base {
   :root {
-    /* Pie Bot Brand Colors - Professional Finance Theme */
-    --primary: 215 100% 50%;          /* Deep Blue - Trust & Stability */
+    /* Pie Bot Brand Colors - Healthy Pumpkin Pie Theme */
+    --primary: 25 95% 53%;            /* Rich Pumpkin Orange */
     --primary-foreground: 0 0% 98%;
-    --secondary: 210 40% 94%;         /* Light Blue-Gray */
-    --secondary-foreground: 215 25% 27%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 168 76% 42%;            /* Teal - Growth & Success */
+    --secondary: 35 45% 92%;          /* Warm Cream */
+    --secondary-foreground: 25 20% 25%;
+    --muted: 35 40% 95%;
+    --muted-foreground: 25 15% 45%;
+    --accent: 45 85% 55%;             /* Golden Crust */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 215 100% 50%;
+    --border: 30 35% 88%;
+    --input: 30 35% 88%;
+    --ring: 25 95% 53%;
     --background: 0 0% 100%;
-    --foreground: 215 25% 27%;
-    --chart-1: 215 100% 50%;          /* Primary Blue */
-    --chart-2: 168 76% 42%;           /* Success Teal */
-    --chart-3: 45 93% 58%;            /* Warning Amber */
-    --chart-4: 262 52% 47%;           /* Purple Accent */
-    --chart-5: 173 58% 39%;           /* Dark Teal */
+    --foreground: 25 20% 25%;
+    --chart-1: 25 95% 53%;            /* Pumpkin Orange */
+    --chart-2: 15 75% 45%;            /* Warm Spice */
+    --chart-3: 45 85% 55%;            /* Golden Crust */
+    --chart-4: 35 60% 40%;            /* Cinnamon */
+    --chart-5: 20 80% 35%;            /* Deep Nutmeg */
     
-    /* Custom Brand Variables */
-    --brand-primary: 215 100% 50%;     /* Deep Blue */
-    --brand-secondary: 168 76% 42%;    /* Teal */
-    --brand-accent: 45 93% 58%;        /* Amber */
-    --brand-neutral: 215 16% 47%;      /* Blue-Gray */
-    --brand-success: 152 69% 31%;      /* Forest Green */
-    --brand-warning: 38 92% 50%;       /* Orange */
-    --brand-danger: 0 84% 60%;         /* Red */
+    /* Custom Pumpkin Brand Variables */
+    --brand-primary: 25 95% 53%;       /* Rich Pumpkin */
+    --brand-secondary: 15 75% 45%;     /* Warm Spice */
+    --brand-accent: 45 85% 55%;        /* Golden Honey */
+    --brand-neutral: 25 15% 45%;       /* Warm Gray */
+    --brand-success: 120 50% 35%;      /* Sage Green */
+    --brand-warning: 35 90% 50%;       /* Butterscotch */
+    --brand-danger: 0 75% 55%;         /* Cranberry */
   }
 
   .dark {
-    --primary: 215 100% 50%;
+    --primary: 25 95% 53%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 215 19% 16%;
+    --secondary: 25 15% 18%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 215 19% 16%;
-    --muted-foreground: 215 16% 65%;
-    --accent: 168 76% 42%;
+    --muted: 25 15% 18%;
+    --muted-foreground: 25 10% 65%;
+    --accent: 45 85% 55%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
-    --border: 215 19% 27%;
-    --input: 215 19% 27%;
-    --ring: 215 100% 50%;
-    --background: 215 28% 9%;
+    --border: 25 15% 25%;
+    --input: 25 15% 25%;
+    --ring: 25 95% 53%;
+    --background: 25 20% 8%;
     --foreground: 0 0% 98%;
-    --chart-1: 215 100% 50%;
-    --chart-2: 168 76% 42%;
-    --chart-3: 45 93% 58%;
-    --chart-4: 262 52% 47%;
-    --chart-5: 173 58% 39%;
+    --chart-1: 25 95% 53%;
+    --chart-2: 15 75% 45%;
+    --chart-3: 45 85% 55%;
+    --chart-4: 35 60% 40%;
+    --chart-5: 20 80% 35%;
   }
 }
 
