@@ -134,52 +134,48 @@ const UserDashboard = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Portfolio Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <DollarSign className="w-8 h-8 text-green-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Net Worth</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  ${totalNetWorth.toLocaleString()}
-                </p>
+        {/* Portfolio Summary Header */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
+          <div className="px-6 py-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="flex items-center">
+                <DollarSign className="w-6 h-6 text-green-600 mr-3" />
+                <div>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Total Net Worth</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    ${totalNetWorth.toLocaleString()}
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <Building2 className="w-8 h-8 text-blue-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Company Equity</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  ${totalPortfolioValue.toLocaleString()}
-                </p>
+              <div className="flex items-center">
+                <Building2 className="w-6 h-6 text-blue-600 mr-3" />
+                <div>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Company Equity</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    ${totalPortfolioValue.toLocaleString()}
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <Users className="w-8 h-8 text-purple-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Pool Returns</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  ${totalPoolValue.toLocaleString()}
-                </p>
+              <div className="flex items-center">
+                <Users className="w-6 h-6 text-purple-600 mr-3" />
+                <div>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Pool Returns</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    ${totalPoolValue.toLocaleString()}
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <TrendingUp className="w-8 h-8 text-orange-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Companies</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  {companyPositions.length}
-                </p>
+              <div className="flex items-center">
+                <TrendingUp className="w-6 h-6 text-orange-600 mr-3" />
+                <div>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Companies</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    {companyPositions.length}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
