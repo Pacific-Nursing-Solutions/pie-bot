@@ -49,6 +49,11 @@ const UserDashboard = () => {
       { name: "TechStart Token", symbol: "TSI", balance: "15000", value: "$450", icon: "🥧" },
       { name: "USDC", symbol: "USDC", balance: "125.50", value: "$125", icon: "💵" },
     ],
+    debts: [
+      { platform: "Aave", type: "ETH Loan", amount: "$45K", rate: "3.2%", status: "active" },
+      { platform: "Compound", type: "USDC Borrow", amount: "$12K", rate: "2.8%", status: "active" },
+      { platform: "MakerDAO", type: "DAI Vault", amount: "$28K", rate: "5.5%", status: "liquidating" }
+    ],
     nfts: [
       { 
         id: 1, 
@@ -90,6 +95,7 @@ const UserDashboard = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showNFTs, setShowNFTs] = useState(false);
   const [showENSManager, setShowENSManager] = useState(false);
+  const [showDebts, setShowDebts] = useState(false);
   
   const [companyPositions] = useState<CompanyPosition[]>([
     {
@@ -293,21 +299,21 @@ const UserDashboard = () => {
             <div className="pb-4">
               <div className="bg-gray-900 dark:bg-gray-950 rounded-lg overflow-hidden">
                 {/* Consolidated Header Row */}
-                <div className="grid grid-cols-4 gap-4 p-3 bg-gradient-to-r from-orange-600 to-orange-700">
+                <div className="grid grid-cols-4 gap-4 p-3 bg-slate-700 dark:bg-slate-800">
                   <div className="text-center">
-                    <p className="text-xs text-orange-100 mb-1">Total Net Worth</p>
+                    <p className="text-xs text-slate-300 mb-1">Total Net Worth</p>
                     <p className="text-lg font-bold text-white">${totalNetWorth.toLocaleString()}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-xs text-orange-100 mb-1">Company Equity</p>
+                    <p className="text-xs text-slate-300 mb-1">Company Equity</p>
                     <p className="text-lg font-bold text-white">${totalPortfolioValue.toLocaleString()}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-xs text-orange-100 mb-1">Pool Returns</p>
+                    <p className="text-xs text-slate-300 mb-1">Pool Returns</p>
                     <p className="text-lg font-bold text-white">${totalPoolValue.toLocaleString()}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-xs text-orange-100 mb-1">Companies</p>
+                    <p className="text-xs text-slate-300 mb-1">Companies</p>
                     <p className="text-lg font-bold text-white">{companyPositions.length}</p>
                   </div>
                 </div>
@@ -599,6 +605,62 @@ const UserDashboard = () => {
               )}
             </div>
 
+            {/* Debt & Lending Section */}
+            <div className="mt-4">
+              <button 
+                onClick={() => setShowDebts(!showDebts)}
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <div className="flex items-center">
+                  <span className="text-gray-700 dark:text-gray-300 mr-2">↳</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Debt Positions</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">({userWallet.debts.length})</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showDebts ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showDebts && (
+                <div className="mt-2 space-y-2">
+                  {userWallet.debts.map((debt, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                      <div className="flex items-center">
+                        <span className="text-lg mr-3">🏦</span>
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-gray-100">{debt.type}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{debt.platform}</div>
+                          <div className="flex items-center mt-1">
+                            <span className={`text-xs px-2 py-1 rounded ${
+                              debt.status === 'active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' :
+                              debt.status === 'liquidating' ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' :
+                              'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
+                            }`}>
+                              {debt.status}
+                            </span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
+                              APR: {debt.rate}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-medium text-gray-900 dark:text-gray-100">{debt.amount}</div>
+                        <button className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 mt-1">
+                          {debt.status === 'liquidating' ? 'Add Collateral' : 'Manage'}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <div className="ml-6 p-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                    <button className="w-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                      <Plus className="w-4 h-4 mr-2" />
+                      <span className="text-sm">Open New Lending Position</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* ENS Management Section */}
             <div className="mt-4">
               <button 
@@ -702,6 +764,64 @@ const UserDashboard = () => {
                     <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
                       <span className="text-orange-500 mr-3">⚙️</span>
                       <span className="font-medium text-gray-900 dark:text-gray-100">Manage DNS Records</span>
+                    </button>
+                  </div>
+
+                  {/* Identity & KYC Integration */}
+                  <div className="border-t pt-3">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Identity Verification</h4>
+                    
+                    <button className="w-full flex items-center justify-between p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors mb-2">
+                      <div className="flex items-center">
+                        <span className="text-orange-500 mr-3">🆔</span>
+                        <span className="font-medium text-gray-900 dark:text-gray-100">Connect Dentity</span>
+                      </div>
+                      <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">Verified</span>
+                    </button>
+
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
+                      <span className="text-orange-500 mr-3">🛡️</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Manage KYC Status</span>
+                    </button>
+                  </div>
+
+                  {/* Crowdfunding Integration */}
+                  <div className="border-t pt-3">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Crowdfunding Platforms</h4>
+                    
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors mb-2">
+                      <span className="text-orange-500 mr-3">🚀</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Connect Kickstarter</span>
+                    </button>
+
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors mb-2">
+                      <span className="text-orange-500 mr-3">💡</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Connect Indiegogo</span>
+                    </button>
+
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
+                      <span className="text-orange-500 mr-3">🌱</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Connect Republic</span>
+                    </button>
+                  </div>
+
+                  {/* Onchain Lending & Investing */}
+                  <div className="border-t pt-3">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">DeFi Integration</h4>
+                    
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors mb-2">
+                      <span className="text-orange-500 mr-3">🏦</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Connect Aave</span>
+                    </button>
+
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors mb-2">
+                      <span className="text-orange-500 mr-3">🔄</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Connect Compound</span>
+                    </button>
+
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
+                      <span className="text-orange-500 mr-3">💰</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Connect MakerDAO</span>
                     </button>
                   </div>
 
