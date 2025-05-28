@@ -1198,14 +1198,28 @@ const UserDashboard = () => {
         {/* Pool Positions Summary */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
           <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Recent Pool Activity
-            </h2>
-            <Link href="/pools">
-              <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                View All Pools <ChevronRight className="w-4 h-4 ml-1" />
+            <div className="flex items-center">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mr-3">
+                Recent Pool Activity
+              </h2>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                {poolPositions.length} positions
+              </span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Link href="/pools">
+                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
+                  View All Pools <ChevronRight className="w-4 h-4 ml-1" />
+                </button>
+              </Link>
+              <button 
+                onClick={() => setShowPoolSection(!showPoolSection)}
+                className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                title={showPoolSection ? "Minimize Pool Section" : "Expand Pool Section"}
+              >
+                {showPoolSection ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
               </button>
-            </Link>
+            </div>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
