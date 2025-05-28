@@ -1,124 +1,242 @@
-import { useState } from 'react';
-import { ChevronDown, ChevronUp, Settings, Minimize2, Maximize2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Terminal, ChevronRight, ArrowUp } from 'lucide-react';
 
-interface Message {
-  role: 'user' | 'assistant';
+interface CommandOutput {
+  type: 'command' | 'output' | 'success' | 'error';
   content: string;
+  timestamp: string;
 }
 
-const PersistentPieBot = () => {
-  const [messages, setMessages] = useState<Message[]>([
+const PieTerminal = () => {
+  const [commandHistory, setCommandHistory] = useState<CommandOutput[]>([
     {
-      role: 'assistant',
-      content: "🥧 Welcome! I'm Pie Bot, your equity and financial management assistant. I can help you with company formation, equity splits, token management, and financial operations. What would you like to work on?"
+      type: 'output',
+      content: '🥧 Pie Bot Terminal v2.1.0 - Equity Command Center',
+      timestamp: new Date().toLocaleTimeString()
+    },
+    {
+      type: 'output',
+      content: 'Type "help" for available commands or start typing...',
+      timestamp: new Date().toLocaleTimeString()
     }
   ]);
-  const [input, setInput] = useState('');
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [currentInput, setCurrentInput] = useState('');
+  const [historyIndex, setHistoryIndex] = useState(-1);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    const userMessage: Message = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-
-    // Simulate Pie Bot response
-    setTimeout(() => {
-      const botResponse: Message = { 
-        role: 'assistant', 
-        content: `🥧 I understand you want help with "${input}". I can assist with equity calculations, token management, financial planning, and legal document generation. Would you like me to start working on this for you?`
-      };
-      setMessages(prev => [...prev, botResponse]);
-    }, 1000);
+  const commands = {
+    'help': () => [
+      'Available commands:',
+      '  equity split <company>     - Calculate equity distribution',
+      '  deploy token <symbol>      - Deploy new company token',
+      '  create agreement <type>    - Generate legal documents',
+      '  valuation <method>         - Run company valuation',
+      '  mint nft <collection>      - Create tokenized asset',
+      '  pool create <name>         - Set up investment pool',
+      '  debt analyze               - Review debt positions',
+      '  ens register <domain>      - Register ENS subdomain',
+      '  clear                      - Clear terminal',
+      '',
+      'Examples:',
+      '  > equity split techstart',
+      '  > deploy token TSI',
+      '  > create agreement founders'
+    ],
+    'clear': () => {
+      setCommandHistory([{
+        type: 'output',
+        content: '🥧 Pie Bot Terminal v2.1.0 - Equity Command Center',
+        timestamp: new Date().toLocaleTimeString()
+      }]);
+      return [];
+    },
+    'equity': (args: string[]) => {
+      if (args[0] === 'split') {
+        return [
+          `🥧 Analyzing equity split for ${args[1] || 'company'}...`,
+          '✓ Processing cap table data',
+          '✓ Calculating vesting schedules',
+          '✓ Applying contribution multipliers',
+          '',
+          'Equity Distribution:',
+          '  Founder A: 45.2% (750,000 shares)',
+          '  Founder B: 32.8% (546,667 shares)',
+          '  Employee Pool: 15.0% (250,000 shares)',
+          '  Investor Reserve: 7.0% (116,667 shares)',
+          '',
+          'Total: 1,663,334 shares issued'
+        ];
+      }
+      return ['Usage: equity split <company>'];
+    },
+    'deploy': (args: string[]) => {
+      if (args[0] === 'token') {
+        return [
+          `🥧 Deploying ERC-20 token ${args[1] || 'TOKEN'}...`,
+          '✓ Compiling smart contract',
+          '✓ Deploying to Base network',
+          '✓ Verifying contract on Basescan',
+          '',
+          `Contract deployed: 0x742d35Cc6334C45532C867b86b8c8E111234567F`,
+          `Token Symbol: ${args[1] || 'TOKEN'}`,
+          'Initial Supply: 1,000,000 tokens',
+          '',
+          '✓ Token deployment complete!'
+        ];
+      }
+      return ['Usage: deploy token <symbol>'];
+    },
+    'create': (args: string[]) => {
+      if (args[0] === 'agreement') {
+        return [
+          `🥧 Generating ${args[1] || 'founders'} agreement...`,
+          '✓ Fetching company data',
+          '✓ Applying Delaware corporate law',
+          '✓ Generating document templates',
+          '✓ Calculating equity percentages',
+          '',
+          'Documents created:',
+          '  • Founders Agreement.pdf',
+          '  • Equity Grant Letters (2)',
+          '  • Vesting Schedule.pdf',
+          '',
+          '✓ Ready for DocuSign workflow'
+        ];
+      }
+      return ['Usage: create agreement <type>'];
+    },
+    'valuation': (args: string[]) => {
+      return [
+        `🥧 Running ${args[0] || 'DCF'} valuation analysis...`,
+        '✓ Gathering financial data',
+        '✓ Analyzing market comparables',
+        '✓ Calculating risk factors',
+        '',
+        'Valuation Results:',
+        '  DCF Method: $8.2M',
+        '  Market Multiple: $7.8M',
+        '  Risk-Adjusted: $7.5M',
+        '',
+        '✓ Recommended valuation: $7.8M'
+      ];
+    }
   };
 
-  if (isMinimized) {
-    return (
-      <div className="fixed bottom-4 right-4 z-50">
-        <button
-          onClick={() => setIsMinimized(false)}
-          className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-full shadow-lg transition-colors"
-          title="Open Pie Bot"
-        >
-          <span className="text-lg">🥧</span>
-        </button>
-      </div>
-    );
-  }
+  const executeCommand = (command: string) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const newHistory = [...commandHistory];
+    
+    // Add the command to history
+    newHistory.push({
+      type: 'command',
+      content: `> ${command}`,
+      timestamp
+    });
+
+    const [cmd, ...args] = command.toLowerCase().split(' ');
+    
+    if (commands[cmd as keyof typeof commands]) {
+      const output = commands[cmd as keyof typeof commands](args);
+      if (Array.isArray(output)) {
+        output.forEach(line => {
+          newHistory.push({
+            type: line.startsWith('✓') ? 'success' : 'output',
+            content: line,
+            timestamp
+          });
+        });
+      }
+    } else if (command.trim()) {
+      newHistory.push({
+        type: 'error',
+        content: `Command not found: ${cmd}. Type "help" for available commands.`,
+        timestamp
+      });
+    }
+
+    setCommandHistory(newHistory);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!currentInput.trim()) return;
+    
+    executeCommand(currentInput);
+    setCurrentInput('');
+    setHistoryIndex(-1);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const commandsOnly = commandHistory.filter(h => h.type === 'command');
+      if (commandsOnly.length === 0) return;
+
+      let newIndex = historyIndex;
+      if (e.key === 'ArrowUp') {
+        newIndex = historyIndex >= commandsOnly.length - 1 ? commandsOnly.length - 1 : historyIndex + 1;
+      } else {
+        newIndex = historyIndex <= 0 ? -1 : historyIndex - 1;
+      }
+
+      setHistoryIndex(newIndex);
+      if (newIndex >= 0) {
+        setCurrentInput(commandsOnly[commandsOnly.length - 1 - newIndex].content.replace('> ', ''));
+      } else {
+        setCurrentInput('');
+      }
+    }
+  };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 w-96 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-        <div className="flex items-center">
-          <span className="text-xl mr-2">🥧</span>
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100">Pie Bot</h3>
+    <div className="bg-black text-green-400 font-mono text-sm rounded-lg overflow-hidden">
+      {/* Terminal Header */}
+      <div className="bg-gray-800 px-4 py-2 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Terminal className="w-4 h-4" />
+          <span className="text-gray-300">Pie Bot Command Center</span>
         </div>
-        <div className="flex items-center space-x-1">
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
-            title={isExpanded ? "Collapse" : "Expand"}
-          >
-            {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-          </button>
-          <button
-            onClick={() => setIsMinimized(true)}
-            className="p-1 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
-            title="Minimize"
-          >
-            <Minimize2 className="w-4 h-4" />
-          </button>
+        <div className="flex space-x-1">
+          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
         </div>
       </div>
 
-      {/* Chat Area */}
-      {isExpanded && (
-        <>
-          <div className="h-64 overflow-y-auto p-4 space-y-3">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[80%] p-3 rounded-lg text-sm ${
-                    message.role === 'user'
-                      ? 'bg-orange-600 text-white'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
-                  }`}
-                >
-                  {message.content}
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Terminal Content */}
+      <div className="p-4 h-96 overflow-y-auto">
+        <div className="space-y-1">
+          {commandHistory.map((entry, index) => (
+            <div key={index} className="flex">
+              <span className="text-gray-500 text-xs w-20 shrink-0">{entry.timestamp}</span>
+              <span className={`${
+                entry.type === 'command' ? 'text-cyan-400' :
+                entry.type === 'success' ? 'text-green-400' :
+                entry.type === 'error' ? 'text-red-400' :
+                'text-gray-300'
+              }`}>
+                {entry.content}
+              </span>
+            </div>
+          ))}
+        </div>
 
-          {/* Input Area */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-            <form onSubmit={handleSubmit} className="flex space-x-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask Pie Bot about equity, tokens, or finances..."
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm font-medium"
-              >
-                Send
-              </button>
-            </form>
-          </div>
-        </>
-      )}
+        {/* Current Input Line */}
+        <form onSubmit={handleSubmit} className="flex items-center mt-2">
+          <span className="text-orange-400 mr-2">pie@terminal:~$</span>
+          <input
+            type="text"
+            value={currentInput}
+            onChange={(e) => setCurrentInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="flex-1 bg-transparent text-green-400 border-none outline-none font-mono"
+            placeholder="Enter command..."
+            autoFocus
+          />
+          <button type="submit" className="hidden">Submit</button>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default PersistentPieBot;
+export default PieTerminal;
