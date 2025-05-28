@@ -48,10 +48,48 @@ const UserDashboard = () => {
       { name: "ATXBT", symbol: "ATXBT", balance: "5529.6545", value: "$1.27K", icon: "🟣" },
       { name: "TechStart Token", symbol: "TSI", balance: "15000", value: "$450", icon: "🥧" },
       { name: "USDC", symbol: "USDC", balance: "125.50", value: "$125", icon: "💵" },
+    ],
+    nfts: [
+      { 
+        id: 1, 
+        collection: "Founders Club", 
+        name: "Founder #2847", 
+        image: "🎨", 
+        value: "$2.3K",
+        tokenized: false,
+        ownership: "100%"
+      },
+      { 
+        id: 2, 
+        collection: "TechStart Genesis", 
+        name: "Genesis Pass #156", 
+        image: "🚀", 
+        value: "$1.8K",
+        tokenized: true,
+        ownership: "45%",
+        totalShares: 1000,
+        ownedShares: 450
+      },
+      { 
+        id: 3, 
+        collection: "AI Art Collective", 
+        name: "Neural Network #3421", 
+        image: "🧠", 
+        value: "$890",
+        tokenized: false,
+        ownership: "100%"
+      }
+    ],
+    ensSubdomains: [
+      { name: "wallet.founder.eth", status: "active", linked: true },
+      { name: "company.founder.eth", status: "active", linked: false },
+      { name: "investment.founder.eth", status: "pending", linked: false }
     ]
   });
   const [showAssets, setShowAssets] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+  const [showNFTs, setShowNFTs] = useState(false);
+  const [showENSManager, setShowENSManager] = useState(false);
   
   const [companyPositions] = useState<CompanyPosition[]>([
     {
@@ -504,6 +542,119 @@ const UserDashboard = () => {
               )}
             </div>
 
+            {/* NFTs Section */}
+            <div className="mt-4">
+              <button 
+                onClick={() => setShowNFTs(!showNFTs)}
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <div className="flex items-center">
+                  <span className="text-gray-700 dark:text-gray-300 mr-2">↳</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">NFTs</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">({userWallet.nfts.length})</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showNFTs ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showNFTs && (
+                <div className="mt-2 space-y-2">
+                  {userWallet.nfts.map((nft) => (
+                    <div key={nft.id} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                      <div className="flex items-center">
+                        <span className="text-lg mr-3">{nft.image}</span>
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-gray-100">{nft.name}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{nft.collection}</div>
+                          {nft.tokenized && (
+                            <div className="flex items-center mt-1">
+                              <span className="text-xs bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded">
+                                Tokenized
+                              </span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
+                                {nft.ownedShares}/{nft.totalShares} shares
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-medium text-gray-900 dark:text-gray-100">{nft.value}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{nft.ownership}</div>
+                        {nft.tokenized && (
+                          <button className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 mt-1">
+                            Manage Shares
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <div className="ml-6 p-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                    <button className="w-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                      <Plus className="w-4 h-4 mr-2" />
+                      <span className="text-sm">Import NFT or Create Tokenized Asset</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* ENS Management Section */}
+            <div className="mt-4">
+              <button 
+                onClick={() => setShowENSManager(!showENSManager)}
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <div className="flex items-center">
+                  <span className="text-gray-700 dark:text-gray-300 mr-2">↳</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">ENS Subdomains</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">({userWallet.ensSubdomains.length})</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showENSManager ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showENSManager && (
+                <div className="mt-2 space-y-2">
+                  {userWallet.ensSubdomains.map((subdomain, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                      <div className="flex items-center">
+                        <span className="text-lg mr-3">🌐</span>
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-gray-100">{subdomain.name}</div>
+                          <div className="flex items-center mt-1">
+                            <span className={`text-xs px-2 py-1 rounded ${
+                              subdomain.status === 'active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' :
+                              subdomain.status === 'pending' ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' :
+                              'bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200'
+                            }`}>
+                              {subdomain.status}
+                            </span>
+                            {subdomain.linked && (
+                              <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded ml-2">
+                                Linked
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <button className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
+                          {subdomain.linked ? 'Manage' : 'Link Wallet'}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <div className="ml-6 p-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                    <button className="w-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                      <Plus className="w-4 h-4 mr-2" />
+                      <span className="text-sm">Create New Subdomain</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Settings Panel */}
             {showSettings && (
               <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -524,9 +675,39 @@ const UserDashboard = () => {
                     <span className="font-medium text-gray-900 dark:text-gray-100">View on Block Explorer</span>
                   </button>
 
+                  {/* NFT & Tokenization Settings */}
+                  <div className="border-t pt-3">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">NFT & Tokenization</h4>
+                    
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors mb-2">
+                      <span className="text-orange-500 mr-3">🎨</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Create Fractional NFT</span>
+                    </button>
+
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
+                      <span className="text-orange-500 mr-3">🔗</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Deploy Share Contract</span>
+                    </button>
+                  </div>
+
+                  {/* ENS Settings */}
+                  <div className="border-t pt-3">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">ENS Management</h4>
+                    
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors mb-2">
+                      <span className="text-orange-500 mr-3">🌐</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Register New Subdomain</span>
+                    </button>
+
+                    <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
+                      <span className="text-orange-500 mr-3">⚙️</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Manage DNS Records</span>
+                    </button>
+                  </div>
+
                   <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                      🥧 Pie Bot has automated control for equity operations
+                      🥧 Pie Bot has automated control for equity operations and smart contract deployments
                     </p>
                   </div>
                 </div>
