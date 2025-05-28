@@ -19,7 +19,7 @@ export default function PersistentPieBot({ defaultState }: PersistentPieBotProps
   const isMainPage = location === '/';
   
   const [botState, setBotState] = useState<PieBotState>(
-    defaultState || (isMainPage ? 'integrated' : 'chatbot')
+    defaultState || 'integrated'
   );
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
@@ -83,28 +83,26 @@ export default function PersistentPieBot({ defaultState }: PersistentPieBotProps
   const getContainerClasses = () => {
     switch (botState) {
       case 'integrated':
-        return isMainPage 
-          ? 'relative w-full bg-white dark:bg-gray-800 rounded-lg shadow mb-8' 
-          : 'fixed bottom-4 right-4 z-50 w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700';
+        return 'relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-orange-200 dark:border-orange-800';
       case 'chatbot':
-        return 'fixed bottom-4 right-4 z-50 w-96 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700';
+        return 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-96 bg-white dark:bg-gray-800 rounded-lg shadow-2xl border-2 border-orange-300 dark:border-orange-700';
       case 'minimized':
         return 'fixed bottom-4 right-4 z-50 w-80 h-16 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700';
       default:
-        return 'fixed bottom-4 right-4 z-50 w-96 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700';
+        return 'relative w-full max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-orange-200 dark:border-orange-800';
     }
   };
 
   const getMessageHeight = () => {
     switch (botState) {
       case 'integrated':
-        return isMainPage ? 'h-96' : 'h-64';
+        return 'h-[500px]';
       case 'chatbot':
-        return 'h-80';
+        return 'h-96';
       case 'minimized':
         return 'h-0';
       default:
-        return 'h-80';
+        return 'h-[500px]';
     }
   };
 
@@ -147,15 +145,27 @@ export default function PersistentPieBot({ defaultState }: PersistentPieBotProps
   return (
     <div className={getContainerClasses()}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className={`flex items-center justify-between border-b border-orange-200 dark:border-orange-700 ${
+        botState === 'integrated' ? 'p-6 bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900' : 'p-4'
+      }`}>
         <div className="flex items-center">
-          <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
-            <span className="text-white text-sm font-bold">🥧</span>
+          <div className={`bg-orange-500 rounded-full flex items-center justify-center mr-4 ${
+            botState === 'integrated' ? 'w-12 h-12' : 'w-8 h-8'
+          }`}>
+            <span className={`text-white font-bold ${
+              botState === 'integrated' ? 'text-2xl' : 'text-sm'
+            }`}>🥧</span>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Pie Bot</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              {getStateLabel()}
+            <h3 className={`font-bold text-orange-900 dark:text-orange-100 ${
+              botState === 'integrated' ? 'text-2xl' : 'text-sm'
+            }`}>
+              Pie Bot
+            </h3>
+            <p className={`text-orange-700 dark:text-orange-300 ${
+              botState === 'integrated' ? 'text-base' : 'text-xs'
+            }`}>
+              {botState === 'integrated' ? 'Your AI-powered equity management assistant' : getStateLabel()}
             </p>
           </div>
         </div>
@@ -163,16 +173,16 @@ export default function PersistentPieBot({ defaultState }: PersistentPieBotProps
           {botState !== 'minimized' && (
             <button
               onClick={() => setBotState('minimized')}
-              className="p-1 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+              className="p-2 text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-200 transition-colors rounded-lg hover:bg-orange-200 dark:hover:bg-orange-800"
               title="Minimize"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           )}
           <button 
             onClick={nextState}
-            className="p-1 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
-            title={botState === 'minimized' ? 'Expand' : botState === 'chatbot' ? (isMainPage ? 'Integrate' : 'Minimize') : 'Chatbot mode'}
+            className="p-2 text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-200 transition-colors rounded-lg hover:bg-orange-200 dark:hover:bg-orange-800"
+            title={botState === 'minimized' ? 'Expand' : botState === 'chatbot' ? 'Integrate' : 'Chatbot mode'}
           >
             {getStateIcon()}
           </button>
