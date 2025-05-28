@@ -97,6 +97,16 @@ const UserDashboard = () => {
   const [showENSManager, setShowENSManager] = useState(false);
   const [showDebts, setShowDebts] = useState(false);
   
+  // Company wallet states
+  const [showCompanyAssets, setShowCompanyAssets] = useState(true);
+  const [showCompanySettings, setShowCompanySettings] = useState(false);
+  const [showCompanyNFTs, setShowCompanyNFTs] = useState(false);
+  const [showCompanyENS, setShowCompanyENS] = useState(false);
+  const [showCompanyDebts, setShowCompanyDebts] = useState(false);
+  
+  // Section minimize states
+  const [showPoolSection, setShowPoolSection] = useState(true);
+  
   const [companyPositions] = useState<CompanyPosition[]>([
     {
       id: 1,
@@ -468,11 +478,11 @@ const UserDashboard = () => {
                   <div className="text-xs text-gray-500 dark:text-gray-400">Total Assets</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm font-medium text-red-600 dark:text-red-400">-$85K</div>
+                  <div className="text-sm font-medium text-gray-900 dark:text-gray-100">($85K)</div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">Total Debt</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-lg font-bold text-green-600 dark:text-green-400">$7.86K</div>
+                  <div className="text-lg font-bold text-gray-900 dark:text-gray-100">$7.86K</div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">Net Worth</div>
                 </div>
                 <button 
@@ -867,11 +877,11 @@ const UserDashboard = () => {
                   <div className="text-xs text-gray-500 dark:text-gray-400">Total Assets</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm font-medium text-red-600 dark:text-red-400">-$450K</div>
+                  <div className="text-sm font-medium text-gray-900 dark:text-gray-100">($450K)</div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">Total Debt</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-lg font-bold text-green-600 dark:text-green-400">$1.95M</div>
+                  <div className="text-lg font-bold text-gray-900 dark:text-gray-100">$1.95M</div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">Net Worth</div>
                 </div>
                 <button className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
@@ -919,146 +929,269 @@ const UserDashboard = () => {
 
             {/* Company Assets Section */}
             <div>
-              <button className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+              <button 
+                onClick={() => setShowCompanyAssets(!showCompanyAssets)}
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
                 <div className="flex items-center">
                   <span className="text-gray-700 dark:text-gray-300 mr-2">↳</span>
                   <span className="font-medium text-gray-900 dark:text-gray-100">Company Assets</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-500 transition-transform" />
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showCompanyAssets ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className="mt-2 space-y-2">
-                <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">🥧</span>
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100">TSI Token</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">1M tokens</div>
+              {showCompanyAssets && (
+                <div className="mt-2 space-y-2">
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">🥧</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">TSI Token</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">1M tokens</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">$450K</div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-medium text-gray-900 dark:text-gray-100">$450K</div>
-                  </div>
-                </div>
 
-                <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">💵</span>
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100">USDC</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">150K</div>
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">💵</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">USDC</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">150K</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">$150K</div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-medium text-gray-900 dark:text-gray-100">$150K</div>
-                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Company NFTs Section */}
             <div className="mt-4">
-              <button className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+              <button 
+                onClick={() => setShowCompanyNFTs(!showCompanyNFTs)}
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
                 <div className="flex items-center">
                   <span className="text-gray-700 dark:text-gray-300 mr-2">↳</span>
                   <span className="font-medium text-gray-900 dark:text-gray-100">Company NFTs</span>
                   <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">(2)</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-500 transition-transform" />
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showCompanyNFTs ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className="mt-2 space-y-2">
-                <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">🏢</span>
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100">Company Logo NFT</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Brand Collection</div>
-                      <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-                        Fully Owned
-                      </span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-medium text-gray-900 dark:text-gray-100">$15K</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">100%</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">🎨</span>
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100">AI Art #4567</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Digital Assets</div>
-                      <div className="flex items-center mt-1">
-                        <span className="text-xs bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded">
-                          Tokenized
-                        </span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
-                          600/1000 shares
+              {showCompanyNFTs && (
+                <div className="mt-2 space-y-2">
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">🏢</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">Company Logo NFT</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">Brand Collection</div>
+                        <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
+                          Fully Owned
                         </span>
                       </div>
                     </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">$15K</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">100%</div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-medium text-gray-900 dark:text-gray-100">$28K</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">60%</div>
-                    <button className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 mt-1">
-                      Manage Shares
+
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">🎨</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">AI Art #4567</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">Digital Assets</div>
+                        <div className="flex items-center mt-1">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded">
+                            Tokenized
+                          </span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
+                            600/1000 shares
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">$28K</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">60%</div>
+                      <button className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 mt-1">
+                        Manage Shares
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="ml-6 p-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                    <button className="w-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                      <Plus className="w-4 h-4 mr-2" />
+                      <span className="text-sm">Import Company NFT or Tokenize Asset</span>
                     </button>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Company Debt Section */}
             <div className="mt-4">
-              <button className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+              <button 
+                onClick={() => setShowCompanyDebts(!showCompanyDebts)}
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
                 <div className="flex items-center">
                   <span className="text-gray-700 dark:text-gray-300 mr-2">↳</span>
                   <span className="font-medium text-gray-900 dark:text-gray-100">Company Debt</span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">(3)</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">(2)</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-500 transition-transform" />
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showCompanyDebts ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className="mt-2 space-y-2">
-                <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">🏦</span>
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100">Bridge Loan</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Traditional Lender</div>
-                      <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">
-                        Active
-                      </span>
+              {showCompanyDebts && (
+                <div className="mt-2 space-y-2">
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">🏦</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">Bridge Loan</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">Traditional Lender</div>
+                        <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">
+                          Active
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">$300K</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">7.5% APR</div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-medium text-gray-900 dark:text-gray-100">$300K</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">7.5% APR</div>
+
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">🔄</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">DeFi Loan</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">Compound</div>
+                        <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">
+                          Active
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">$150K</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">4.2% APR</div>
+                    </div>
+                  </div>
+
+                  <div className="ml-6 p-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                    <button className="w-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                      <Plus className="w-4 h-4 mr-2" />
+                      <span className="text-sm">Open New Company Lending Position</span>
+                    </button>
                   </div>
                 </div>
+              )}
+            </div>
 
-                <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">🔄</span>
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100">DeFi Loan</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Compound</div>
-                      <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">
-                        Active
-                      </span>
+            {/* Company ENS Management Section */}
+            <div className="mt-4">
+              <button 
+                onClick={() => setShowCompanyENS(!showCompanyENS)}
+                className="flex items-center justify-between w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <div className="flex items-center">
+                  <span className="text-gray-700 dark:text-gray-300 mr-2">↳</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">ENS & Contracts</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">(4)</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showCompanyENS ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showCompanyENS && (
+                <div className="mt-2 space-y-2">
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">🌐</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">equity.techstart.eth</div>
+                        <div className="flex items-center mt-1">
+                          <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">
+                            Active
+                          </span>
+                          <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded ml-2">
+                            Smart Contract
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <button className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
+                        Manage
+                      </button>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-medium text-gray-900 dark:text-gray-100">$150K</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">4.2% APR</div>
+
+                  <div className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors ml-6">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-3">📜</span>
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">voting.techstart.eth</div>
+                        <div className="flex items-center mt-1">
+                          <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">
+                            Active
+                          </span>
+                          <span className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded ml-2">
+                            Governance
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <button className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
+                        Manage
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="ml-6 p-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                    <button className="w-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                      <Plus className="w-4 h-4 mr-2" />
+                      <span className="text-sm">Create Company Subdomain</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Company Settings Panel */}
+            {showCompanySettings && (
+              <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company Wallet Settings</h3>
+                <div className="space-y-3">
+                  <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
+                    <Shield className="w-5 h-5 text-orange-500 mr-3" />
+                    <span className="font-medium text-gray-900 dark:text-gray-100">Multi-Sig Backup</span>
+                  </button>
+                  
+                  <button className="w-full flex items-center p-3 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors">
+                    <ExternalLink className="w-5 h-5 text-orange-500 mr-3" />
+                    <span className="font-medium text-gray-900 dark:text-gray-100">View on Block Explorer</span>
+                  </button>
+
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      🥧 Pie Bot manages all company equity operations automatically
+                    </p>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
