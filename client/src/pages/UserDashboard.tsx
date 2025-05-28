@@ -250,51 +250,144 @@ const UserDashboard = () => {
             </div>
           </div>
 
-          {/* Portfolio Summary - Collapsible */}
+          {/* Portfolio Dashboard - CoinMarketCap Style */}
           {!isHeaderMinimized && (
             <div className="pb-4">
-              <div className="bg-orange-50 dark:bg-orange-950/50 rounded-lg p-4 border border-orange-100 dark:border-orange-900">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="flex items-center">
-                    <DollarSign className="w-5 h-5 text-orange-600 mr-2" />
-                    <div>
-                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Total Net Worth</p>
-                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
-                        ${totalNetWorth.toLocaleString()}
-                      </p>
-                    </div>
+              <div className="bg-gray-900 dark:bg-gray-950 rounded-lg overflow-hidden">
+                {/* Consolidated Header Row */}
+                <div className="grid grid-cols-4 gap-4 p-3 bg-gradient-to-r from-orange-600 to-orange-700">
+                  <div className="text-center">
+                    <p className="text-xs text-orange-100 mb-1">Total Net Worth</p>
+                    <p className="text-lg font-bold text-white">${totalNetWorth.toLocaleString()}</p>
                   </div>
-
-                  <div className="flex items-center">
-                    <Building2 className="w-5 h-5 text-orange-600 mr-2" />
-                    <div>
-                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Company Equity</p>
-                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
-                        ${totalPortfolioValue.toLocaleString()}
-                      </p>
-                    </div>
+                  <div className="text-center">
+                    <p className="text-xs text-orange-100 mb-1">Company Equity</p>
+                    <p className="text-lg font-bold text-white">${totalPortfolioValue.toLocaleString()}</p>
                   </div>
-
-                  <div className="flex items-center">
-                    <Users className="w-5 h-5 text-orange-600 mr-2" />
-                    <div>
-                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Pool Returns</p>
-                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
-                        ${totalPoolValue.toLocaleString()}
-                      </p>
-                    </div>
+                  <div className="text-center">
+                    <p className="text-xs text-orange-100 mb-1">Pool Returns</p>
+                    <p className="text-lg font-bold text-white">${totalPoolValue.toLocaleString()}</p>
                   </div>
-
-                  <div className="flex items-center">
-                    <TrendingUp className="w-5 h-5 text-orange-600 mr-2" />
-                    <div>
-                      <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Companies</p>
-                      <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
-                        {companyPositions.length}
-                      </p>
-                    </div>
+                  <div className="text-center">
+                    <p className="text-xs text-orange-100 mb-1">Companies</p>
+                    <p className="text-lg font-bold text-white">{companyPositions.length}</p>
                   </div>
                 </div>
+
+                {/* Table Header */}
+                <div className="grid grid-cols-12 gap-1 px-3 py-2 bg-gray-800 text-xs font-medium text-gray-300 border-b border-gray-700">
+                  <div className="col-span-1">#</div>
+                  <div className="col-span-3">Company</div>
+                  <div className="col-span-1 text-right">Value</div>
+                  <div className="col-span-1 text-right">1d %</div>
+                  <div className="col-span-1 text-right">7d %</div>
+                  <div className="col-span-1 text-right">30d %</div>
+                  <div className="col-span-2 text-right">Equity %</div>
+                  <div className="col-span-1 text-right">Volume</div>
+                  <div className="col-span-1 text-right">Last 7d</div>
+                </div>
+
+                {/* Company Rows */}
+                {companyPositions.map((company, index) => (
+                  <Link key={company.id} href={`/company/${company.id}/dashboard`}>
+                    <div className="grid grid-cols-12 gap-1 px-3 py-2 hover:bg-gray-800 transition-colors border-b border-gray-800 text-sm cursor-pointer">
+                      <div className="col-span-1 text-gray-400 font-medium">{index + 1}</div>
+                      
+                      <div className="col-span-3 flex items-center">
+                        <div className="w-5 h-5 bg-orange-600 rounded-full flex items-center justify-center mr-2">
+                          <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
+                        </div>
+                        <div>
+                          <div className="text-white font-medium text-sm">{company.name}</div>
+                          <div className="text-gray-400 text-xs">{company.entityType.split(' ')[0]}</div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <div className="text-white font-medium">${(company.userEquityValue / 1000).toFixed(0)}K</div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <span className="text-green-400">▲2.45%</span>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <span className="text-red-400">▼1.23%</span>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <span className="text-green-400">▲8.67%</span>
+                      </div>
+
+                      <div className="col-span-2 text-right">
+                        <div className="text-white font-medium">{company.userEquityPercentage}%</div>
+                        <div className="text-gray-400 text-xs">${(company.marketCap / 1000000).toFixed(1)}M MC</div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <div className="text-white text-xs">${(Math.random() * 500 + 100).toFixed(0)}K</div>
+                        <div className="text-gray-400 text-xs">24h</div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <div className="w-12 h-6 bg-gray-700 rounded flex items-center justify-center">
+                          <div className="text-xs text-green-400">📈</div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+
+                {/* Pool Positions */}
+                {poolPositions.map((pool, index) => (
+                  <Link key={pool.id} href={`/pool/${pool.id}`}>
+                    <div className="grid grid-cols-12 gap-1 px-3 py-2 hover:bg-gray-800 transition-colors border-b border-gray-800 text-sm cursor-pointer">
+                      <div className="col-span-1 text-gray-400 font-medium">{companyPositions.length + index + 1}</div>
+                      
+                      <div className="col-span-3 flex items-center">
+                        <div className="w-5 h-5 bg-purple-600 rounded-full flex items-center justify-center mr-2">
+                          <span className="text-white text-xs font-bold">P</span>
+                        </div>
+                        <div>
+                          <div className="text-white font-medium text-sm">{pool.name}</div>
+                          <div className="text-gray-400 text-xs">{pool.type}</div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <div className="text-white font-medium">${(pool.returns / 1000).toFixed(0)}K</div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <span className="text-green-400">▲1.89%</span>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <span className="text-green-400">▲3.45%</span>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <span className="text-green-400">▲12.3%</span>
+                      </div>
+
+                      <div className="col-span-2 text-right">
+                        <div className="text-white font-medium">${(pool.totalCommitted / 1000).toFixed(0)}K</div>
+                        <div className="text-gray-400 text-xs">{pool.companies} cos</div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <div className="text-white text-xs">${(pool.deployed / 1000).toFixed(0)}K</div>
+                        <div className="text-gray-400 text-xs">dep</div>
+                      </div>
+
+                      <div className="col-span-1 text-right">
+                        <div className="w-12 h-6 bg-gray-700 rounded flex items-center justify-center">
+                          <div className="text-xs text-green-400">📊</div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           )}
