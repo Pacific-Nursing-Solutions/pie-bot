@@ -1,296 +1,335 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, Users, TrendingUp, Building2, Plus, Search } from 'lucide-react';
+import { 
+  Users, 
+  TrendingUp, 
+  Plus, 
+  Search,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  DollarSign,
+  Calendar,
+  BarChart3
+} from 'lucide-react';
 
 interface Pool {
   id: number;
   name: string;
-  type: 'Angel' | 'VC' | 'Syndicate';
+  type: string;
+  status: 'Active' | 'Closed' | 'Fundraising';
   totalCommitted: number;
   deployed: number;
   returns: number;
   companies: number;
-  status: 'Active' | 'Closed' | 'Fundraising';
-  description: string;
-  leadInvestor?: string;
-  minimumInvestment: number;
-  targetSize: number;
-  currentSize: number;
+  fundSize: number;
+  investors: number;
+  managementFee: number;
+  carriedInterest: number;
+  fundingPeriod: string;
+  vintage: string;
+  focus: string;
+  geography: string;
 }
 
 const Pools = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showActiveOnly, setShowActiveOnly] = useState(true);
+  const [isMinimized, setIsMinimized] = useState(false);
+  
   const [pools] = useState<Pool[]>([
     {
       id: 1,
-      name: "Early Stage Tech Fund",
-      type: "Angel",
+      name: "Startup Accelerator Pool",
+      type: "Early Stage",
+      status: 'Active',
       totalCommitted: 500000,
       deployed: 350000,
-      returns: 425000,
-      companies: 12,
-      status: 'Active',
-      description: 'Focus on early-stage technology companies with strong product-market fit',
-      leadInvestor: 'TechAngels Group',
-      minimumInvestment: 25000,
-      targetSize: 2000000,
-      currentSize: 1250000
+      returns: 125000,
+      companies: 8,
+      fundSize: 2000000,
+      investors: 12,
+      managementFee: 2.0,
+      carriedInterest: 20,
+      fundingPeriod: "36 months",
+      vintage: "2023",
+      focus: "B2B SaaS",
+      geography: "North America"
     },
     {
       id: 2,
-      name: "AI/ML Syndicate",
-      type: "Syndicate",
-      totalCommitted: 250000,
-      deployed: 200000,
-      returns: 280000,
-      companies: 8,
+      name: "AI/ML Investment Pool",
+      type: "Sector Focus",
       status: 'Active',
-      description: 'Specialized investments in artificial intelligence and machine learning startups',
-      leadInvestor: 'AI Ventures',
-      minimumInvestment: 10000,
-      targetSize: 500000,
-      currentSize: 350000
+      totalCommitted: 250000,
+      deployed: 180000,
+      returns: 87000,
+      companies: 5,
+      fundSize: 1500000,
+      investors: 8,
+      managementFee: 2.0,
+      carriedInterest: 20,
+      fundingPeriod: "24 months",
+      vintage: "2024",
+      focus: "AI/ML",
+      geography: "Global"
     },
     {
       id: 3,
-      name: "FinTech Innovation Fund",
-      type: "VC",
-      totalCommitted: 1000000,
-      deployed: 800000,
-      returns: 950000,
-      companies: 15,
-      status: 'Fundraising',
-      description: 'Series A and B investments in financial technology companies',
-      leadInvestor: 'FinVest Partners',
-      minimumInvestment: 50000,
-      targetSize: 5000000,
-      currentSize: 3200000
+      name: "Clean Energy Ventures",
+      type: "Growth Stage",
+      status: 'Closed',
+      totalCommitted: 750000,
+      deployed: 750000,
+      returns: 234000,
+      companies: 3,
+      fundSize: 5000000,
+      investors: 25,
+      managementFee: 2.5,
+      carriedInterest: 25,
+      fundingPeriod: "48 months",
+      vintage: "2022",
+      focus: "Clean Energy",
+      geography: "North America"
     }
   ]);
 
-  const filteredPools = pools.filter(pool =>
-    pool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pool.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pool.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPools = pools.filter(pool => {
+    const matchesSearch = pool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         pool.focus.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = showActiveOnly ? pool.status === 'Active' : true;
+    return matchesSearch && matchesStatus;
+  });
 
   const totalCommitted = pools.reduce((sum, pool) => sum + pool.totalCommitted, 0);
   const totalReturns = pools.reduce((sum, pool) => sum + pool.returns, 0);
+  const activePools = pools.filter(p => p.status === 'Active').length;
+  const totalCompanies = pools.reduce((sum, pool) => sum + pool.companies, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-6">
-            <div className="flex items-center">
-              <Link href="/">
-                <button className="mr-4 p-2 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-              </Link>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                  Investment Pools
-                </h1>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  Diversify your portfolio through syndicated investments
-                </p>
-              </div>
-            </div>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center">
-              <Plus className="w-4 h-4 mr-2" />
-              Create Pool
-            </button>
-          </div>
+    <div className="space-y-6">
+      {/* Command Hints */}
+      <div className="bg-purple-50 dark:bg-purple-950/30 rounded-lg p-4 border-l-4 border-purple-500">
+        <h3 className="font-medium text-purple-900 dark:text-purple-100 mb-2">💡 Terminal Commands for Pools:</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
+          <code className="bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded">pool create ai-fund</code>
+          <code className="bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded">deploy token POOL</code>
+          <code className="bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded">generate report pools</code>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <Users className="w-8 h-8 text-blue-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Pools</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  {pools.filter(p => p.status === 'Active').length}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <TrendingUp className="w-8 h-8 text-green-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Committed</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  ${totalCommitted.toLocaleString()}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <Building2 className="w-8 h-8 text-purple-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Returns</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  ${totalReturns.toLocaleString()}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <TrendingUp className="w-8 h-8 text-orange-600 mr-3" />
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">ROI</p>
-                <p className="text-2xl font-bold text-green-600">
-                  {totalCommitted > 0 ? `${(((totalReturns - totalCommitted) / totalCommitted) * 100).toFixed(1)}%` : '0%'}
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Quick Actions */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Link href="/">
+            <button className="flex items-center px-3 py-2 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950 rounded-lg transition-colors">
+              ← Back to Dashboard
+            </button>
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Investment Pools</h1>
         </div>
+        
+        <button className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+          <Plus className="w-4 h-4 mr-2" />
+          Create Pool
+        </button>
+      </div>
 
-        {/* Search */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-6">
-          <div className="p-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
+          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Committed</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">${totalCommitted.toLocaleString()}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
+          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Returns</h3>
+          <p className="text-2xl font-bold text-green-600 dark:text-green-400">${totalReturns.toLocaleString()}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
+          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Pools</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{activePools}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
+          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Portfolio Companies</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{totalCompanies}</p>
+        </div>
+      </div>
+
+      {/* Pools List */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Your Investment Pools</h2>
+            <button 
+              onClick={() => setIsMinimized(!isMinimized)}
+              className="p-2 text-gray-500 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+            >
+              {isMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            </button>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="relative flex-1">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search pools by name, type, or description..."
+                placeholder="Search pools or focus areas..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                checked={showActiveOnly}
+                onChange={(e) => setShowActiveOnly(e.target.checked)}
+                className="mr-2"
+              />
+              <span className="text-sm text-gray-600 dark:text-gray-400">Active only</span>
+            </label>
           </div>
         </div>
 
-        {/* Pools Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredPools.map((pool) => (
-            <div key={pool.id} className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                      {pool.name}
-                    </h3>
-                    <div className="flex items-center space-x-2">
-                      <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                        pool.type === 'Angel' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                        pool.type === 'VC' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
-                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                      }`}>
-                        {pool.type}
-                      </span>
-                      <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                        pool.status === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                        pool.status === 'Fundraising' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                        'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
-                      }`}>
-                        {pool.status}
-                      </span>
+        {!isMinimized && (
+          <div className="p-6">
+            <div className="space-y-6">
+              {filteredPools.map((pool) => (
+                <div key={pool.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                        <Users className="w-6 h-6 text-white" />
+                      </div>
+                      
+                      <div>
+                        <div className="flex items-center space-x-3">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{pool.name}</h3>
+                          <span className={`px-2 py-1 text-xs rounded-full ${
+                            pool.status === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                            pool.status === 'Closed' ? 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200' :
+                            'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                          }`}>
+                            {pool.status}
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          <span>{pool.type}</span>
+                          <span>•</span>
+                          <span>{pool.focus}</span>
+                          <span>•</span>
+                          <span>Vintage {pool.vintage}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-green-600 dark:text-green-400">
+                        +${pool.returns.toLocaleString()}
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        {((pool.returns / pool.totalCommitted) * 100).toFixed(1)}% return
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                      ${pool.returns.toLocaleString()}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Returns</p>
+
+                  {/* Pool Metrics */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                      <div className="flex items-center text-gray-600 dark:text-gray-400 text-xs mb-1">
+                        <DollarSign className="w-3 h-3 mr-1" />
+                        Fund Size
+                      </div>
+                      <div className="font-semibold text-gray-900 dark:text-gray-100">
+                        ${pool.fundSize.toLocaleString()}
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                      <div className="flex items-center text-gray-600 dark:text-gray-400 text-xs mb-1">
+                        <TrendingUp className="w-3 h-3 mr-1" />
+                        Deployed
+                      </div>
+                      <div className="font-semibold text-gray-900 dark:text-gray-100">
+                        ${pool.deployed.toLocaleString()}
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                      <div className="flex items-center text-gray-600 dark:text-gray-400 text-xs mb-1">
+                        <Users className="w-3 h-3 mr-1" />
+                        Companies
+                      </div>
+                      <div className="font-semibold text-gray-900 dark:text-gray-100">
+                        {pool.companies}
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                      <div className="flex items-center text-gray-600 dark:text-gray-400 text-xs mb-1">
+                        <BarChart3 className="w-3 h-3 mr-1" />
+                        Investors
+                      </div>
+                      <div className="font-semibold text-gray-900 dark:text-gray-100">
+                        {pool.investors}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pool Details */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-600 dark:text-gray-400">Management Fee:</span>
+                      <span className="font-medium ml-1">{pool.managementFee}%</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600 dark:text-gray-400">Carried Interest:</span>
+                      <span className="font-medium ml-1">{pool.carriedInterest}%</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600 dark:text-gray-400">Investment Period:</span>
+                      <span className="font-medium ml-1">{pool.fundingPeriod}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="text-sm">
+                        <span className="text-gray-600 dark:text-gray-400">Geography:</span>
+                        <span className="font-medium ml-1">{pool.geography}</span>
+                      </div>
+                      <div className="text-sm">
+                        <span className="text-gray-600 dark:text-gray-400">Deployment:</span>
+                        <span className="font-medium ml-1">
+                          {((pool.deployed / pool.totalCommitted) * 100).toFixed(0)}%
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Link href={`/pool/${pool.id}/dashboard`}>
+                        <button className="px-3 py-1 text-sm bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors">
+                          View Dashboard
+                        </button>
+                      </Link>
+                      <button className="p-1 text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                        <ExternalLink className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
+              ))}
 
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                  {pool.description}
-                </p>
-
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Committed</p>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">
-                      ${pool.totalCommitted.toLocaleString()}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Deployed</p>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">
-                      ${pool.deployed.toLocaleString()}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Companies</p>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">
-                      {pool.companies}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Min Investment</p>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">
-                      ${pool.minimumInvestment.toLocaleString()}
-                    </p>
-                  </div>
+              {filteredPools.length === 0 && (
+                <div className="text-center py-12">
+                  <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600 dark:text-gray-400">No pools found matching your criteria.</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                    Try adjusting your search or use the terminal to create a new pool.
+                  </p>
                 </div>
-
-                {pool.leadInvestor && (
-                  <div className="mb-4">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Lead Investor</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      {pool.leadInvestor}
-                    </p>
-                  </div>
-                )}
-
-                {/* Progress Bar for Fund Size */}
-                <div className="mb-4">
-                  <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
-                    <span>Fund Progress</span>
-                    <span>{((pool.currentSize / pool.targetSize) * 100).toFixed(0)}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
-                      className="bg-blue-600 h-2 rounded-full" 
-                      style={{ width: `${(pool.currentSize / pool.targetSize) * 100}%` }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    <span>${pool.currentSize.toLocaleString()}</span>
-                    <span>${pool.targetSize.toLocaleString()}</span>
-                  </div>
-                </div>
-
-                <div className="flex space-x-2">
-                  <Link href={`/pool/${pool.id}`} className="flex-1">
-                    <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium">
-                      View Details
-                    </button>
-                  </Link>
-                  {pool.status === 'Fundraising' && (
-                    <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm font-medium">
-                      Invest
-                    </button>
-                  )}
-                </div>
-              </div>
+              )}
             </div>
-          ))}
-        </div>
-
-        {filteredPools.length === 0 && (
-          <div className="text-center py-12">
-            <Users className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No pools found</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Try adjusting your search terms or create a new pool.
-            </p>
           </div>
         )}
       </div>
