@@ -25,21 +25,36 @@ const PieTerminal = () => {
 
   const commands = {
     'help': () => [
-      'Available commands:',
+      '🥧 PIE BOT COMMAND CENTER - Available Operations:',
+      '',
+      'EQUITY & LEGAL:',
       '  equity split <company>     - Calculate equity distribution',
-      '  deploy token <symbol>      - Deploy new company token',
       '  create agreement <type>    - Generate legal documents',
       '  valuation <method>         - Run company valuation',
-      '  mint nft <collection>      - Create tokenized asset',
-      '  pool create <name>         - Set up investment pool',
-      '  debt analyze               - Review debt positions',
-      '  ens register <domain>      - Register ENS subdomain',
-      '  clear                      - Clear terminal',
+      '',
+      'BLOCKCHAIN & TOKENS:',
+      '  deploy token <symbol>      - Deploy ERC-20 smart contract',
+      '  mint nft <collection>      - Create tokenized NFT assets',
+      '  ens register <domain>      - Register ENS subdomains',
+      '',
+      'FINANCIAL OPERATIONS:',
+      '  debt analyze               - Review all debt positions',
+      '  fund <company>             - Initiate fundraising process',
+      '  pool create <name>         - Set up investment pools',
+      '  generate report <type>     - Create financial reports',
+      '',
+      'SYSTEM:',
+      '  clear                      - Clear terminal history',
+      '  help                       - Show this command list',
       '',
       'Examples:',
       '  > equity split techstart',
       '  > deploy token TSI',
-      '  > create agreement founders'
+      '  > mint nft company-assets',
+      '  > debt analyze',
+      '  > fund techstart',
+      '',
+      'Type any command to control your equity ecosystem!'
     ],
     'clear': () => {
       setCommandHistory([{
@@ -118,6 +133,121 @@ const PieTerminal = () => {
         '',
         '✓ Recommended valuation: $7.8M'
       ];
+    },
+    'mint': (args: string[]) => {
+      if (args[0] === 'nft') {
+        return [
+          `🥧 Minting NFT for ${args[1] || 'collection'}...`,
+          '✓ Uploading metadata to IPFS',
+          '✓ Deploying ERC-721 contract',
+          '✓ Configuring royalties (2.5%)',
+          '✓ Setting up tokenized ownership',
+          '',
+          `NFT Contract: 0x89Ab32156e46F15F507a5573c72681eD1616634`,
+          `Collection: ${args[1] || 'collection'}`,
+          'Shares: 1,000 tokens (tradeable)',
+          '',
+          '✓ NFT ready for fractional ownership!'
+        ];
+      }
+      return ['Usage: mint nft <collection>'];
+    },
+    'pool': (args: string[]) => {
+      if (args[0] === 'create') {
+        return [
+          `🥧 Creating investment pool "${args[1] || 'pool'}"...`,
+          '✓ Setting up pool smart contract',
+          '✓ Configuring governance rules',
+          '✓ Establishing fee structure (2/20)',
+          '✓ Creating LP tokens',
+          '',
+          `Pool Address: 0x1234567890abcdef1234567890abcdef12345678`,
+          `Pool Name: ${args[1] || 'pool'}`,
+          'Min Investment: $10,000',
+          'Max Pool Size: $5,000,000',
+          '',
+          '✓ Pool ready for investments!'
+        ];
+      }
+      return ['Usage: pool create <name>'];
+    },
+    'debt': (args: string[]) => {
+      if (args[0] === 'analyze') {
+        return [
+          '🥧 Analyzing debt positions...',
+          '✓ Scanning personal wallet',
+          '✓ Reviewing company positions',
+          '✓ Checking DeFi protocols',
+          '',
+          'Personal Debt Summary:',
+          '  Aave ETH Loan: $45K (3.2% APR)',
+          '  Compound USDC: $12K (2.8% APR)',
+          '  MakerDAO Vault: $28K (5.5% APR)',
+          '',
+          'Company Debt Summary:',
+          '  Bridge Loan: $300K (7.5% APR)',
+          '  DeFi Position: $150K (4.2% APR)',
+          '',
+          '⚠️  MakerDAO vault approaching liquidation',
+          '✓ Recommend adding $5K collateral'
+        ];
+      }
+      return ['Usage: debt analyze'];
+    },
+    'ens': (args: string[]) => {
+      if (args[0] === 'register') {
+        return [
+          `🥧 Registering ENS domain "${args[1] || 'subdomain'}.founder.eth"...`,
+          '✓ Checking domain availability',
+          '✓ Calculating registration fees',
+          '✓ Submitting ENS transaction',
+          '✓ Configuring DNS records',
+          '',
+          `Domain: ${args[1] || 'subdomain'}.founder.eth`,
+          'Registration Period: 1 year',
+          'Total Cost: 0.003 ETH',
+          '',
+          '✓ ENS domain registered successfully!'
+        ];
+      }
+      return ['Usage: ens register <subdomain>'];
+    },
+    'fund': (args: string[]) => {
+      return [
+        `🥧 Initiating fundraising for ${args[0] || 'company'}...`,
+        '✓ Preparing pitch deck',
+        '✓ Updating cap table',
+        '✓ Generating legal documents',
+        '✓ Setting up data room',
+        '',
+        'Fundraising Package:',
+        '  Target: $2M Series A',
+        '  Valuation: $8M pre-money',
+        '  Use of funds: Product development (60%)',
+        '                Marketing (25%), Operations (15%)',
+        '',
+        '✓ Ready to connect with investors!'
+      ];
+    },
+    'generate': (args: string[]) => {
+      if (args[0] === 'report') {
+        return [
+          `🥧 Generating ${args[1] || 'financial'} report...`,
+          '✓ Compiling portfolio data',
+          '✓ Calculating performance metrics',
+          '✓ Creating visualizations',
+          '✓ Formatting for export',
+          '',
+          'Report Contents:',
+          '  Portfolio Performance: +23.4% YTD',
+          '  Equity Positions: 2 companies',
+          '  Pool Returns: $212K total',
+          '  Risk Analysis: Moderate',
+          '',
+          '✓ Report exported to reports/portfolio-2024.pdf'
+        ];
+      }
+      return ['Usage: generate report <type>'];
     }
   };
 
