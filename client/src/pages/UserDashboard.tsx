@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { TrendingUp, Building2, Users, FileText, DollarSign, Percent, ChevronRight, Plus, Bell, ChevronDown, ChevronUp, Zap, Settings } from 'lucide-react';
+import { TrendingUp, Building2, Users, FileText, DollarSign, Percent, ChevronRight, Plus, Bell, ChevronDown, ChevronUp, Zap, Settings, Wallet, Copy, ExternalLink, Download, Shield } from 'lucide-react';
 import SimplePieBot from '../components/SimplePieBot';
 
 interface CompanyPosition {
@@ -36,6 +36,13 @@ interface PoolPosition {
 const UserDashboard = () => {
   const [isHeaderMinimized, setIsHeaderMinimized] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [userWallet, setUserWallet] = useState({
+    address: "0x742d35Cc6635C0532925a3b8D46c6E4e4c4e7b98",
+    balance: "2.4567",
+    connected: true,
+    provider: "MetaMask"
+  });
+  const [showRecoveryPhrase, setShowRecoveryPhrase] = useState(false);
   
   const [companyPositions] = useState<CompanyPosition[]>([
     {
@@ -298,6 +305,139 @@ const UserDashboard = () => {
             </p>
           </div>
           <SimplePieBot />
+        </div>
+
+        {/* Personal Wallet Panel */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center">
+              <Wallet className="w-5 h-5 text-orange-500 mr-2" />
+              Personal Wallet
+            </h2>
+          </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Wallet Info */}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <div className={`w-3 h-3 rounded-full mr-2 ${userWallet.connected ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                    <span className="font-medium text-gray-900 dark:text-gray-100">
+                      {userWallet.connected ? 'Connected' : 'Disconnected'}
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
+                      ({userWallet.provider})
+                    </span>
+                  </div>
+                  <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300 flex items-center">
+                    <ExternalLink className="w-4 h-4 mr-1" />
+                    View on Explorer
+                  </button>
+                </div>
+
+                <div className="bg-orange-50 dark:bg-orange-950/30 rounded-lg p-4 mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">Wallet Address</span>
+                    <button 
+                      onClick={() => navigator.clipboard.writeText(userWallet.address)}
+                      className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300"
+                    >
+                      <Copy className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <p className="font-mono text-sm text-gray-900 dark:text-gray-100 break-all">
+                    {userWallet.address}
+                  </p>
+                </div>
+
+                <div className="bg-orange-50 dark:bg-orange-950/30 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">ETH Balance</span>
+                      <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                        {userWallet.balance} ETH
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        ≈ ${(parseFloat(userWallet.balance) * 2340).toFixed(2)} USD
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <button className="px-3 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 text-sm font-medium mb-2 block w-full">
+                        Send
+                      </button>
+                      <button className="px-3 py-2 border border-orange-600 text-orange-600 dark:text-orange-400 rounded-md hover:bg-orange-50 dark:hover:bg-orange-950 text-sm font-medium block w-full">
+                        Receive
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Wallet Controls */}
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Wallet Management</h3>
+                
+                <div className="space-y-3">
+                  <button 
+                    onClick={() => setShowRecoveryPhrase(!showRecoveryPhrase)}
+                    className="w-full flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors"
+                  >
+                    <div className="flex items-center">
+                      <Shield className="w-5 h-5 text-orange-500 mr-3" />
+                      <span className="font-medium text-gray-900 dark:text-gray-100">Recovery Phrase</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-500" />
+                  </button>
+
+                  {showRecoveryPhrase && (
+                    <div className="bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                      <p className="text-sm text-yellow-800 dark:text-yellow-300 mb-3">
+                        ⚠️ Keep your recovery phrase secure and never share it with anyone
+                      </p>
+                      <div className="grid grid-cols-3 gap-2 mb-3">
+                        {['abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract', 'absurd', 'abuse', 'access', 'accident'].map((word, idx) => (
+                          <div key={idx} className="bg-white dark:bg-gray-700 p-2 rounded text-center text-sm font-mono">
+                            <span className="text-gray-400 mr-1">{idx + 1}.</span>
+                            {word}
+                          </div>
+                        ))}
+                      </div>
+                      <button className="w-full px-3 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 text-sm font-medium flex items-center justify-center">
+                        <Download className="w-4 h-4 mr-2" />
+                        Download Backup
+                      </button>
+                    </div>
+                  )}
+
+                  <button className="w-full flex items-center p-3 bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors">
+                    <Plus className="w-5 h-5 text-orange-500 mr-3" />
+                    <span className="font-medium text-gray-900 dark:text-gray-100">Connect Additional Wallet</span>
+                  </button>
+
+                  <button className="w-full flex items-center p-3 bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors">
+                    <Settings className="w-5 h-5 text-orange-500 mr-3" />
+                    <span className="font-medium text-gray-900 dark:text-gray-100">Wallet Settings</span>
+                  </button>
+                </div>
+
+                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+                    🥧 Pie Bot Control
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                    Allow Pie Bot to manage wallet transactions for automated equity operations
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Smart Contract Control</span>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" defaultChecked className="sr-only peer" />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 dark:peer-focus:ring-orange-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-600"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Pool Positions Summary */}
