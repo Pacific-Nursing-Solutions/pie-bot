@@ -3,7 +3,6 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import PersistentPieBot from "@/components/PersistentPieBot";
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
 import CompanyPositions from "@/pages/CompanyPositions";
@@ -40,7 +39,6 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Router />
-        <PersistentPieBot />
       </TooltipProvider>
     </QueryClientProvider>
   );
