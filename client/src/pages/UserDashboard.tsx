@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { TrendingUp, Building2, Users, FileText, DollarSign, Percent, ChevronRight, Plus, Bell, ChevronDown, ChevronUp } from 'lucide-react';
+import { TrendingUp, Building2, Users, FileText, DollarSign, Percent, ChevronRight, Plus, Bell, ChevronDown, ChevronUp, Zap, Settings } from 'lucide-react';
 import SimplePieBot from '../components/SimplePieBot';
 
 interface CompanyPosition {
@@ -115,7 +115,7 @@ const UserDashboard = () => {
             <div className="flex items-center space-x-6">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  Investment Dashboard
+                  🥧 Pie Bot
                 </h1>
               </div>
               
@@ -287,11 +287,11 @@ const UserDashboard = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        {/* Pie Bot Command Center - Star of the Show */}
+        {/* Pie Bot - Star of the Show */}
         <div className="mb-8">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              🥧 Pie Bot Command Center
+              🥧 Pie Bot
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
               Your AI-powered investment assistant - ask about anything in your portfolio
@@ -352,6 +352,148 @@ const UserDashboard = () => {
           </div>
         </div>
 
+        {/* Integrations Section */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center">
+              <Zap className="w-5 h-5 text-orange-500 mr-2" />
+              Integrations
+            </h2>
+          </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* DocuSign */}
+              <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <FileText className="w-6 h-6 text-orange-500 mr-2" />
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">DocuSign</h3>
+                  </div>
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Digital contract signing and document management
+                </p>
+                <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300">
+                  Configure →
+                </button>
+              </div>
+
+              {/* Hubstaff */}
+              <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <Users className="w-6 h-6 text-orange-500 mr-2" />
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Hubstaff</h3>
+                  </div>
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Time tracking for equity-based compensation
+                </p>
+                <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300">
+                  Configure →
+                </button>
+              </div>
+
+              {/* QuickBooks */}
+              <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <DollarSign className="w-6 h-6 text-orange-500 mr-2" />
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">QuickBooks</h3>
+                  </div>
+                  <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Accounting software integration for financial data
+                </p>
+                <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300">
+                  Connect →
+                </button>
+              </div>
+
+              {/* Xero */}
+              <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <TrendingUp className="w-6 h-6 text-orange-500 mr-2" />
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Xero</h3>
+                  </div>
+                  <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Alternative accounting platform integration
+                </p>
+                <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300">
+                  Connect →
+                </button>
+              </div>
+
+              {/* Ethereum */}
+              <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <Building2 className="w-6 h-6 text-orange-500 mr-2" />
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Ethereum</h3>
+                  </div>
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Blockchain equity tokenization and smart contracts
+                </p>
+                <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300">
+                  Configure →
+                </button>
+              </div>
+
+              {/* Banking APIs */}
+              <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <DollarSign className="w-6 h-6 text-orange-500 mr-2" />
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Banking APIs</h3>
+                  </div>
+                  <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Direct bank account integration for financial tracking
+                </p>
+                <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300">
+                  Connect →
+                </button>
+              </div>
+
+              {/* Legal Platforms */}
+              <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center">
+                    <FileText className="w-6 h-6 text-orange-500 mr-2" />
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">Legal Platforms</h3>
+                  </div>
+                  <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Connect with legal service providers for compliance
+                </p>
+                <button className="text-orange-600 dark:text-orange-400 text-sm font-medium hover:text-orange-700 dark:hover:text-orange-300">
+                  Explore →
+                </button>
+              </div>
+
+              {/* Add New Integration */}
+              <div className="border-2 border-dashed border-orange-300 dark:border-orange-700 rounded-lg p-4 hover:border-orange-400 dark:hover:border-orange-600 transition-colors">
+                <div className="flex flex-col items-center justify-center h-full text-center">
+                  <Plus className="w-8 h-8 text-orange-500 mb-2" />
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">Add Integration</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Connect new services to your workflow
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
