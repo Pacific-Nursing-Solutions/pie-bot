@@ -199,7 +199,11 @@ const Companies = () => {
           <div className="p-6">
             <div className="space-y-4">
               {filteredCompanies.map((company) => (
-                <div key={company.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <Link 
+                  href={`/company/${company.id}/dashboard`}
+                  key={company.id} 
+                  className="block border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all cursor-pointer"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center">
@@ -259,17 +263,12 @@ const Companies = () => {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                      <Link href={`/company/${company.id}/dashboard`}>
-                        <button className="px-3 py-1 text-sm bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors">
-                          View Dashboard
-                        </button>
-                      </Link>
-                      <button className="p-1 text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
-                        <ExternalLink className="w-4 h-4" />
-                      </button>
+                      <span className="text-xs text-orange-600 dark:text-orange-400 font-medium">
+                        Click to view dashboard →
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
 
               {filteredCompanies.length === 0 && (
