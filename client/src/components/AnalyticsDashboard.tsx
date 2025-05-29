@@ -308,31 +308,31 @@ const AnalyticsDashboard = () => {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-r from-amber-400 to-amber-500 rounded-lg p-6 text-white">
+        <div className="bg-gradient-to-r from-amber-200 to-amber-300 rounded-lg p-6 text-amber-800">
           <div className="flex items-center space-x-3">
             <Target className="w-8 h-8" />
             <div>
-              <p className="text-amber-50">Companies Managed</p>
+              <p className="text-amber-700">Companies Managed</p>
               <p className="text-3xl font-bold">3</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-violet-400 to-violet-500 rounded-lg p-6 text-white">
+        <div className="bg-gradient-to-r from-violet-200 to-violet-300 rounded-lg p-6 text-violet-800">
           <div className="flex items-center space-x-3">
             <Users className="w-8 h-8" />
             <div>
-              <p className="text-violet-50">Investment Pools</p>
+              <p className="text-violet-700">Investment Pools</p>
               <p className="text-3xl font-bold">3</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-lg p-6 text-white">
+        <div className="bg-gradient-to-r from-emerald-200 to-emerald-300 rounded-lg p-6 text-emerald-800">
           <div className="flex items-center space-x-3">
             <DollarSign className="w-8 h-8" />
             <div>
-              <p className="text-emerald-50">Total Managed</p>
+              <p className="text-emerald-700">Total Managed</p>
               <p className="text-3xl font-bold">$3.9M</p>
             </div>
           </div>

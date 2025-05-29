@@ -333,7 +333,13 @@ const PieTerminal = () => {
       </div>
 
       {/* Terminal Content */}
-      <div className="p-4 h-96 overflow-y-auto">
+      <div 
+        className="p-4 h-96 overflow-y-auto cursor-text"
+        onClick={() => {
+          const input = document.querySelector('input[placeholder="Enter command..."]') as HTMLInputElement;
+          if (input) input.focus();
+        }}
+      >
         <div className="space-y-1">
           {commandHistory.map((entry, index) => (
             <div key={index} className="flex">
@@ -354,6 +360,12 @@ const PieTerminal = () => {
         <form onSubmit={handleSubmit} className="flex items-center mt-2">
           <span className="text-amber-300 mr-2">pie@terminal:~$</span>
           <input
+            ref={(input) => {
+              if (input) {
+                // Store reference for clicking functionality
+                (window as any).pieTerminalInput = input;
+              }
+            }}
             type="text"
             value={currentInput}
             onChange={(e) => setCurrentInput(e.target.value)}
