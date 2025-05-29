@@ -13,7 +13,12 @@ import {
   ChevronDown,
   ChevronUp,
   ExternalLink,
-  Settings
+  Settings,
+  DollarSign,
+  TrendingDown,
+  Activity,
+  MessageSquare,
+  Wallet
 } from 'lucide-react';
 
 interface Employee {
@@ -47,10 +52,34 @@ interface Integration {
   lastSync: string;
 }
 
+interface PersonalContribution {
+  id: number;
+  company: string;
+  type: 'hours' | 'capital' | 'property' | 'ip' | 'sales';
+  description: string;
+  amount: number;
+  unit: string;
+  date: string;
+  project?: string;
+  equityPercentage: number;
+  equityValue: number;
+}
+
+interface Wallet {
+  id: number;
+  name: string;
+  ensName: string;
+  address: string;
+  type: 'personal' | 'company';
+  balance: number;
+}
+
 const Management = () => {
   const [isEmployeesMinimized, setIsEmployeesMinimized] = useState(false);
   const [isProjectsMinimized, setIsProjectsMinimized] = useState(false);
   const [isIntegrationsMinimized, setIsIntegrationsMinimized] = useState(false);
+  const [isContributionsMinimized, setIsContributionsMinimized] = useState(false);
+  const [contributionTimeframe, setContributionTimeframe] = useState<'week' | 'month' | 'year' | 'all-time'>('month');
 
   const [employees] = useState<Employee[]>([
     {
@@ -173,6 +202,85 @@ const Management = () => {
     }
   ]);
 
+  const [personalContributions] = useState<PersonalContribution[]>([
+    {
+      id: 1,
+      company: "TechStart Inc.",
+      type: 'hours',
+      description: "Product development and architecture",
+      amount: 42,
+      unit: "hours",
+      date: "2024-03-20",
+      project: "Core Platform Build",
+      equityPercentage: 35.0,
+      equityValue: 875000
+    },
+    {
+      id: 2,
+      company: "TechStart Inc.",
+      type: 'capital',
+      description: "Initial seed funding",
+      amount: 50000,
+      unit: "USD",
+      date: "2024-03-15",
+      equityPercentage: 35.0,
+      equityValue: 875000
+    },
+    {
+      id: 3,
+      company: "AI Solutions LLC",
+      type: 'ip',
+      description: "Machine learning algorithms and patents",
+      amount: 150000,
+      unit: "USD estimated",
+      date: "2024-03-10",
+      equityPercentage: 45.0,
+      equityValue: 675000
+    },
+    {
+      id: 4,
+      company: "TechStart Inc.",
+      type: 'sales',
+      description: "Enterprise client acquisition",
+      amount: 25000,
+      unit: "USD commission",
+      date: "2024-03-18",
+      project: "Q1 Sales Push",
+      equityPercentage: 35.0,
+      equityValue: 875000
+    },
+    {
+      id: 5,
+      company: "AI Solutions LLC",
+      type: 'property',
+      description: "Development equipment and servers",
+      amount: 15000,
+      unit: "USD value",
+      date: "2024-03-12",
+      equityPercentage: 45.0,
+      equityValue: 675000
+    }
+  ]);
+
+  const [wallets] = useState<Wallet[]>([
+    {
+      id: 1,
+      name: "Personal Portfolio",
+      ensName: "founder.eth",
+      address: "0x1234...5678",
+      type: 'personal',
+      balance: 1250000
+    },
+    {
+      id: 2,
+      name: "TechStart Operations",
+      ensName: "techstart.eth",
+      address: "0xabcd...efgh",
+      type: 'company',
+      balance: 850000
+    }
+  ]);
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
@@ -240,24 +348,213 @@ const Management = () => {
         </Link>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Employees</h3>
-          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{activeEmployees}</p>
+      {/* Key Performance Indicators */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Monthly Revenue</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">$847K</p>
+            </div>
+            <DollarSign className="w-8 h-8 text-emerald-500" />
+          </div>
+          <p className="text-sm text-emerald-600 dark:text-emerald-400 mt-2">+12.4% vs last month</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Hours Today</h3>
-          <p className="text-2xl font-bold text-violet-600 dark:text-violet-400">{totalHoursToday.toFixed(1)}</p>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Total Workers</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{activeEmployees}</p>
+            </div>
+            <Users className="w-8 h-8 text-violet-500" />
+          </div>
+          <p className="text-sm text-emerald-600 dark:text-emerald-400 mt-2">+3 new hires this month</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Projects</h3>
-          <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{activeProjects}</p>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Sales Growth</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">+18.3%</p>
+            </div>
+            <TrendingUp className="w-8 h-8 text-blue-500" />
+          </div>
+          <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">$156K new deals closed</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Integrations</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{connectedIntegrations}/{integrations.length}</p>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Cash Available</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">$2.1M</p>
+            </div>
+            <Wallet className="w-8 h-8 text-amber-500" />
+          </div>
+          <p className="text-sm text-amber-600 dark:text-amber-400 mt-2">18 months runway</p>
         </div>
+      </div>
+
+      {/* Secondary KPIs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Social Media</h3>
+            <MessageSquare className="w-6 h-6 text-violet-500" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-gray-600 dark:text-gray-400">Posts this week</span>
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">23</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-gray-600 dark:text-gray-400">Engagement rate</span>
+              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">+4.2%</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Burn Rate</h3>
+            <TrendingDown className="w-6 h-6 text-red-500" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-gray-600 dark:text-gray-400">Monthly burn</span>
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">$118K</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-gray-600 dark:text-gray-400">vs last month</span>
+              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">-8.1%</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Growth Rate</h3>
+            <Activity className="w-6 h-6 text-emerald-500" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-gray-600 dark:text-gray-400">Monthly growth</span>
+              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">+23.8%</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-gray-600 dark:text-gray-400">Annual target</span>
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">85% reached</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ENS Wallets */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">ENS Domain Wallets</h2>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {wallets.map((wallet) => (
+              <div key={wallet.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">{wallet.name}</h3>
+                  <span className={`px-2 py-1 text-xs rounded-full ${
+                    wallet.type === 'personal' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' : 
+                    'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300'
+                  }`}>
+                    {wallet.type}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">ENS Name:</span>
+                    <code className="text-sm font-mono text-violet-600 dark:text-violet-400">{wallet.ensName}</code>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Address:</span>
+                    <code className="text-sm font-mono text-gray-500 dark:text-gray-400">{wallet.address}</code>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Balance:</span>
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">${wallet.balance.toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Individual Activities */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Your Personal Contributions</h2>
+          <div className="flex items-center space-x-4">
+            <select
+              value={contributionTimeframe}
+              onChange={(e) => setContributionTimeframe(e.target.value as any)}
+              className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
+            >
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="year">This Year</option>
+              <option value="all-time">All Time</option>
+            </select>
+            <button 
+              onClick={() => setIsContributionsMinimized(!isContributionsMinimized)}
+              className="p-2 text-gray-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+            >
+              {isContributionsMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {!isContributionsMinimized && (
+          <div className="p-6">
+            <div className="space-y-4">
+              {personalContributions.map((contribution) => (
+                <div key={contribution.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3 mb-2">
+                        <span className={`px-2 py-1 text-xs rounded-full font-medium ${
+                          contribution.type === 'hours' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
+                          contribution.type === 'capital' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300' :
+                          contribution.type === 'sales' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300' :
+                          contribution.type === 'ip' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300' :
+                          'bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300'
+                        }`}>
+                          {contribution.type.toUpperCase()}
+                        </span>
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{contribution.company}</h3>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">{contribution.date}</span>
+                      </div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{contribution.description}</p>
+                      {contribution.project && (
+                        <p className="text-xs text-violet-600 dark:text-violet-400 mb-2">Project: {contribution.project}</p>
+                      )}
+                      <div className="flex items-center space-x-4 text-sm">
+                        <span className="font-medium text-gray-900 dark:text-gray-100">
+                          {contribution.amount.toLocaleString()} {contribution.unit}
+                        </span>
+                        <span className="text-gray-500 dark:text-gray-400">•</span>
+                        <span className="text-violet-600 dark:text-violet-400">
+                          {contribution.equityPercentage}% equity
+                        </span>
+                        <span className="text-gray-500 dark:text-gray-400">•</span>
+                        <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                          ${contribution.equityValue.toLocaleString()} value
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Employee Activity */}
