@@ -101,34 +101,55 @@ const AnalyticsDashboard = () => {
 
   const recentActivity = [
     {
-      command: 'equity split techstart',
-      result: 'Calculated distribution for 4 stakeholders',
-      timestamp: '5 min ago',
-      success: true
+      type: 'recent',
+      title: 'Series A term sheet signed',
+      company: 'TechStart Inc.',
+      amount: '$2M',
+      timestamp: '15 min ago',
+      status: 'completed'
     },
     {
-      command: 'deploy token TSI',
-      result: 'Contract deployed to Base: 0x1234...5678',
-      timestamp: '12 min ago',
-      success: true
+      type: 'recent',
+      title: 'Equity distribution updated',
+      company: 'AI Solutions LLC',
+      details: '4 new stakeholders added',
+      timestamp: '2 hours ago',
+      status: 'completed'
     },
     {
-      command: 'fund ai-solutions',
-      result: 'Fundraising package prepared, 3 documents generated',
-      timestamp: '28 min ago',
-      success: true
+      type: 'recent',
+      title: 'MakerDAO vault liquidation risk',
+      company: 'Personal',
+      amount: '$85K exposure',
+      timestamp: '3 hours ago',
+      status: 'warning'
+    }
+  ];
+
+  const upcomingActivity = [
+    {
+      type: 'upcoming',
+      title: 'Board meeting scheduled',
+      company: 'TechStart Inc.',
+      details: 'Quarterly review and Series A discussion',
+      timestamp: 'Tomorrow, 2:00 PM',
+      status: 'scheduled'
     },
     {
-      command: 'debt analyze',
-      result: 'Found $85K total debt across 3 protocols',
-      timestamp: '45 min ago',
-      success: true
+      type: 'upcoming',
+      title: 'Compliance certificate renewal',
+      company: 'GreenTech Ventures',
+      details: 'Annual certification expires soon',
+      timestamp: 'In 3 days',
+      status: 'urgent'
     },
     {
-      command: 'valuation series-a',
-      result: 'DCF analysis complete: $8.2M valuation',
-      timestamp: '1 hour ago',
-      success: true
+      type: 'upcoming',
+      title: 'Pool distribution payment',
+      company: 'Startup Accelerator Pool',
+      amount: '$125K distribution',
+      timestamp: 'March 31, 2024',
+      status: 'scheduled'
     }
   ];
 
@@ -197,34 +218,81 @@ const AnalyticsDashboard = () => {
         })}
       </div>
 
-      {/* Command Activity & System Alerts */}
+      {/* Recent & Upcoming Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Command Activity */}
+        {/* Recent Activity */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
           <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Command Activity</h3>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-sm text-gray-600 dark:text-gray-400">Live</span>
-              </div>
-            </div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Activity</h3>
           </div>
           <div className="p-6">
             <div className="space-y-4">
               {recentActivity.map((activity, index) => (
                 <div key={index} className="flex items-start space-x-3">
                   <div className={`w-2 h-2 rounded-full mt-2 ${
-                    activity.success ? 'bg-green-500' : 'bg-red-500'
+                    activity.status === 'completed' ? 'bg-emerald-500' : 
+                    activity.status === 'warning' ? 'bg-amber-500' : 'bg-slate-400'
                   }`}></div>
                   <div className="flex-1">
-                    <div className="flex items-center space-x-2">
-                      <code className="text-sm bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded font-mono">
-                        {activity.command}
-                      </code>
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.title}</h4>
                       <span className="text-xs text-gray-500 dark:text-gray-400">{activity.timestamp}</span>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{activity.result}</p>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{activity.company}</span>
+                      {activity.amount && (
+                        <>
+                          <span className="text-gray-400">•</span>
+                          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.amount}</span>
+                        </>
+                      )}
+                      {activity.details && (
+                        <>
+                          <span className="text-gray-400">•</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{activity.details}</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Upcoming Activity */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Upcoming Activity</h3>
+          </div>
+          <div className="p-6">
+            <div className="space-y-4">
+              {upcomingActivity.map((activity, index) => (
+                <div key={index} className="flex items-start space-x-3">
+                  <div className={`w-2 h-2 rounded-full mt-2 ${
+                    activity.status === 'urgent' ? 'bg-red-500' : 
+                    activity.status === 'scheduled' ? 'bg-blue-500' : 'bg-slate-400'
+                  }`}></div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.title}</h4>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{activity.timestamp}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{activity.company}</span>
+                      {activity.amount && (
+                        <>
+                          <span className="text-gray-400">•</span>
+                          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.amount}</span>
+                        </>
+                      )}
+                      {activity.details && (
+                        <>
+                          <span className="text-gray-400">•</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{activity.details}</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

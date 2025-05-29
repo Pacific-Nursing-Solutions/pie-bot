@@ -37,28 +37,6 @@ const Settings = () => {
   const integrations: Integration[] = [
     {
       id: 1,
-      name: "Notion",
-      category: "Project Management",
-      description: "Sync projects, tasks, and documentation with Notion workspaces",
-      status: 'connected',
-      icon: "N",
-      setupComplexity: 'easy',
-      features: ["Project tracking", "Document management", "Team collaboration"],
-      website: "notion.so"
-    },
-    {
-      id: 2,
-      name: "ClickUp",
-      category: "Task Management", 
-      description: "Import tasks, time tracking, and project milestones",
-      status: 'available',
-      icon: "C",
-      setupComplexity: 'medium',
-      features: ["Task management", "Time tracking", "Goal tracking"],
-      website: "clickup.com"
-    },
-    {
-      id: 3,
       name: "Hubstaff",
       category: "Time Tracking",
       description: "Employee time tracking and productivity monitoring",
@@ -69,7 +47,7 @@ const Settings = () => {
       website: "hubstaff.com"
     },
     {
-      id: 4,
+      id: 2,
       name: "QuickBooks",
       category: "Accounting",
       description: "Financial data sync for accounting and reporting",
@@ -80,29 +58,18 @@ const Settings = () => {
       website: "quickbooks.com"
     },
     {
-      id: 5,
-      name: "Xero",
-      category: "Accounting",
-      description: "Cloud accounting integration for financial management",
-      status: 'available',
-      icon: "X",
-      setupComplexity: 'medium',
-      features: ["Cloud accounting", "Invoice management", "Financial reports"],
-      website: "xero.com"
-    },
-    {
-      id: 6,
+      id: 3,
       name: "DocuSign",
       category: "Legal",
       description: "Digital signature workflows for legal documents",
       status: 'connected',
       icon: "D",
-      setupComplexity: 'medium',
+      setupComplexity: 'easy',
       features: ["Digital signatures", "Document workflows", "Legal compliance"],
       website: "docusign.com"
     },
     {
-      id: 7,
+      id: 4,
       name: "Slack",
       category: "Communication",
       description: "Team communication and automated notifications",
@@ -113,37 +80,37 @@ const Settings = () => {
       website: "slack.com"
     },
     {
-      id: 8,
-      name: "GitHub",
-      category: "Development",
-      description: "Code repository integration for development tracking",
-      status: 'coming-soon',
-      icon: "G",
+      id: 5,
+      name: "Carta",
+      category: "Legal",
+      description: "Cap table management and equity administration",
+      status: 'connected',
+      icon: "C",
+      setupComplexity: 'advanced',
+      features: ["Cap table sync", "Equity tracking", "Investor relations"],
+      website: "carta.com"
+    },
+    {
+      id: 6,
+      name: "X (Twitter)",
+      category: "Communication",
+      description: "Social media engagement and company updates",
+      status: 'available',
+      icon: "X",
+      setupComplexity: 'easy',
+      features: ["Social posting", "Engagement tracking", "Brand monitoring"],
+      website: "x.com"
+    },
+    {
+      id: 7,
+      name: "Farcaster",
+      category: "Communication",
+      description: "Decentralized social network protocol integration",
+      status: 'available',
+      icon: "F",
       setupComplexity: 'medium',
-      features: ["Code tracking", "Issue management", "Release tracking"],
-      website: "github.com"
-    },
-    {
-      id: 9,
-      name: "Jira",
-      category: "Project Management",
-      description: "Advanced project management and issue tracking",
-      status: 'coming-soon',
-      icon: "J",
-      setupComplexity: 'advanced',
-      features: ["Issue tracking", "Sprint planning", "Reporting"],
-      website: "atlassian.com/jira"
-    },
-    {
-      id: 10,
-      name: "Salesforce",
-      category: "CRM",
-      description: "Customer relationship management and sales tracking",
-      status: 'coming-soon',
-      icon: "SF",
-      setupComplexity: 'advanced',
-      features: ["CRM integration", "Sales tracking", "Customer insights"],
-      website: "salesforce.com"
+      features: ["Decentralized social", "Web3 engagement", "Protocol integration"],
+      website: "farcaster.xyz"
     }
   ];
 
