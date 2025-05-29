@@ -109,12 +109,12 @@ const Pools = () => {
   return (
     <div className="space-y-6">
       {/* Command Hints */}
-      <div className="bg-purple-50 dark:bg-purple-950/30 rounded-lg p-4 border-l-4 border-purple-500">
-        <h3 className="font-medium text-purple-900 dark:text-purple-100 mb-2">💡 Terminal Commands for Pools:</h3>
+      <div className="bg-violet-50 dark:bg-violet-950/20 rounded-lg p-4 border-l-4 border-violet-300">
+        <h3 className="font-medium text-violet-800 dark:text-violet-200 mb-2">💡 Terminal Commands for Pools:</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-          <code className="bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded">pool create ai-fund</code>
-          <code className="bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded">deploy token POOL</code>
-          <code className="bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded">generate report pools</code>
+          <code className="bg-violet-100 dark:bg-violet-900/30 px-2 py-1 rounded text-violet-700 dark:text-violet-300">pool create ai-fund</code>
+          <code className="bg-violet-100 dark:bg-violet-900/30 px-2 py-1 rounded text-violet-700 dark:text-violet-300">deploy token POOL</code>
+          <code className="bg-violet-100 dark:bg-violet-900/30 px-2 py-1 rounded text-violet-700 dark:text-violet-300">generate report pools</code>
         </div>
       </div>
 

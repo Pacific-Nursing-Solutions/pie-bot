@@ -109,12 +109,12 @@ const Companies = () => {
   return (
     <div className="space-y-6">
       {/* Command Hints */}
-      <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-4 border-l-4 border-orange-500">
-        <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-2">💡 Terminal Commands for Companies:</h3>
+      <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-4 border-l-4 border-amber-300">
+        <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-2">💡 Terminal Commands for Companies:</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-          <code className="bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded">equity split techstart</code>
-          <code className="bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded">create agreement founders</code>
-          <code className="bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded">valuation DCF</code>
+          <code className="bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded text-amber-700 dark:text-amber-300">equity split techstart</code>
+          <code className="bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded text-amber-700 dark:text-amber-300">create agreement founders</code>
+          <code className="bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded text-amber-700 dark:text-amber-300">valuation DCF</code>
         </div>
       </div>
 

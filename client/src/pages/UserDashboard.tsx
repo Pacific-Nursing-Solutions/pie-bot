@@ -114,25 +114,25 @@ const UserDashboard = () => {
       {/* Quick Navigation */}
       <div className="flex items-center justify-center space-x-4 mb-8">
         <Link href="/companies">
-          <button className="flex items-center px-4 py-2 bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors">
+          <button className="flex items-center px-4 py-2 bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-300 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-950/30 transition-colors">
             <Building2 className="w-4 h-4 mr-2" />
             Companies
           </button>
         </Link>
         <Link href="/pools">
-          <button className="flex items-center px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors">
+          <button className="flex items-center px-4 py-2 bg-violet-50 dark:bg-violet-950/20 text-violet-600 dark:text-violet-300 rounded-lg hover:bg-violet-100 dark:hover:bg-violet-950/30 transition-colors">
             <Users className="w-4 h-4 mr-2" />
             Pools
           </button>
         </Link>
         <Link href="/fundraising">
-          <button className="flex items-center px-4 py-2 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-200 dark:hover:bg-green-800 transition-colors">
+          <button className="flex items-center px-4 py-2 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-300 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-950/30 transition-colors">
             <TrendingUp className="w-4 h-4 mr-2" />
             Fundraising
           </button>
         </Link>
         <Link href="/documents">
-          <button className="flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+          <button className="flex items-center px-4 py-2 bg-sky-50 dark:bg-sky-950/20 text-sky-600 dark:text-sky-300 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-950/30 transition-colors">
             <FileText className="w-4 h-4 mr-2" />
             Documents
           </button>
