@@ -14,13 +14,13 @@ const Header = () => {
   return (
     <header className="bg-white dark:bg-[#293145] shadow-md py-4">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
           {/* Logo */}
           <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
             <span className="material-icons text-white">pie_chart</span>
           </div>
           <h1 className="text-2xl font-bold text-primary dark:text-white">Pie Bot</h1>
-        </div>
+        </Link>
         
         {/* Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
