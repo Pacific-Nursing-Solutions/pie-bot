@@ -119,22 +119,22 @@ const UserDashboard = () => {
             Companies
           </button>
         </Link>
-        <Link href="/pools">
+        <Link href="/management">
           <button className="flex items-center px-4 py-2 bg-violet-50 dark:bg-violet-950/20 text-violet-600 dark:text-violet-300 rounded-lg hover:bg-violet-100 dark:hover:bg-violet-950/30 transition-colors">
             <Users className="w-4 h-4 mr-2" />
-            Pools
-          </button>
-        </Link>
-        <Link href="/fundraising">
-          <button className="flex items-center px-4 py-2 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-300 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-950/30 transition-colors">
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Fundraising
+            Management
           </button>
         </Link>
         <Link href="/documents">
           <button className="flex items-center px-4 py-2 bg-sky-50 dark:bg-sky-950/20 text-sky-600 dark:text-sky-300 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-950/30 transition-colors">
             <FileText className="w-4 h-4 mr-2" />
             Documents
+          </button>
+        </Link>
+        <Link href="/settings">
+          <button className="flex items-center px-4 py-2 bg-slate-50 dark:bg-slate-950/20 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-950/30 transition-colors">
+            <Settings className="w-4 h-4 mr-2" />
+            Settings
           </button>
         </Link>
       </div>

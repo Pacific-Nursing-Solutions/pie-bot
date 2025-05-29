@@ -7,6 +7,8 @@ import PieTerminal from "@/components/PersistentPieBot";
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
 import CompanyPositions from "@/pages/CompanyPositions";
+import Management from "@/pages/Management";
+import Settings from "@/pages/Settings";
 import Pools from "@/pages/Pools";
 import Fundraising from "@/pages/Fundraising";
 import Documents from "@/pages/Documents";
@@ -21,12 +23,15 @@ function Router() {
     <Switch>
       <Route path="/" component={UserDashboard} />
       <Route path="/companies" component={Companies} />
-      <Route path="/company-positions" component={CompanyPositions} />
-      <Route path="/pools" component={Pools} />
-      <Route path="/fundraising" component={Fundraising} />
-      <Route path="/documents" component={Documents} />
-      <Route path="/portfolio" component={Portfolio} />
       <Route path="/company/:id/dashboard" component={CompanyDashboard} />
+      <Route path="/company/:id/pools" component={Pools} />
+      <Route path="/company/:id/fundraising" component={Fundraising} />
+      <Route path="/company/:id/documents" component={Documents} />
+      <Route path="/management" component={Management} />
+      <Route path="/documents" component={Documents} />
+      <Route path="/settings" component={Settings} />
+      <Route path="/company-positions" component={CompanyPositions} />
+      <Route path="/portfolio" component={Portfolio} />
       <Route path="/company/:id/pie-bot" component={CompanyPieBot} />
       <Route path="/pie-bot" component={SimplePage} />
       <Route component={NotFound} />
