@@ -20,6 +20,7 @@ import {
   MessageSquare,
   Wallet
 } from 'lucide-react';
+import WalletManager from '@/components/WalletManager';
 
 interface Employee {
   id: number;
@@ -449,41 +450,16 @@ const Management = () => {
         </div>
       </div>
 
-      {/* ENS Wallets */}
+      {/* Wallet Management */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-8">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">ENS Domain Wallets</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallet Management</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Connect your X account to wallets and manage both personal and company wallets
+          </p>
         </div>
         <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {wallets.map((wallet) => (
-              <div key={wallet.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">{wallet.name}</h3>
-                  <span className={`px-2 py-1 text-xs rounded-full ${
-                    wallet.type === 'personal' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' : 
-                    'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300'
-                  }`}>
-                    {wallet.type}
-                  </span>
-                </div>
-                <div className="space-y-1">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">ENS Name:</span>
-                    <code className="text-sm font-mono text-violet-600 dark:text-violet-400">{wallet.ensName}</code>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Address:</span>
-                    <code className="text-sm font-mono text-gray-500 dark:text-gray-400">{wallet.address}</code>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Balance:</span>
-                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">${wallet.balance.toLocaleString()}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <WalletManager walletType="personal" />
         </div>
       </div>
 
