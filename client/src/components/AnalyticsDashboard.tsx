@@ -308,32 +308,38 @@ const AnalyticsDashboard = () => {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-r from-amber-200 to-amber-300 rounded-lg p-6 text-amber-800">
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center space-x-3">
-            <Target className="w-8 h-8" />
+            <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
+              <Target className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            </div>
             <div>
-              <p className="text-amber-700">Companies Managed</p>
-              <p className="text-3xl font-bold">3</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Companies Managed</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">3</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-violet-200 to-violet-300 rounded-lg p-6 text-violet-800">
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center space-x-3">
-            <Users className="w-8 h-8" />
+            <div className="w-10 h-10 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center">
+              <Users className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+            </div>
             <div>
-              <p className="text-violet-700">Investment Pools</p>
-              <p className="text-3xl font-bold">3</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Investment Pools</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">3</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-emerald-200 to-emerald-300 rounded-lg p-6 text-emerald-800">
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center space-x-3">
-            <DollarSign className="w-8 h-8" />
+            <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
+              <DollarSign className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
             <div>
-              <p className="text-emerald-700">Total Managed</p>
-              <p className="text-3xl font-bold">$3.9M</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Total Managed</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">$3.9M</p>
             </div>
           </div>
         </div>

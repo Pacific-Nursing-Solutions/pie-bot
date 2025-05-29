@@ -139,15 +139,15 @@ const UserDashboard = () => {
         </Link>
       </div>
 
-      {/* Portfolio Overview */}
+      {/* Holdings Overview */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-            Portfolio Overview
+            Your Holdings Overview
           </h2>
           <button 
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
-            className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+            className="p-2 text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
           >
             {isPortfolioMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
           </button>
@@ -155,23 +155,92 @@ const UserDashboard = () => {
 
         {!isPortfolioMinimized && (
           <div className="p-6">
-            {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Total Net Worth</h3>
-                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">${totalNetWorth.toLocaleString()}</p>
+            {/* Holdings Summary Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {/* Total Equity Value */}
+              <div className="text-center">
+                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
+                  ${totalNetWorth.toLocaleString()}
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Total Equity Value</div>
+                <div className="flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm">
+                  <TrendingUp className="w-4 h-4 mr-1" />
+                  +$124K (3.3%) this week
+                </div>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Company Equity</h3>
-                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">${totalPortfolioValue.toLocaleString()}</p>
+
+              {/* Companies & Pools */}
+              <div className="text-center">
+                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
+                  {companyPositions.length + poolPositions.length}
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Holdings</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400">
+                  {companyPositions.length} companies • {poolPositions.length} pools
+                </div>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Pool Returns</h3>
-                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">${totalPoolValue.toLocaleString()}</p>
+
+              {/* 7-Day Earnings */}
+              <div className="text-center">
+                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
+                  $47.2K
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">7-Day Earnings</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400">
+                  $32K equity • $15.2K distributions
+                </div>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">Companies</h3>
-                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{companyPositions.length}</p>
+
+              {/* Active Operations */}
+              <div className="text-center">
+                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
+                  89
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Active Operations</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400">
+                  Across all companies
+                </div>
+              </div>
+            </div>
+
+            {/* Weekly Performance Chart */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                7-Day Performance Breakdown
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Equity Growth</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 text-sm font-medium">+$32,100</span>
+                  </div>
+                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                    <div className="bg-emerald-500 h-2 rounded-full" style={{ width: '68%' }}></div>
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">68% of weekly earnings</div>
+                </div>
+                
+                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Distributions</span>
+                    <span className="text-violet-600 dark:text-violet-400 text-sm font-medium">+$15,200</span>
+                  </div>
+                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                    <div className="bg-violet-500 h-2 rounded-full" style={{ width: '32%' }}></div>
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">32% of weekly earnings</div>
+                </div>
+                
+                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Net Change</span>
+                    <span className="text-slate-900 dark:text-slate-100 text-sm font-medium">+3.3%</span>
+                  </div>
+                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                    <div className="bg-slate-600 h-2 rounded-full" style={{ width: '75%' }}></div>
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">Above market average</div>
+                </div>
               </div>
             </div>
 
