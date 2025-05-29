@@ -128,12 +128,12 @@ const Fundraising = () => {
   return (
     <div className="space-y-6">
       {/* Command Hints */}
-      <div className="bg-green-50 dark:bg-green-950/30 rounded-lg p-4 border-l-4 border-green-500">
-        <h3 className="font-medium text-green-900 dark:text-green-100 mb-2">💡 Terminal Commands for Fundraising:</h3>
+      <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded-lg p-4 border-l-4 border-emerald-300">
+        <h3 className="font-medium text-emerald-800 dark:text-emerald-200 mb-2">💡 Terminal Commands for Fundraising:</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-          <code className="bg-green-100 dark:bg-green-900 px-2 py-1 rounded">fund techstart</code>
-          <code className="bg-green-100 dark:bg-green-900 px-2 py-1 rounded">create agreement term-sheet</code>
-          <code className="bg-green-100 dark:bg-green-900 px-2 py-1 rounded">valuation series-a</code>
+          <code className="bg-emerald-100 dark:bg-emerald-900/30 px-2 py-1 rounded text-emerald-700 dark:text-emerald-300">fund techstart</code>
+          <code className="bg-emerald-100 dark:bg-emerald-900/30 px-2 py-1 rounded text-emerald-700 dark:text-emerald-300">create agreement term-sheet</code>
+          <code className="bg-emerald-100 dark:bg-emerald-900/30 px-2 py-1 rounded text-emerald-700 dark:text-emerald-300">valuation series-a</code>
         </div>
       </div>
 

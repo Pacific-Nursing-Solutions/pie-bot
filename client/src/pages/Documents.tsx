@@ -186,12 +186,12 @@ const Documents = () => {
   return (
     <div className="space-y-6">
       {/* Command Hints */}
-      <div className="bg-blue-50 dark:bg-blue-950/30 rounded-lg p-4 border-l-4 border-blue-500">
-        <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">💡 Terminal Commands for Documents:</h3>
+      <div className="bg-sky-50 dark:bg-sky-950/20 rounded-lg p-4 border-l-4 border-sky-300">
+        <h3 className="font-medium text-sky-800 dark:text-sky-200 mb-2">💡 Terminal Commands for Documents:</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-          <code className="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">create agreement founders</code>
-          <code className="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">generate report legal</code>
-          <code className="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded">equity split techstart</code>
+          <code className="bg-sky-100 dark:bg-sky-900/30 px-2 py-1 rounded text-sky-700 dark:text-sky-300">create agreement founders</code>
+          <code className="bg-sky-100 dark:bg-sky-900/30 px-2 py-1 rounded text-sky-700 dark:text-sky-300">generate report legal</code>
+          <code className="bg-sky-100 dark:bg-sky-900/30 px-2 py-1 rounded text-sky-700 dark:text-sky-300">equity split techstart</code>
         </div>
       </div>
 

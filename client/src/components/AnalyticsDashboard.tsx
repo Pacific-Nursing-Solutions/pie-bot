@@ -42,7 +42,7 @@ const AnalyticsDashboard = () => {
       change: 5.2,
       changeLabel: "vs last month",
       icon: TrendingUp,
-      color: "text-green-600"
+      color: "text-emerald-500"
     },
     {
       title: "Active Commands",
@@ -50,7 +50,7 @@ const AnalyticsDashboard = () => {
       change: 12.3,
       changeLabel: "commands executed",
       icon: Zap,
-      color: "text-blue-600"
+      color: "text-sky-500"
     },
     {
       title: "Equity Operations",
@@ -58,7 +58,7 @@ const AnalyticsDashboard = () => {
       change: -2.1,
       changeLabel: "this week",
       icon: Target,
-      color: "text-orange-600"
+      color: "text-amber-500"
     },
     {
       title: "System Health",
@@ -66,7 +66,7 @@ const AnalyticsDashboard = () => {
       change: 0.3,
       changeLabel: "uptime",
       icon: Activity,
-      color: "text-purple-600"
+      color: "text-violet-500"
     }
   ];
 
@@ -308,31 +308,31 @@ const AnalyticsDashboard = () => {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-6 text-white">
+        <div className="bg-gradient-to-r from-amber-400 to-amber-500 rounded-lg p-6 text-white">
           <div className="flex items-center space-x-3">
             <Target className="w-8 h-8" />
             <div>
-              <p className="text-orange-100">Companies Managed</p>
+              <p className="text-amber-50">Companies Managed</p>
               <p className="text-3xl font-bold">3</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-6 text-white">
+        <div className="bg-gradient-to-r from-violet-400 to-violet-500 rounded-lg p-6 text-white">
           <div className="flex items-center space-x-3">
             <Users className="w-8 h-8" />
             <div>
-              <p className="text-purple-100">Investment Pools</p>
+              <p className="text-violet-50">Investment Pools</p>
               <p className="text-3xl font-bold">3</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-6 text-white">
+        <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-lg p-6 text-white">
           <div className="flex items-center space-x-3">
             <DollarSign className="w-8 h-8" />
             <div>
-              <p className="text-green-100">Total Managed</p>
+              <p className="text-emerald-50">Total Managed</p>
               <p className="text-3xl font-bold">$3.9M</p>
             </div>
           </div>
