@@ -83,7 +83,10 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
               startAngle={90}
               endAngle={-270}
               dataKey="value"
-              label={({ name, value }) => `${name}: $${(value / 1000).toFixed(0)}K`}
+              label={({ name, value }) => {
+                const shortName = name.length > 8 ? name.substring(0, 8) + '...' : name;
+                return `${shortName}: $${(value / 1000).toFixed(0)}K`;
+              }}
               labelLine={false}
             >
               {portfolioData.map((entry, index) => (
@@ -103,7 +106,7 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
                 className="w-3 h-3 rounded-full" 
                 style={{ backgroundColor: project.color }}
               />
-              <span className="text-sm font-medium text-[var(--text-primary)]">
+              <span className="text-sm font-medium text-[var(--text-primary)] truncate max-w-[120px]">
                 {project.name}
               </span>
             </div>
