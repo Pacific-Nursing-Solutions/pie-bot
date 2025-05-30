@@ -17,6 +17,7 @@ import Documents from "@/pages/Documents";
 import Portfolio from "@/pages/Portfolio";
 import CompanyDashboard from "@/pages/CompanyDashboard";
 import CompanyPieBot from "@/pages/CompanyPieBot";
+import CompanyWallets from "@/pages/CompanyWallets";
 import SimplePage from "@/components/SimplePage";
 import NotFound from "@/pages/not-found";
 
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/company/:id/pools" component={Pools} />
       <Route path="/company/:id/fundraising" component={Fundraising} />
       <Route path="/company/:id/documents" component={Documents} />
+      <Route path="/company/:id/wallets" component={CompanyWallets} />
       <Route path="/management" component={Management} />
       <Route path="/documents" component={Documents} />
       <Route path="/settings" component={Settings} />
@@ -43,36 +45,31 @@ function Router() {
 
 function App() {
   return (
-    <PrivyProvider
-      appId={privyConfig.appId}
-      config={privyConfig.config}
-    >
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-            {/* Command Center Layout */}
-            <div className="max-w-7xl mx-auto px-4 py-8">
-              {/* Pie Bot Terminal - The Star */}
-              <div className="mb-8">
-                <a href="/" className="block hover:opacity-80 transition-opacity">
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
-                    🥧 Pie Bot Command Center
-                  </h1>
-                </a>
-                <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
-                  Your powerful terminal for equity management, financial operations, and business control
-                </p>
-                <PieTerminal />
-              </div>
-              
-              {/* Page Content Around Terminal */}
-              <Router />
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+          {/* Command Center Layout */}
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            {/* Pie Bot Terminal - The Star */}
+            <div className="mb-8">
+              <a href="/" className="block hover:opacity-80 transition-opacity">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
+                  🥧 Pie Bot Command Center
+                </h1>
+              </a>
+              <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
+                Your powerful terminal for equity management, financial operations, and business control
+              </p>
+              <PieTerminal />
             </div>
+            
+            {/* Page Content Around Terminal */}
+            <Router />
           </div>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </PrivyProvider>
+        </div>
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 }
 

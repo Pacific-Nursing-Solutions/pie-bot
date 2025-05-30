@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
 import { 
   Wallet, 
   Twitter, 
@@ -9,7 +8,8 @@ import {
   ExternalLink,
   Shield,
   Users,
-  Building2
+  Building2,
+  CheckCircle
 } from 'lucide-react';
 
 interface WalletData {
@@ -33,17 +33,8 @@ interface WalletManagerProps {
 }
 
 const WalletManager = ({ walletType, companyId, companyName }: WalletManagerProps) => {
-  const { 
-    ready, 
-    authenticated, 
-    user, 
-    login, 
-    logout, 
-    linkTwitter, 
-    unlinkTwitter,
-    createWallet,
-    exportWallet
-  } = usePrivy();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const [wallets, setWallets] = useState<WalletData[]>([
     {
@@ -64,31 +55,26 @@ const WalletManager = ({ walletType, companyId, companyName }: WalletManagerProp
   const [importKey, setImportKey] = useState('');
 
   const handleCreateWallet = async () => {
-    if (!authenticated) {
-      await login();
+    if (!isAuthenticated) {
+      setIsAuthenticated(true);
+      setUser({ twitter: { username: 'founder_demo' }, email: { address: 'founder@example.com' } });
       return;
     }
 
-    try {
-      const newWallet = await createWallet();
-      
-      const walletData: WalletData = {
-        id: Date.now().toString(),
-        address: newWallet.address,
-        type: walletType,
-        companyId: companyId,
-        balance: 0,
-        connectedAccounts: {
-          twitter: user?.twitter?.username ? `@${user.twitter.username}` : undefined,
-          email: user?.email?.address
-        },
-        isImported: false
-      };
+    const walletData: WalletData = {
+      id: Date.now().toString(),
+      address: '0x' + Math.random().toString(16).substr(2, 40),
+      type: walletType,
+      companyId: companyId,
+      balance: 0,
+      connectedAccounts: {
+        twitter: user?.twitter?.username ? `@${user.twitter.username}` : undefined,
+        email: user?.email?.address
+      },
+      isImported: false
+    };
 
-      setWallets(prev => [...prev, walletData]);
-    } catch (error) {
-      console.error('Failed to create wallet:', error);
-    }
+    setWallets(prev => [...prev, walletData]);
   };
 
   const handleImportWallet = () => {
