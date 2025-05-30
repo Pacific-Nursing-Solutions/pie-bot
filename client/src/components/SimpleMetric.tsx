@@ -3,14 +3,14 @@ import { LineChart, Line, ResponsiveContainer, YAxis, Tooltip } from 'recharts';
 interface SimpleMetricProps {
   label: string;
   value: string;
-  sparklineData: number[];
+  sparklineData: { days: string; value: number }[];
   trend?: 'up' | 'down' | 'neutral';
   startDate?: string;
   endDate?: string;
 }
 
 const SimpleMetric = ({ label, value, sparklineData, trend, startDate, endDate }: SimpleMetricProps) => {
-  const chartData = sparklineData.map((value, index) => ({ value, index }));
+  const chartData = sparklineData;
   
   return (
     <div className="bg-[var(--card-bg)] border border-[var(--subtle-border)] rounded-lg p-6">

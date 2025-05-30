@@ -84,9 +84,37 @@ const AnalyticsDashboard = () => {
     { name: 'Startup Pool', value: 1580000, change: 12.4, ownership: 8.3 }
   ];
 
-  // Sample sparkline data for metrics - more realistic variation
-  const revenueData = [31200, 28900, 34800, 32100, 39200, 33400, 36900, 35800, 38500];
-  const runwayData = [18, 17.2, 16.8, 15.9, 15.1, 14.7, 14.3, 14.1, 14];
+  // Portfolio value data over 30-day increments with major drop at 90 days
+  const portfolioValueData = [
+    { days: '30', value: 4160000 },
+    { days: '60', value: 4140000 },
+    { days: '90', value: 3850000 }, // Big drop 90 days ago
+    { days: '120', value: 3920000 },
+    { days: '150', value: 4050000 },
+    { days: '180', value: 4020000 },
+    { days: '210', value: 4100000 },
+    { days: '240', value: 3950000 },
+    { days: '270', value: 3980000 },
+    { days: '300', value: 3800000 },
+    { days: '330', value: 3900000 },
+    { days: '360', value: 3750000 }
+  ];
+
+  // Equity holdings percentage over same time periods
+  const equityHoldingsData = [
+    { days: '30', value: 16.2 },
+    { days: '60', value: 16.1 },
+    { days: '90', value: 14.8 }, // Corresponding drop
+    { days: '120', value: 15.2 },
+    { days: '150', value: 15.8 },
+    { days: '180', value: 15.6 },
+    { days: '210', value: 16.0 },
+    { days: '240', value: 15.4 },
+    { days: '270', value: 15.7 },
+    { days: '300', value: 14.9 },
+    { days: '330', value: 15.3 },
+    { days: '360', value: 14.2 }
+  ];
 
   // Wallet holdings data
   const walletHoldings = [
@@ -95,36 +123,36 @@ const AnalyticsDashboard = () => {
     { company: 'Startup Pool', walletAddress: '0x9876...1234', equityValue: 131140, percentage: 8.3 }
   ];
 
-  // ROI data - single line showing performance over 30-day increments with realistic variation
+  // ROI data - single line showing performance over 30-day increments with drop at 90 days
   const growthData = [
-    { days: '30', roi: 12.3 },
-    { days: '60', roi: 8.9 },
-    { days: '90', roi: 18.4 },
-    { days: '120', roi: 14.2 },
-    { days: '150', roi: 21.7 },
-    { days: '180', roi: 16.8 },
-    { days: '210', roi: 24.1 },
-    { days: '240', roi: 19.3 },
-    { days: '270', roi: 22.9 },
-    { days: '300', roi: 17.6 },
-    { days: '330', roi: 25.8 },
-    { days: '360', roi: 20.4 }
+    { days: '30', roi: 20.4 },
+    { days: '60', roi: 18.2 },
+    { days: '90', roi: -8.7 }, // Big losing month 90 days ago
+    { days: '120', roi: -2.1 },
+    { days: '150', roi: 6.8 },
+    { days: '180', roi: 12.3 },
+    { days: '210', roi: 18.4 },
+    { days: '240', roi: 14.2 },
+    { days: '270', roi: 16.9 },
+    { days: '300', roi: 11.5 },
+    { days: '330', roi: 15.3 },
+    { days: '360', roi: 9.8 }
   ];
 
-  // Distribution payments data with more realistic variation
+  // Distribution payments data with same X-axis and drop at 90 days
   const distributionData = [
-    { period: 'Dec', amount: 1850 },
-    { period: 'Jan', amount: 2400 },
-    { period: 'Feb', amount: 1920 },
-    { period: 'Mar', amount: 3100 },
-    { period: 'Apr', amount: 2650 },
-    { period: 'May', amount: 2200 },
-    { period: 'Jun', amount: 3850 },
-    { period: 'Jul', amount: 2950 },
-    { period: 'Aug', amount: 3400 },
-    { period: 'Sep', amount: 2750 },
-    { period: 'Oct', amount: 4200 },
-    { period: 'Nov', amount: 3600 }
+    { period: '30', amount: 3600 },
+    { period: '60', amount: 3400 },
+    { period: '90', amount: 1200 }, // Big drop 90 days ago
+    { period: '120', amount: 1800 },
+    { period: '150', amount: 2650 },
+    { period: '180', amount: 2400 },
+    { period: '210', amount: 3100 },
+    { period: '240', amount: 2200 },
+    { period: '270', amount: 2750 },
+    { period: '300', amount: 1950 },
+    { period: '330', amount: 2850 },
+    { period: '360', amount: 1850 }
   ];
 
   return (
@@ -134,19 +162,19 @@ const AnalyticsDashboard = () => {
         <SimpleMetric
           label="Total Portfolio Value"
           value="$4.16M"
-          sparklineData={[3800000, 3950000, 4020000, 4100000, 4050000, 4160000, 4180000, 4140000, 4160000]}
+          sparklineData={portfolioValueData}
           trend="up"
-          startDate="Jan 2024"
-          endDate="May 2024"
+          startDate="30 days"
+          endDate="360 days"
         />
         
         <SimpleMetric
           label="Total Equity Holdings"
           value="16.2%"
-          sparklineData={[14.2, 15.1, 15.8, 16.0, 15.6, 16.2, 16.4, 16.1, 16.2]}
+          sparklineData={equityHoldingsData}
           trend="up"
-          startDate="Jan 2024"
-          endDate="May 2024"
+          startDate="30 days"
+          endDate="360 days"
         />
       </div>
 
