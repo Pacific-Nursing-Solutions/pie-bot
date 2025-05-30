@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DataTable } from './DataVisualization';
 import PortfolioChart from './PortfolioChart';
-import SimpleMetric from './SimpleMetric';
+import CombinedMetrics from './CombinedMetrics';
 import WalletSnapshot from './WalletSnapshot';
 import EquityGrowthChart from './EquityGrowthChart';
 import DistributionsChart from './DistributionsChart';
@@ -84,9 +84,9 @@ const AnalyticsDashboard = () => {
     { name: 'Startup Pool', value: 1580000, change: 12.4, ownership: 8.3 }
   ];
 
-  // Sample sparkline data for metrics
-  const revenueData = [28000, 32000, 35000, 38000, 42000, 38500, 41000, 39000, 38500];
-  const runwayData = [18, 17.5, 16, 15.2, 14.8, 14.5, 14.2, 14, 14];
+  // Sample sparkline data for metrics - more realistic variation
+  const revenueData = [31200, 28900, 34800, 32100, 39200, 33400, 36900, 35800, 38500];
+  const runwayData = [18, 17.2, 16.8, 15.9, 15.1, 14.7, 14.3, 14.1, 14];
 
   // Wallet holdings data
   const walletHoldings = [
@@ -95,60 +95,42 @@ const AnalyticsDashboard = () => {
     { company: 'Startup Pool', walletAddress: '0x9876...1234', equityValue: 131140, percentage: 8.3 }
   ];
 
-  // ROI data - single line showing performance over 30-day increments
+  // ROI data - single line showing performance over 30-day increments with realistic variation
   const growthData = [
-    { days: '30', roi: 8.2 },
-    { days: '60', roi: 15.4 },
-    { days: '90', roi: 22.1 },
-    { days: '120', roi: 18.7 },
-    { days: '150', roi: 25.3 },
-    { days: '180', roi: 21.2 },
-    { days: '210', roi: 28.9 },
-    { days: '240', roi: 17.8 },
-    { days: '270', roi: 24.1 },
-    { days: '300', roi: 19.6 },
-    { days: '330', roi: 26.7 },
-    { days: '360', roi: 23.1 }
+    { days: '30', roi: 12.3 },
+    { days: '60', roi: 8.9 },
+    { days: '90', roi: 18.4 },
+    { days: '120', roi: 14.2 },
+    { days: '150', roi: 21.7 },
+    { days: '180', roi: 16.8 },
+    { days: '210', roi: 24.1 },
+    { days: '240', roi: 19.3 },
+    { days: '270', roi: 22.9 },
+    { days: '300', roi: 17.6 },
+    { days: '330', roi: 25.8 },
+    { days: '360', roi: 20.4 }
   ];
 
-  // Distribution payments data
+  // Distribution payments data with more realistic variation
   const distributionData = [
-    { period: 'Dec', amount: 2100 },
-    { period: 'Jan', amount: 1800 },
-    { period: 'Feb', amount: 3200 },
-    { period: 'Mar', amount: 2700 },
-    { period: 'Apr', amount: 1900 },
-    { period: 'May', amount: 4100 },
-    { period: 'Jun', amount: 2300 },
-    { period: 'Jul', amount: 3800 },
-    { period: 'Aug', amount: 2900 },
-    { period: 'Sep', amount: 4500 },
-    { period: 'Oct', amount: 3100 },
-    { period: 'Nov', amount: 3700 }
+    { period: 'Dec', amount: 1850 },
+    { period: 'Jan', amount: 2400 },
+    { period: 'Feb', amount: 1920 },
+    { period: 'Mar', amount: 3100 },
+    { period: 'Apr', amount: 2650 },
+    { period: 'May', amount: 2200 },
+    { period: 'Jun', amount: 3850 },
+    { period: 'Jul', amount: 2950 },
+    { period: 'Aug', amount: 3400 },
+    { period: 'Sep', amount: 2750 },
+    { period: 'Oct', amount: 4200 },
+    { period: 'Nov', amount: 3600 }
   ];
 
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
-      {/* Key Metrics - Simple Numbers with Sparklines */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <SimpleMetric
-          label="Monthly Recurring Revenue"
-          value="$38.5K"
-          sparklineData={revenueData}
-          trend="down"
-          startDate="Jan 2024"
-          endDate="May 2024"
-        />
-        
-        <SimpleMetric
-          label="Cash Runway"
-          value="14 months"
-          sparklineData={runwayData}
-          trend="down"
-          startDate="Jan 2024"
-          endDate="May 2024"
-        />
-      </div>
+      {/* Combined Key Metrics */}
+      <CombinedMetrics revenueData={revenueData} runwayData={runwayData} />
 
       {/* Portfolio Holdings and Performance Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

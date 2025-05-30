@@ -83,11 +83,7 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
               startAngle={90}
               endAngle={-270}
               dataKey="value"
-              label={({ name, value }) => {
-                const shortName = name.length > 8 ? name.substring(0, 8) + '...' : name;
-                return `${shortName}: $${(value / 1000).toFixed(0)}K`;
-              }}
-              labelLine={false}
+              label={false}
             >
               {portfolioData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
