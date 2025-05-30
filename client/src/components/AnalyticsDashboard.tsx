@@ -95,20 +95,20 @@ const AnalyticsDashboard = () => {
     { company: 'Startup Pool', walletAddress: '0x9876...1234', equityValue: 131140, percentage: 8.3 }
   ];
 
-  // Trailing ROI data - 12 data points
+  // ROI data - single line showing performance over 30-day increments
   const growthData = [
-    { period: 'Dec', roi30: 8.2, roi60: 15.4, roi90: 22.1 },
-    { period: 'Jan', roi30: 12.3, roi60: 18.7, roi90: 25.3 },
-    { period: 'Feb', roi30: 15.7, roi60: 21.2, roi90: 28.9 },
-    { period: 'Mar', roi30: 8.9, roi60: 17.8, roi90: 24.1 },
-    { period: 'Apr', roi30: 22.1, roi60: 19.6, roi90: 26.7 },
-    { period: 'May', roi30: 18.4, roi60: 23.1, roi90: 29.2 },
-    { period: 'Jun', roi30: 14.8, roi60: 20.5, roi90: 27.3 },
-    { period: 'Jul', roi30: 19.2, roi60: 22.8, roi90: 30.1 },
-    { period: 'Aug', roi30: 16.5, roi60: 21.9, roi90: 28.4 },
-    { period: 'Sep', roi30: 21.7, roi60: 24.3, roi90: 31.6 },
-    { period: 'Oct', roi30: 17.9, roi60: 23.7, roi90: 29.8 },
-    { period: 'Nov', roi30: 20.3, roi60: 25.1, roi90: 32.4 }
+    { days: '30', roi: 8.2 },
+    { days: '60', roi: 15.4 },
+    { days: '90', roi: 22.1 },
+    { days: '120', roi: 18.7 },
+    { days: '150', roi: 25.3 },
+    { days: '180', roi: 21.2 },
+    { days: '210', roi: 28.9 },
+    { days: '240', roi: 17.8 },
+    { days: '270', roi: 24.1 },
+    { days: '300', roi: 19.6 },
+    { days: '330', roi: 26.7 },
+    { days: '360', roi: 23.1 }
   ];
 
   // Distribution payments data

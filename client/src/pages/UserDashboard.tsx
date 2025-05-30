@@ -203,46 +203,7 @@ const UserDashboard = () => {
               </div>
             </div>
 
-            {/* Weekly Performance Chart */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
-                7-Day Performance Breakdown
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600 dark:text-slate-400">Equity Growth</span>
-                    <span className="text-emerald-600 dark:text-emerald-400 text-sm font-medium">+$32,100</span>
-                  </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
-                    <div className="bg-emerald-500 h-2 rounded-full" style={{ width: '68%' }}></div>
-                  </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">68% of weekly earnings</div>
-                </div>
-                
-                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600 dark:text-slate-400">Distributions</span>
-                    <span className="text-violet-600 dark:text-violet-400 text-sm font-medium">+$15,200</span>
-                  </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
-                    <div className="bg-violet-500 h-2 rounded-full" style={{ width: '32%' }}></div>
-                  </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">32% of weekly earnings</div>
-                </div>
-                
-                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600 dark:text-slate-400">Net Change</span>
-                    <span className="text-slate-900 dark:text-slate-100 text-sm font-medium">+3.3%</span>
-                  </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
-                    <div className="bg-slate-600 h-2 rounded-full" style={{ width: '75%' }}></div>
-                  </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">Above market average</div>
-                </div>
-              </div>
-            </div>
+
 
             {/* Company Positions Table */}
             <div className="overflow-x-auto">
