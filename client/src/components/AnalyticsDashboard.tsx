@@ -3,6 +3,7 @@ import { DataTable } from './DataVisualization';
 import PortfolioChart from './PortfolioChart';
 import SimpleMetric from './SimpleMetric';
 import WalletSnapshot from './WalletSnapshot';
+import EquityGrowthChart from './EquityGrowthChart';
 import { 
   AlertTriangle,
   CheckCircle,
@@ -93,6 +94,15 @@ const AnalyticsDashboard = () => {
     { company: 'Startup Pool', walletAddress: '0x9876...1234', equityValue: 131140, percentage: 8.3 }
   ];
 
+  // Equity performance data
+  const equityData = [
+    { month: 'Jan', growth: 12.3, distributions: 2.1 },
+    { month: 'Feb', growth: 15.7, distributions: 1.8 },
+    { month: 'Mar', growth: 8.9, distributions: 3.2 },
+    { month: 'Apr', growth: 22.1, distributions: 2.7 },
+    { month: 'May', growth: 18.4, distributions: 1.9 }
+  ];
+
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
       {/* Key Metrics - Simple Numbers with Sparklines */}
@@ -116,24 +126,25 @@ const AnalyticsDashboard = () => {
         />
       </div>
 
-      {/* Portfolio Holdings Chart and Wallet Snapshot */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <PortfolioChart projects={portfolioProjects} />
-        </div>
-        <WalletSnapshot holdings={walletHoldings} />
+      {/* Portfolio Holdings Chart and Equity Growth */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <PortfolioChart projects={portfolioProjects} />
+        <EquityGrowthChart data={equityData} />
       </div>
 
-      {/* Individual Ownership Breakdown */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {portfolioProjects.map((project) => (
-          <PortfolioChart
-            key={project.name}
-            projects={portfolioProjects}
-            showOwnership={true}
-            selectedProject={project.name}
-          />
-        ))}
+      {/* Wallet Snapshot and Individual Ownership */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <WalletSnapshot holdings={walletHoldings} />
+        <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+          {portfolioProjects.map((project) => (
+            <PortfolioChart
+              key={project.name}
+              projects={portfolioProjects}
+              showOwnership={true}
+              selectedProject={project.name}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Data Tables Section - Removed financial details */}
