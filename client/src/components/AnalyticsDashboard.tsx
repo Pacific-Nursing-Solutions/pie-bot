@@ -129,22 +129,22 @@ const AnalyticsDashboard = () => {
 
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
-      {/* Key Metrics - Separate Charts */}
+      {/* Portfolio-Level Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SimpleMetric
-          label="Monthly Recurring Revenue"
-          value="$38.5K"
-          sparklineData={revenueData}
-          trend="down"
+          label="Total Portfolio Value"
+          value="$4.16M"
+          sparklineData={[3800000, 3950000, 4020000, 4100000, 4050000, 4160000, 4180000, 4140000, 4160000]}
+          trend="up"
           startDate="Jan 2024"
           endDate="May 2024"
         />
         
         <SimpleMetric
-          label="Cash Runway"
-          value="14 months"
-          sparklineData={runwayData}
-          trend="down"
+          label="Total Equity Holdings"
+          value="16.2%"
+          sparklineData={[14.2, 15.1, 15.8, 16.0, 15.6, 16.2, 16.4, 16.1, 16.2]}
+          trend="up"
           startDate="Jan 2024"
           endDate="May 2024"
         />
