@@ -4,6 +4,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Information Dashboard Design Inspired Color Palette */
+:root {
+  /* Soft neutrals for backgrounds and structure */
+  --dashboard-bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --subtle-border: #e1e5e9;
+  --text-primary: #2c3e50;
+  --text-secondary: #546e7a;
+  --text-muted: #78909c;
+  
+  /* Soft data colors - muted and professional */
+  --data-primary: #5c7cfa;    /* Soft blue */
+  --data-success: #51cf66;    /* Soft green */
+  --data-warning: #ffd43b;    /* Soft yellow */
+  --data-danger: #ff6b6b;     /* Soft red */
+  --data-purple: #9775fa;     /* Soft purple */
+  --data-teal: #20c997;       /* Soft teal */
+  --data-orange: #fd7e14;     /* Soft orange */
+  
+  /* Bullet graph colors */
+  --bullet-poor: #ff8a80;
+  --bullet-satisfactory: #ffcc80;
+  --bullet-good: #a5d6a7;
+  --bullet-excellent: #81c784;
+  --bullet-target: #37474f;
+  
+  /* Grid and dividers */
+  --grid-line: #ecf0f1;
+  --divider: #dee2e6;
+}
+
+.dark {
+  --dashboard-bg: #1a1d23;
+  --card-bg: #2d3748;
+  --subtle-border: #4a5568;
+  --text-primary: #e2e8f0;
+  --text-secondary: #cbd5e0;
+  --text-muted: #a0aec0;
+  
+  --data-primary: #7c3aed;
+  --data-success: #10b981;
+  --data-warning: #f59e0b;
+  --data-danger: #ef4444;
+  --data-purple: #8b5cf6;
+  --data-teal: #14b8a6;
+  --data-orange: #f97316;
+  
+  --bullet-poor: #dc2626;
+  --bullet-satisfactory: #d97706;
+  --bullet-good: #059669;
+  --bullet-excellent: #047857;
+  --bullet-target: #f8fafc;
+  
+  --grid-line: #374151;
+  --divider: #4b5563;
+}
+
 @layer base {
   :root {
     /* Pie Bot Brand Colors - Soft Pumpkin Spice Theme */
