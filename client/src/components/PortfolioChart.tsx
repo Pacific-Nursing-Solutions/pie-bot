@@ -43,6 +43,8 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
                 cy="50%"
                 innerRadius={20}
                 outerRadius={60}
+                startAngle={90}
+                endAngle={450}
                 dataKey="value"
               >
                 {ownershipData.map((entry, index) => (
@@ -69,28 +71,26 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
     <div className="bg-[var(--card-bg)] border border-[var(--subtle-border)] rounded-lg p-6">
       <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Portfolio Holdings</h3>
       
-      {/* Bar chart showing value changes */}
+      {/* Pie chart showing total holdings */}
       <div className="h-64 mb-4">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={portfolioData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--grid-line)" />
-            <XAxis 
-              dataKey="name" 
-              tick={{ fontSize: 12, fill: 'var(--text-secondary)' }}
-              angle={-45}
-              textAnchor="end"
-              height={80}
-            />
-            <YAxis 
-              tick={{ fontSize: 12, fill: 'var(--text-secondary)' }}
-              label={{ value: 'Change %', angle: -90, position: 'insideLeft' }}
-            />
-            <Bar 
-              dataKey="change" 
-              fill="#c8956d"
-              radius={[2, 2, 0, 0]}
-            />
-          </BarChart>
+          <PieChart>
+            <Pie
+              data={portfolioData}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              startAngle={90}
+              endAngle={450}
+              dataKey="value"
+              label={({ name, value }) => `${name}: $${(value / 1000).toFixed(0)}K`}
+              labelLine={false}
+            >
+              {portfolioData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+          </PieChart>
         </ResponsiveContainer>
       </div>
 

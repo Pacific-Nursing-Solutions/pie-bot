@@ -94,6 +94,8 @@ const AnalyticsDashboard = () => {
           value="$38.5K"
           sparklineData={revenueData}
           trend="down"
+          startDate="Jan 2024"
+          endDate="May 2024"
         />
         
         <SimpleMetric
@@ -101,6 +103,8 @@ const AnalyticsDashboard = () => {
           value="14 months"
           sparklineData={runwayData}
           trend="down"
+          startDate="Jan 2024"
+          endDate="May 2024"
         />
       </div>
 
