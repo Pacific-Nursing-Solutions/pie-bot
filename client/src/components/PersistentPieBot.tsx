@@ -323,7 +323,7 @@ const PieTerminal = () => {
       <div className="bg-slate-700 px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Terminal className="w-4 h-4 text-slate-300" />
-          <span className="text-slate-200">Pie Bot Command Center</span>
+          <span className="text-slate-200">Pie Bot Terminal v0.0.1</span>
         </div>
         <div className="flex space-x-1">
           <div className="w-3 h-3 bg-rose-400 rounded-full"></div>
@@ -358,7 +358,7 @@ const PieTerminal = () => {
 
         {/* Current Input Line */}
         <form onSubmit={handleSubmit} className="flex items-center mt-2">
-          <span className="text-amber-300 mr-2">pie@terminal:~$</span>
+          <span className="text-amber-300 mr-2">pie.bot:~$</span>
           <input
             ref={(input) => {
               if (input) {

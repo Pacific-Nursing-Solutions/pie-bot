@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DataTable } from './DataVisualization';
 import PortfolioChart from './PortfolioChart';
-import CombinedMetrics from './CombinedMetrics';
+import SimpleMetric from './SimpleMetric';
 import WalletSnapshot from './WalletSnapshot';
 import EquityGrowthChart from './EquityGrowthChart';
 import DistributionsChart from './DistributionsChart';
@@ -129,8 +129,26 @@ const AnalyticsDashboard = () => {
 
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
-      {/* Combined Key Metrics */}
-      <CombinedMetrics revenueData={revenueData} runwayData={runwayData} />
+      {/* Key Metrics - Separate Charts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <SimpleMetric
+          label="Monthly Recurring Revenue"
+          value="$38.5K"
+          sparklineData={revenueData}
+          trend="down"
+          startDate="Jan 2024"
+          endDate="May 2024"
+        />
+        
+        <SimpleMetric
+          label="Cash Runway"
+          value="14 months"
+          sparklineData={runwayData}
+          trend="down"
+          startDate="Jan 2024"
+          endDate="May 2024"
+        />
+      </div>
 
       {/* Portfolio Holdings and Performance Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
