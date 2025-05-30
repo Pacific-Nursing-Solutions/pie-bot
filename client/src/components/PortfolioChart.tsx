@@ -44,7 +44,7 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
                 innerRadius={20}
                 outerRadius={60}
                 startAngle={90}
-                endAngle={450}
+                endAngle={-270}
                 dataKey="value"
               >
                 {ownershipData.map((entry, index) => (
@@ -81,7 +81,7 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
               cy="50%"
               outerRadius={80}
               startAngle={90}
-              endAngle={450}
+              endAngle={-270}
               dataKey="value"
               label={({ name, value }) => `${name}: $${(value / 1000).toFixed(0)}K`}
               labelLine={false}

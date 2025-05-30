@@ -64,15 +64,32 @@ const Sparkline = ({ data, color = 'var(--data-primary)', height = 40 }: Sparkli
   }).join(' ');
 
   return (
-    <div className="w-full" style={{ height }}>
+    <div className="w-full relative group" style={{ height }}>
       <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
         <polyline
           points={points}
           fill="none"
           stroke={color}
-          strokeWidth="2"
+          strokeWidth="1.5"
           vectorEffect="non-scaling-stroke"
         />
+        {/* Hover points */}
+        {data.map((value, index) => {
+          const x = (index / (data.length - 1)) * 100;
+          const y = 100 - ((value - min) / range) * 100;
+          return (
+            <circle
+              key={index}
+              cx={x}
+              cy={y}
+              r="1.5"
+              fill={color}
+              className="opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <title>{value.toLocaleString()}</title>
+            </circle>
+          );
+        })}
       </svg>
     </div>
   );

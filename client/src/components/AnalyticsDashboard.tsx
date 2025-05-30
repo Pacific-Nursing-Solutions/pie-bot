@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DataTable } from './DataVisualization';
 import PortfolioChart from './PortfolioChart';
 import SimpleMetric from './SimpleMetric';
+import WalletSnapshot from './WalletSnapshot';
 import { 
   AlertTriangle,
   CheckCircle,
@@ -85,6 +86,13 @@ const AnalyticsDashboard = () => {
   const revenueData = [28000, 32000, 35000, 38000, 42000, 38500, 41000, 39000, 38500];
   const runwayData = [18, 17.5, 16, 15.2, 14.8, 14.5, 14.2, 14, 14];
 
+  // Wallet holdings data
+  const walletHoldings = [
+    { company: 'TechStart Inc.', walletAddress: '0x1234...5678', equityValue: 225000, percentage: 18.5 },
+    { company: 'AI Solutions LLC', walletAddress: '0xabcd...efgh', equityValue: 100040, percentage: 12.2 },
+    { company: 'Startup Pool', walletAddress: '0x9876...1234', equityValue: 131140, percentage: 8.3 }
+  ];
+
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
       {/* Key Metrics - Simple Numbers with Sparklines */}
@@ -108,8 +116,13 @@ const AnalyticsDashboard = () => {
         />
       </div>
 
-      {/* Portfolio Holdings Chart */}
-      <PortfolioChart projects={portfolioProjects} />
+      {/* Portfolio Holdings Chart and Wallet Snapshot */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <PortfolioChart projects={portfolioProjects} />
+        </div>
+        <WalletSnapshot holdings={walletHoldings} />
+      </div>
 
       {/* Individual Ownership Breakdown */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
