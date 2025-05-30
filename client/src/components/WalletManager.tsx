@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePrivy } from '@privy-io/react-auth';
 import { 
   Wallet, 
   Twitter, 
@@ -33,8 +34,17 @@ interface WalletManagerProps {
 }
 
 const WalletManager = ({ walletType, companyId, companyName }: WalletManagerProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const { 
+    ready, 
+    authenticated, 
+    user, 
+    login, 
+    logout, 
+    linkTwitter, 
+    unlinkTwitter,
+    createWallet,
+    exportWallet
+  } = usePrivy();
 
   const [wallets, setWallets] = useState<WalletData[]>([
     {
