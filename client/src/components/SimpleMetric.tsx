@@ -34,12 +34,21 @@ const SimpleMetric = ({ label, value, sparklineData, trend, startDate, endDate }
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
             <YAxis 
-              domain={['dataMin - 1', 'dataMax + 1']}
+              domain={['dataMin * 0.95', 'dataMax * 1.05']}
               tick={{ fontSize: 10, fill: 'var(--text-secondary)' }}
               axisLine={false}
               tickLine={false}
               width={40}
-              tickFormatter={(value) => `${(value/1000).toFixed(0)}K`}
+              tickCount={4}
+              tickFormatter={(value) => {
+                if (label.includes('Portfolio Value')) {
+                  return `$${(value/1000000).toFixed(1)}M`;
+                } else if (label.includes('Equity Holdings')) {
+                  return `${value.toFixed(1)}%`;
+                } else {
+                  return `${(value/1000).toFixed(0)}K`;
+                }
+              }}
             />
             <Tooltip 
               contentStyle={{ 

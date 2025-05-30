@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 interface PortfolioProject {
   name: string;
@@ -16,10 +16,11 @@ interface PortfolioChartProps {
 const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: PortfolioChartProps) => {
   const COLORS = ['#c8956d', '#d4926f', '#e4a574', '#f4b97a', '#b8845e', '#a67c56'];
 
-  // Portfolio value breakdown
+  // Portfolio value breakdown with abbreviations
   const portfolioData = projects.map((project, index) => ({
     ...project,
-    color: COLORS[index % COLORS.length]
+    color: COLORS[index % COLORS.length],
+    abbreviation: project.name.split(' ').map(word => word[0]).join('').substring(0, 3)
   }));
 
   // Ownership data for selected project
@@ -54,6 +55,15 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
                   />
                 ))}
               </Pie>
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card-bg)', 
+                  border: '1px solid var(--subtle-border)',
+                  borderRadius: '6px',
+                  fontSize: '12px'
+                }}
+                formatter={(value, name) => [`${value}%`, name]}
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -83,12 +93,25 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
               startAngle={90}
               endAngle={-270}
               dataKey="value"
-              label={false}
+              label={({ abbreviation, value }) => abbreviation}
+              labelLine={false}
             >
               {portfolioData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'var(--card-bg)', 
+                border: '1px solid var(--subtle-border)',
+                borderRadius: '6px',
+                fontSize: '12px'
+              }}
+              formatter={(value, name, props) => [
+                `$${(Number(value) / 1000).toFixed(0)}K`, 
+                props.payload.name
+              ]}
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>
