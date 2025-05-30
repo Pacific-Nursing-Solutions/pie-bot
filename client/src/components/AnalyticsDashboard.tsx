@@ -1,19 +1,11 @@
 import { useState } from 'react';
-import { KPICard, CompactMetric, DataTable, Sparkline } from './DataVisualization';
+import { DataTable } from './DataVisualization';
+import PortfolioChart from './PortfolioChart';
+import SimpleMetric from './SimpleMetric';
 import { 
-  BarChart3,
-  TrendingUp,
-  TrendingDown,
-  Activity,
-  DollarSign,
-  Users,
-  Target,
   AlertTriangle,
   CheckCircle,
-  Clock,
-  ArrowUpRight,
-  ArrowDownRight,
-  Zap
+  Clock
 } from 'lucide-react';
 
 interface SystemAlert {
@@ -82,111 +74,78 @@ const AnalyticsDashboard = () => {
     }
   };
 
+  const portfolioProjects = [
+    { name: 'TechStart Inc.', value: 1250000, change: 15.3, ownership: 18.5 },
+    { name: 'AI Solutions LLC', value: 820000, change: 8.7, ownership: 12.2 },
+    { name: 'GreenTech Ventures', value: 510000, change: -2.1, ownership: 25.0 },
+    { name: 'Startup Pool', value: 1580000, change: 12.4, ownership: 8.3 }
+  ];
+
+  // Sample sparkline data for metrics
+  const revenueData = [28000, 32000, 35000, 38000, 42000, 38500, 41000, 39000, 38500];
+  const runwayData = [18, 17.5, 16, 15.2, 14.8, 14.5, 14.2, 14, 14];
+
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
-      {/* Executive Summary - Key Performance Indicators */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <KPICard
-          title="Monthly Recurring Revenue"
-          subtitle="vs $45K target"
-          value={38500}
-          target={45000}
-          max={60000}
-          unit="$"
-          trend={{
-            direction: 'up',
-            percentage: 12.3,
-            period: 'vs last month'
-          }}
-          ranges={{
-            poor: 20000,
-            satisfactory: 35000,
-            good: 50000
-          }}
+      {/* Key Metrics - Simple Numbers with Sparklines */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <SimpleMetric
+          label="Monthly Recurring Revenue"
+          value="$38.5K"
+          sparklineData={revenueData}
+          trend="down"
         />
         
-        <KPICard
-          title="Cash Runway"
-          subtitle="vs 18 month target"
-          value={14}
-          target={18}
-          max={24}
-          unit=" months"
-          trend={{
-            direction: 'down',
-            percentage: 2.1,
-            period: 'vs last quarter'
-          }}
-          ranges={{
-            poor: 6,
-            satisfactory: 12,
-            good: 20
-          }}
+        <SimpleMetric
+          label="Cash Runway"
+          value="14 months"
+          sparklineData={runwayData}
+          trend="down"
         />
       </div>
 
-      {/* Operational Metrics Grid */}
+      {/* Portfolio Holdings Chart */}
+      <PortfolioChart projects={portfolioProjects} />
+
+      {/* Individual Ownership Breakdown */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <CompactMetric
-          label="Active Users"
-          value="1,247"
-          change={{ value: "+12.3%", direction: "up" }}
-          sparkline={[980, 1050, 1120, 1180, 1240, 1220, 1247]}
-          icon={<Users className="w-4 h-4" />}
-        />
-        
-        <CompactMetric
-          label="Command Executions"
-          value="89"
-          change={{ value: "+5.7%", direction: "up" }}
-          sparkline={[67, 72, 78, 81, 85, 87, 89]}
-          icon={<Zap className="w-4 h-4" />}
-        />
-        
-        <CompactMetric
-          label="System Uptime"
-          value="99.8%"
-          change={{ value: "0.0%", direction: "neutral" }}
-          sparkline={[99.6, 99.7, 99.8, 99.8, 99.9, 99.8, 99.8]}
-          icon={<Activity className="w-4 h-4" />}
-        />
-        
-        <CompactMetric
-          label="Portfolio Value"
-          value="$3.17M"
-          change={{ value: "+23.4%", direction: "up" }}
-          sparkline={[2.8, 2.9, 3.0, 3.1, 3.15, 3.16, 3.17]}
-          icon={<DollarSign className="w-4 h-4" />}
-        />
+        {portfolioProjects.map((project) => (
+          <PortfolioChart
+            key={project.name}
+            projects={portfolioProjects}
+            showOwnership={true}
+            selectedProject={project.name}
+          />
+        ))}
       </div>
 
-      {/* Data Tables Section */}
+      {/* Data Tables Section - Removed financial details */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <DataTable
-          title="Recent Transactions"
-          headers={["Date", "Type", "Amount", "Status"]}
+          title="Recent Activity"
+          headers={["Date", "Type", "Company", "Status"]}
           rows={[
-            ["2024-05-30", "Equity Distribution", "$125K", "Completed"],
-            ["2024-05-29", "Series A", "$2M", "Completed"],
-            ["2024-05-28", "MakerDAO Vault", "$85K", "Warning"],
-            ["2024-05-27", "Pool Distribution", "$50K", "Scheduled"],
-            ["2024-05-26", "Advisory Shares", "$15K", "Completed"]
+            ["2024-05-30", "Equity Distribution", "TechStart Inc.", "Completed"],
+            ["2024-05-29", "Series A Signing", "TechStart Inc.", "Completed"],
+            ["2024-05-28", "Vault Review", "Personal", "Warning"],
+            ["2024-05-27", "Pool Distribution", "Startup Pool", "Scheduled"],
+            ["2024-05-26", "Advisory Shares", "GreenTech", "Completed"]
           ]}
         />
         
         <DataTable
-          title="Company Performance Summary"
-          headers={["Company", "Valuation", "Change", "Runway"]}
+          title="Company Performance"
+          headers={["Company", "Change", "Runway", "Status"]}
           rows={[
-            ["TechStart Inc.", "$12.5M", "+15.3%", "14 mo"],
-            ["AI Solutions LLC", "$8.2M", "+8.7%", "18 mo"],
-            ["GreenTech Ventures", "$5.1M", "-2.1%", "12 mo"],
-            ["Startup Pool", "$15.8M", "+12.4%", "N/A"]
+            ["TechStart Inc.", "+15.3%", "14 mo", "Growing"],
+            ["AI Solutions LLC", "+8.7%", "18 mo", "Stable"],
+            ["GreenTech Ventures", "-2.1%", "12 mo", "Review"],
+            ["Startup Pool", "+12.4%", "N/A", "Strong"]
           ]}
         />
       </div>
 
-      {/* System Alerts - Redesigned with soft colors */}
+      {/* System Alerts */}
       <div className="bg-[var(--card-bg)] border border-[var(--subtle-border)] rounded-lg">
         <div className="px-6 py-4 border-b border-[var(--grid-line)]">
           <h3 className="text-lg font-medium text-[var(--text-primary)]">System Alerts</h3>

@@ -23,11 +23,11 @@
   --data-teal: #20c997;       /* Soft teal */
   --data-orange: #fd7e14;     /* Soft orange */
   
-  /* Bullet graph colors */
-  --bullet-poor: #ff8a80;
-  --bullet-satisfactory: #ffcc80;
-  --bullet-good: #a5d6a7;
-  --bullet-excellent: #81c784;
+  /* Bullet graph colors - consistent brown/orange theme */
+  --bullet-poor: #d4926f;
+  --bullet-satisfactory: #e4a574;
+  --bullet-good: #f4b97a;
+  --bullet-excellent: #c8956d;
   --bullet-target: #37474f;
   
   /* Grid and dividers */
