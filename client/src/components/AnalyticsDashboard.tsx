@@ -5,6 +5,7 @@ import SimpleMetric from './SimpleMetric';
 import WalletSnapshot from './WalletSnapshot';
 import EquityGrowthChart from './EquityGrowthChart';
 import DistributionsChart from './DistributionsChart';
+import TreemapChart from './TreemapChart';
 import { 
   AlertTriangle,
   CheckCircle,
@@ -183,6 +184,21 @@ const AnalyticsDashboard = () => {
         <PortfolioChart projects={portfolioProjects} />
         <EquityGrowthChart data={growthData} />
         <DistributionsChart data={distributionData} />
+      </div>
+
+      {/* Gains and Losses Treemap */}
+      <div className="grid grid-cols-1 gap-6">
+        <TreemapChart 
+          data={[
+            { name: 'TechStart Inc.', value: 2450000, gain: 325000, isGain: true },
+            { name: 'AI Solutions LLC', value: 980000, gain: 78000, isGain: true },
+            { name: 'GreenTech Ventures', value: 470000, gain: -12000, isGain: false },
+            { name: 'Startup Pool', value: 260000, gain: 28000, isGain: true },
+            { name: 'Advisory Shares', value: 145000, gain: 15000, isGain: true },
+            { name: 'Previous Exit', value: 89000, gain: -25000, isGain: false }
+          ]}
+          title="Total Gains and Losses of Assets"
+        />
       </div>
 
       {/* Wallet Snapshot and Individual Ownership */}

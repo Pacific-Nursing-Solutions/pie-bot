@@ -57,10 +57,11 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
               </Pie>
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: 'var(--card-bg)', 
-                  border: '1px solid var(--subtle-border)',
+                  backgroundColor: '#2a2a2a', 
+                  border: '1px solid #444',
                   borderRadius: '6px',
-                  fontSize: '12px'
+                  fontSize: '12px',
+                  color: '#ffffff'
                 }}
                 formatter={(value, name) => [`${value}%`, name]}
               />
@@ -102,10 +103,11 @@ const PortfolioChart = ({ projects, showOwnership = false, selectedProject }: Po
             </Pie>
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: 'var(--card-bg)', 
-                border: '1px solid var(--subtle-border)',
+                backgroundColor: '#2a2a2a', 
+                border: '1px solid #444',
                 borderRadius: '6px',
-                fontSize: '12px'
+                fontSize: '12px',
+                color: '#ffffff'
               }}
               formatter={(value, name, props) => [
                 `$${(Number(value) / 1000).toFixed(0)}K`, 
