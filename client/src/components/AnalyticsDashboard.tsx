@@ -4,6 +4,7 @@ import PortfolioChart from './PortfolioChart';
 import SimpleMetric from './SimpleMetric';
 import WalletSnapshot from './WalletSnapshot';
 import EquityGrowthChart from './EquityGrowthChart';
+import DistributionsChart from './DistributionsChart';
 import { 
   AlertTriangle,
   CheckCircle,
@@ -94,13 +95,36 @@ const AnalyticsDashboard = () => {
     { company: 'Startup Pool', walletAddress: '0x9876...1234', equityValue: 131140, percentage: 8.3 }
   ];
 
-  // Equity performance data
-  const equityData = [
-    { month: 'Jan', growth: 12.3, distributions: 2.1 },
-    { month: 'Feb', growth: 15.7, distributions: 1.8 },
-    { month: 'Mar', growth: 8.9, distributions: 3.2 },
-    { month: 'Apr', growth: 22.1, distributions: 2.7 },
-    { month: 'May', growth: 18.4, distributions: 1.9 }
+  // Trailing ROI data - 12 data points
+  const growthData = [
+    { period: 'Dec', roi30: 8.2, roi60: 15.4, roi90: 22.1 },
+    { period: 'Jan', roi30: 12.3, roi60: 18.7, roi90: 25.3 },
+    { period: 'Feb', roi30: 15.7, roi60: 21.2, roi90: 28.9 },
+    { period: 'Mar', roi30: 8.9, roi60: 17.8, roi90: 24.1 },
+    { period: 'Apr', roi30: 22.1, roi60: 19.6, roi90: 26.7 },
+    { period: 'May', roi30: 18.4, roi60: 23.1, roi90: 29.2 },
+    { period: 'Jun', roi30: 14.8, roi60: 20.5, roi90: 27.3 },
+    { period: 'Jul', roi30: 19.2, roi60: 22.8, roi90: 30.1 },
+    { period: 'Aug', roi30: 16.5, roi60: 21.9, roi90: 28.4 },
+    { period: 'Sep', roi30: 21.7, roi60: 24.3, roi90: 31.6 },
+    { period: 'Oct', roi30: 17.9, roi60: 23.7, roi90: 29.8 },
+    { period: 'Nov', roi30: 20.3, roi60: 25.1, roi90: 32.4 }
+  ];
+
+  // Distribution payments data
+  const distributionData = [
+    { period: 'Dec', amount: 2100 },
+    { period: 'Jan', amount: 1800 },
+    { period: 'Feb', amount: 3200 },
+    { period: 'Mar', amount: 2700 },
+    { period: 'Apr', amount: 1900 },
+    { period: 'May', amount: 4100 },
+    { period: 'Jun', amount: 2300 },
+    { period: 'Jul', amount: 3800 },
+    { period: 'Aug', amount: 2900 },
+    { period: 'Sep', amount: 4500 },
+    { period: 'Oct', amount: 3100 },
+    { period: 'Nov', amount: 3700 }
   ];
 
   return (
@@ -126,10 +150,11 @@ const AnalyticsDashboard = () => {
         />
       </div>
 
-      {/* Portfolio Holdings Chart and Equity Growth */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Portfolio Holdings and Performance Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <PortfolioChart projects={portfolioProjects} />
-        <EquityGrowthChart data={equityData} />
+        <EquityGrowthChart data={growthData} />
+        <DistributionsChart data={distributionData} />
       </div>
 
       {/* Wallet Snapshot and Individual Ownership */}
