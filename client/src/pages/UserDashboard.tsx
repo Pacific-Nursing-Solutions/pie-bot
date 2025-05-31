@@ -16,6 +16,7 @@ import {
   BarChart3
 } from 'lucide-react';
 import AnalyticsDashboard from '../components/AnalyticsDashboard';
+import ModernWalletManager from '../components/ModernWalletManager';
 
 interface CompanyPosition {
   id: number;
@@ -408,74 +409,8 @@ const UserDashboard = () => {
       </div>
 
       {/* Wallets Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-            Wallet Management
-          </h2>
-          <button 
-            onClick={() => setIsWalletsMinimized(!isWalletsMinimized)}
-            className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
-          >
-            {isWalletsMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
-          </button>
-        </div>
-
-        {!isWalletsMinimized && (
-          <div className="p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Personal Wallet */}
-              <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Personal Wallet</h3>
-                  <div className="text-right">
-                    <div className="text-lg font-bold">$7.94K</div>
-                    <div className="text-sm text-gray-500">($85K) = $7.86K</div>
-                  </div>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>ETH Balance:</span>
-                    <span>1.52 ETH</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>NFTs:</span>
-                    <span>3 items</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>ENS Domains:</span>
-                    <span>founder.eth</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Company Wallet */}
-              <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">TechStart Wallet</h3>
-                  <div className="text-right">
-                    <div className="text-lg font-bold">$2.4M</div>
-                    <div className="text-sm text-gray-500">($450K) = $1.95M</div>
-                  </div>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>ETH Balance:</span>
-                    <span>125.8 ETH</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Company NFTs:</span>
-                    <span>2 items</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>ENS Domain:</span>
-                    <span>techstart.founder.eth</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+      <div className="mb-8">
+        <ModernWalletManager walletType="personal" />
       </div>
 
   
