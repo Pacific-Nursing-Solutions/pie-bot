@@ -45,6 +45,7 @@ const UserDashboard = () => {
   const [isAnalyticsMinimized, setIsAnalyticsMinimized] = useState(false);
   const [showPoolSection, setShowPoolSection] = useState(true);
   const [showCompensationSection, setShowCompensationSection] = useState(false);
+  const [compensationPeriod, setCompensationPeriod] = useState<'7d' | '30d' | '1y'>('30d');
   
   // Portfolio data
   const [companyPositions] = useState<CompanyPosition[]>([
@@ -133,7 +134,7 @@ const UserDashboard = () => {
                   <tr className="border-b border-gray-200 dark:border-gray-700">
                     <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Equity Performance</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Equity Position</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
@@ -162,9 +163,9 @@ const UserDashboard = () => {
                     </td>
                     <td className="py-4 text-right hidden md:table-cell">
                       <div className="text-xs space-y-1">
-                        <div className="text-gray-400">1D: 0.0%</div>
-                        <div className="text-gray-400">7D: 0.0%</div>
-                        <div className="text-gray-400">30D: 0.0%</div>
+                        <div className="text-gray-400">Portfolio Total</div>
+                        <div className="text-gray-400">100% owned</div>
+                        <div className="text-gray-400">All companies</div>
                       </div>
                     </td>
                     <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
@@ -198,7 +199,7 @@ const UserDashboard = () => {
                       <tr className="border-b border-gray-200 dark:border-gray-700">
                         <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Equity Performance</th>
+                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Equity Position</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
@@ -214,11 +215,9 @@ const UserDashboard = () => {
                             weekly: (Math.random() - 0.5) * 12,
                             monthly: (Math.random() - 0.5) * 20
                           };
-                          const equityPerformance = {
-                            daily: (Math.random() - 0.5) * 2,
-                            weekly: (Math.random() - 0.5) * 4,
-                            monthly: (Math.random() - 0.5) * 8
-                          };
+                          // Calculate equity position display
+                          const marketCapPercentage = (company.userEquityValue / company.marketCap) * 100;
+                          const totalShares = Math.floor(company.userEquityValue / 10); // Mock shares calculation
                           
                           return (
                             <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -248,15 +247,19 @@ const UserDashboard = () => {
                               </td>
                               <td className="py-3 text-right hidden md:table-cell">
                                 <div className="text-xs space-y-1">
-                                  <div className={equityPerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    1D: {equityPerformance.daily >= 0 ? '+' : ''}{equityPerformance.daily.toFixed(1)}%
-                                  </div>
-                                  <div className={equityPerformance.weekly >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    7D: {equityPerformance.weekly >= 0 ? '+' : ''}{equityPerformance.weekly.toFixed(1)}%
-                                  </div>
-                                  <div className={equityPerformance.monthly >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    30D: {equityPerformance.monthly >= 0 ? '+' : ''}{equityPerformance.monthly.toFixed(1)}%
-                                  </div>
+                                  {marketCapPercentage >= 1 ? (
+                                    <>
+                                      <div className="text-blue-600">{marketCapPercentage.toFixed(1)}%</div>
+                                      <div className="text-gray-500">of market cap</div>
+                                      <div className="text-gray-500">{company.userEquityPercentage}% owned</div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div className="text-blue-600">{totalShares.toLocaleString()}</div>
+                                      <div className="text-gray-500">shares held</div>
+                                      <div className="text-gray-500">{company.userEquityPercentage}% owned</div>
+                                    </>
+                                  )}
                                 </div>
                               </td>
                               <td className="py-3 text-right font-medium">${company.userEquityValue.toLocaleString()}</td>
