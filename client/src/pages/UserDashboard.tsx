@@ -125,57 +125,6 @@ const UserDashboard = () => {
 
         {!isPortfolioMinimized && (
           <div className="p-6">
-            {/* Holdings Summary Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {/* Total Equity Value */}
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
-                  ${totalNetWorth.toLocaleString()}
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Total Equity Value</div>
-                <div className="flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm">
-                  <TrendingUp className="w-4 h-4 mr-1" />
-                  +$124K (3.3%) this week
-                </div>
-              </div>
-
-              {/* Companies */}
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
-                  {companyPositions.length}
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Holdings</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400">
-                  {companyPositions.length} companies
-                </div>
-              </div>
-
-              {/* 7-Day Earnings */}
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
-                  $47.2K
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">7-Day Earnings</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400">
-                  $32K equity • $15.2K distributions
-                </div>
-              </div>
-
-              {/* Active Operations */}
-              <div className="text-center">
-                <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
-                  89
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Active Operations</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400">
-                  Across all companies
-                </div>
-              </div>
-            </div>
-
-
-
-            {/* Company Positions Table */}
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -188,9 +137,37 @@ const UserDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {companyPositions.map((company) => (
+                  {/* Portfolio Summary Row - Always Visible */}
+                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
+                    <td className="py-4">
+                      <div className="flex items-center">
+                        <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center mr-3">
+                          <span className="text-white text-xs font-bold">P</span>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900 dark:text-gray-100">Total Portfolio</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{companyPositions.length} companies</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-4 text-right font-semibold">100%</td>
+                    <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
+                    <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.marketCap, 0).toLocaleString()}</td>
+                    <td className="py-4 text-right">
+                      <button 
+                        onClick={() => setShowPoolSection(!showPoolSection)}
+                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center"
+                      >
+                        {showPoolSection ? 'Collapse' : 'Expand'}
+                        {showPoolSection ? <ChevronUp className="w-4 h-4 ml-1" /> : <ChevronDown className="w-4 h-4 ml-1" />}
+                      </button>
+                    </td>
+                  </tr>
+
+                  {/* Individual Company Positions - Expandable */}
+                  {showPoolSection && companyPositions.map((company) => (
                     <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <td className="py-3">
+                      <td className="py-3 pl-8">
                         <div className="flex items-center">
                           <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
                             <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
