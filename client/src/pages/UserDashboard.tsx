@@ -191,16 +191,6 @@ const UserDashboard = () => {
               <div className="mt-4">
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200 dark:border-gray-700">
-                        <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
-                      </tr>
-                    </thead>
                     <tbody>
                       {[...companyPositions]
                         .sort((a, b) => b.userEquityValue - a.userEquityValue)
@@ -217,7 +207,7 @@ const UserDashboard = () => {
                           
                           return (
                             <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                              <td className="py-3">
+                              <td className="py-3 w-1/4">
                                 <div className="flex items-center">
                                   <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
                                     <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
@@ -228,9 +218,9 @@ const UserDashboard = () => {
                                   </div>
                                 </div>
                               </td>
-                              <td className="py-3 text-right font-medium">${company.userEquityValue.toLocaleString()}</td>
-                              <td className="py-3 text-right hidden lg:table-cell">
-                                <div className="text-xs flex flex-col xl:flex-row xl:space-x-4 space-y-1 xl:space-y-0">
+                              <td className="py-3 text-right font-medium w-1/6">${company.userEquityValue.toLocaleString()}</td>
+                              <td className="py-3 text-center hidden lg:table-cell w-1/3">
+                                <div className="text-xs flex flex-row justify-center space-x-6">
                                   <div className={valuePerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
                                     1D: {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
                                   </div>
@@ -242,8 +232,8 @@ const UserDashboard = () => {
                                   </div>
                                 </div>
                               </td>
-                              <td className="py-3 text-right hidden sm:table-cell">
-                                <div className="w-16 h-8">
+                              <td className="py-3 text-center hidden sm:table-cell w-1/8">
+                                <div className="w-16 h-8 mx-auto">
                                   <svg viewBox="0 0 64 32" className="w-full h-full">
                                     <path 
                                       d={`M0,${16 + Math.sin(index) * 8} L16,${16 + Math.sin(index + 1) * 8} L32,${16 + Math.sin(index + 2) * 8} L48,${16 + Math.sin(index + 3) * 8} L64,${16 + Math.sin(index + 4) * 8}`}
@@ -254,10 +244,10 @@ const UserDashboard = () => {
                                   </svg>
                                 </div>
                               </td>
-                              <td className="py-3 text-right hidden md:table-cell">
+                              <td className="py-3 text-center hidden md:table-cell w-1/8">
                                 <div className="text-blue-400 font-medium">{company.userEquityPercentage}%</div>
                               </td>
-                              <td className="py-3 text-right">
+                              <td className="py-3 text-right w-1/6">
                                 <Link href={`/company/${company.id}/dashboard`}>
                                   <button className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm">
                                     View Details
