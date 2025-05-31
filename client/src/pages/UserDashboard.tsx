@@ -133,9 +133,9 @@ const UserDashboard = () => {
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-700">
                     <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Equity Position</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Percentage Equity</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                   </tr>
@@ -154,6 +154,7 @@ const UserDashboard = () => {
                         </div>
                       </div>
                     </td>
+                    <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
                     <td className="py-4 text-right hidden lg:table-cell">
                       <div className="text-xs flex flex-col lg:flex-row lg:space-x-4 space-y-1 lg:space-y-0">
                         <div className="text-green-400">1D: +2.1%</div>
@@ -162,13 +163,8 @@ const UserDashboard = () => {
                       </div>
                     </td>
                     <td className="py-4 text-right hidden md:table-cell">
-                      <div className="text-xs space-y-1">
-                        <div className="text-gray-400">Portfolio Total</div>
-                        <div className="text-gray-400">100% owned</div>
-                        <div className="text-gray-400">All companies</div>
-                      </div>
+                      <div className="text-blue-400 font-medium">100%</div>
                     </td>
-                    <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
                     <td className="py-4 text-right hidden sm:table-cell">
                       <div className="w-16 h-8">
                         <svg viewBox="0 0 64 32" className="w-full h-full">
@@ -198,9 +194,9 @@ const UserDashboard = () => {
                     <thead>
                       <tr className="border-b border-gray-200 dark:border-gray-700">
                         <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Equity Position</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
+                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
+                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Percentage Equity</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                       </tr>
@@ -232,6 +228,7 @@ const UserDashboard = () => {
                                   </div>
                                 </div>
                               </td>
+                              <td className="py-3 text-right font-medium">${company.userEquityValue.toLocaleString()}</td>
                               <td className="py-3 text-right hidden lg:table-cell">
                                 <div className="text-xs flex flex-col xl:flex-row xl:space-x-4 space-y-1 xl:space-y-0">
                                   <div className={valuePerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
@@ -246,23 +243,8 @@ const UserDashboard = () => {
                                 </div>
                               </td>
                               <td className="py-3 text-right hidden md:table-cell">
-                                <div className="text-xs space-y-1">
-                                  {marketCapPercentage >= 1 ? (
-                                    <>
-                                      <div className="text-blue-600">{marketCapPercentage.toFixed(1)}%</div>
-                                      <div className="text-gray-500">of market cap</div>
-                                      <div className="text-gray-500">{company.userEquityPercentage}% owned</div>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <div className="text-blue-600">{totalShares.toLocaleString()}</div>
-                                      <div className="text-gray-500">shares held</div>
-                                      <div className="text-gray-500">{company.userEquityPercentage}% owned</div>
-                                    </>
-                                  )}
-                                </div>
+                                <div className="text-blue-400 font-medium">{company.userEquityPercentage}%</div>
                               </td>
-                              <td className="py-3 text-right font-medium">${company.userEquityValue.toLocaleString()}</td>
                               <td className="py-3 text-right hidden sm:table-cell">
                                 <div className="w-16 h-8">
                                   <svg viewBox="0 0 64 32" className="w-full h-full">
