@@ -168,12 +168,23 @@ const UserDashboard = () => {
                       <div className="w-20 h-12 mx-auto">
                         <svg viewBox="0 0 80 48" className="w-full h-full">
                           <path 
-                            d={Array.from({ length: 40 }, (_, i) => {
-                              const x = i * 2;
-                              const y = 24 + Math.sin(i * 0.15) * 8 + Math.sin(i * 0.05) * 4 + (Math.random() - 0.5) * 2;
-                              const scaledY = 48 - (y / 48) * 48;
-                              return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
-                            }).join(' ')}
+                            d={(() => {
+                              const seed = 12345; // Fixed seed for consistent but random-looking data
+                              let lastPrice = 24;
+                              const trend = 0.98 + Math.random() * 0.04; // Slight upward trend
+                              
+                              return Array.from({ length: 40 }, (_, i) => {
+                                const x = i * 2;
+                                // Create realistic price movement
+                                const volatility = 0.8 + Math.sin(i * 0.1) * 0.3;
+                                const randomWalk = (Math.sin(seed + i * 1.7) + Math.sin(seed + i * 3.2) + Math.sin(seed + i * 0.8)) / 3;
+                                const priceChange = randomWalk * volatility * trend;
+                                lastPrice = Math.max(8, Math.min(40, lastPrice + priceChange));
+                                
+                                const scaledY = 48 - (lastPrice / 48) * 48;
+                                return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
+                              }).join(' ');
+                            })()}
                             stroke="#22c55e" 
                             strokeWidth="2" 
                             fill="none"
@@ -261,12 +272,29 @@ const UserDashboard = () => {
                                 <div className="w-20 h-12 mx-auto">
                                   <svg viewBox="0 0 80 48" className="w-full h-full">
                                     <path 
-                                      d={Array.from({ length: 40 }, (_, i) => {
-                                        const x = i * 2;
-                                        const y = 24 + Math.sin((i + index) * 0.2) * 10 + Math.sin(i * 0.1) * 5 + (Math.random() - 0.5) * 3;
-                                        const scaledY = 48 - (y / 48) * 48;
-                                        return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
-                                      }).join(' ')}
+                                      d={(() => {
+                                        const companySeed = (company.id * 7919) + 54321; // Unique seed per company
+                                        let lastPrice = 20 + (index * 4); // Different starting prices
+                                        const trendDirection = valuePerformance.monthly >= 0 ? 1.02 : 0.98;
+                                        const volatilityFactor = 0.6 + (index * 0.2); // Different volatility per company
+                                        
+                                        return Array.from({ length: 40 }, (_, i) => {
+                                          const x = i * 2;
+                                          
+                                          // Create unique market behavior per company
+                                          const marketCycle = Math.sin(companySeed + i * 0.15) * 0.7;
+                                          const shortTermNoise = Math.sin(companySeed + i * 2.1) * 0.3;
+                                          const momentum = Math.sin(companySeed + i * 0.05) * 0.4;
+                                          
+                                          const combinedSignal = (marketCycle + shortTermNoise + momentum) / 3;
+                                          const priceChange = combinedSignal * volatilityFactor * trendDirection;
+                                          
+                                          lastPrice = Math.max(5, Math.min(43, lastPrice + priceChange));
+                                          
+                                          const scaledY = 48 - (lastPrice / 48) * 48;
+                                          return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
+                                        }).join(' ');
+                                      })()}
                                       stroke={valuePerformance.monthly >= 0 ? '#22c55e' : '#ef4444'} 
                                       strokeWidth="2" 
                                       fill="none"
