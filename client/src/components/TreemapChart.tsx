@@ -140,6 +140,8 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
             fill="#8884d8"
             content={<CustomizedContent />}
             nameKey="name"
+            animationBegin={0}
+            animationDuration={800}
           >
             <Tooltip 
               contentStyle={{ 
