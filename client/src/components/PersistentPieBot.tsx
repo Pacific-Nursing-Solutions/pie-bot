@@ -11,7 +11,7 @@ const PieTerminal = () => {
   const [commandHistory, setCommandHistory] = useState<CommandOutput[]>([
     {
       type: 'output',
-      content: '🥧 Pie Bot Terminal v2.1.0 - Equity Command Center',
+      content: '🥧 Pie Bot Terminal v0.0.1',
       timestamp: new Date().toLocaleTimeString()
     },
     {
