@@ -215,6 +215,12 @@ const AnalyticsDashboard = () => {
         portfolioSparkline={portfolioSparklineData}
       />
 
+      {/* Market Heatmap */}
+      <TreemapChart 
+        data={[]}
+        title="Market Performance Heatmap"
+      />
+
       {/* Portfolio-Level Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SimpleMetric
