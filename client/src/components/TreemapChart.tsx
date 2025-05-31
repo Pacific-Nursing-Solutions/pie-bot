@@ -9,55 +9,56 @@ interface TreemapChartProps {
 const TreemapChart = ({ data, title }: TreemapChartProps) => {
   const [selectedPeriod, setSelectedPeriod] = useState<'Day' | 'Week' | 'Month' | 'Year'>('Week');
 
-  // Portfolio investment data structured for treemap
+  // Flatten investment data for R-style heatmap display
   const investmentData = [
-    {
-      name: 'Startups',
-      value: 4995000,
-      children: [
-        { name: 'TechStart Inc.', symbol: 'TSI', value: 2450000, change: 8.5 },
-        { name: 'AI Solutions LLC', symbol: 'AIS', value: 980000, change: 3.2 },
-        { name: 'GreenTech Ventures', symbol: 'GTV', value: 890000, change: -2.1 },
-        { name: 'BioTech Alpha', symbol: 'BTA', value: 650000, change: 5.7 },
-        { name: 'FinTech Partners', symbol: 'FTP', value: 520000, change: -1.8 }
-      ]
-    },
-    {
-      name: 'Tech Companies',
-      value: 1320000,
-      children: [
-        { name: 'CloudOps Inc.', symbol: 'COI', value: 450000, change: 4.2 },
-        { name: 'DataFlow Corp', symbol: 'DFC', value: 380000, change: -0.9 },
-        { name: 'CyberSec Ltd', symbol: 'CSL', value: 290000, change: 2.1 },
-        { name: 'RoboTech Ventures', symbol: 'RTV', value: 200000, change: -3.4 }
-      ]
-    },
-    {
-      name: 'Emerging Tech',
-      value: 585000,
-      children: [
-        { name: 'SpaceTech Alpha', symbol: 'STA', value: 325000, change: 1.8 },
-        { name: 'QuantumCore Ltd', symbol: 'QCL', value: 260000, change: -1.2 }
-      ]
-    }
+    { name: 'TechStart Inc.', symbol: 'TSI', value: 2450000, change: 8.5 },
+    { name: 'AI Solutions LLC', symbol: 'AIS', value: 980000, change: 3.2 },
+    { name: 'GreenTech Ventures', symbol: 'GTV', value: 890000, change: -2.1 },
+    { name: 'BioTech Alpha', symbol: 'BTA', value: 650000, change: 5.7 },
+    { name: 'FinTech Partners', symbol: 'FTP', value: 520000, change: -1.8 },
+    { name: 'CloudOps Inc.', symbol: 'COI', value: 450000, change: 4.2 },
+    { name: 'DataFlow Corp', symbol: 'DFC', value: 380000, change: -0.9 },
+    { name: 'CyberSec Ltd', symbol: 'CSL', value: 290000, change: 2.1 },
+    { name: 'RoboTech Ventures', symbol: 'RTV', value: 200000, change: -3.4 },
+    { name: 'SpaceTech Alpha', symbol: 'STA', value: 325000, change: 1.8 },
+    { name: 'QuantumCore Ltd', symbol: 'QCL', value: 260000, change: -1.2 },
+    { name: 'MedTech Solutions', symbol: 'MTS', value: 180000, change: 0.3 }
   ];
+
+  // R-style heatmap color gradient (like ggplot2)
+  const getHeatmapColor = (value: number, min: number, max: number) => {
+    // Normalize value between 0 and 1
+    const normalized = (value - min) / (max - min);
+    
+    // R ggplot2 style gradient: white to steelblue equivalent
+    const r = Math.round(255 - (normalized * 185)); // 255 to 70
+    const g = Math.round(255 - (normalized * 125)); // 255 to 130
+    const b = Math.round(255 - (normalized * 75));  // 255 to 180
+    
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
+  // Find min and max values for color scaling
+  const values = investmentData.map(item => item.change);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
 
   // Custom treemap content component
   const CustomizedContent = (props: any) => {
     const { depth, x, y, width, height, payload } = props;
     
-    if (depth === 1 && payload && payload.change !== undefined) {
+    if (payload && payload.change !== undefined) {
       const change = payload.change;
-      const isGain = change >= 0;
       
-      // Color coding based on performance
-      const backgroundColor = isGain ? 
-        (change > 5 ? '#16a34a' : change > 2 ? '#22c55e' : '#86efac') :
-        (change < -5 ? '#dc2626' : change < -2 ? '#ef4444' : '#fca5a5');
+      // R-style gradient coloring
+      const backgroundColor = getHeatmapColor(change, minValue, maxValue);
       
-      const textColor = Math.abs(change) > 1 ? '#ffffff' : '#000000';
-      const fontSize = Math.min(width / 8, height / 4, 16);
-      const smallFontSize = Math.min(width / 12, height / 6, 12);
+      // Text color based on background brightness
+      const brightness = (0.299 * 70 + 0.587 * 130 + 0.114 * 180) / 255;
+      const textColor = brightness > 0.5 ? '#000000' : '#ffffff';
+      
+      const fontSize = Math.min(width / 6, height / 3, 14);
+      const smallFontSize = Math.min(width / 8, height / 4, 10);
       
       return (
         <g>
@@ -68,24 +69,24 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
             height={height}
             style={{
               fill: backgroundColor,
-              stroke: '#fff',
-              strokeWidth: 2,
-              strokeOpacity: 1,
+              stroke: '#ffffff',
+              strokeWidth: 1,
+              strokeOpacity: 0.8,
             }}
           />
           <text
             x={x + width / 2}
-            y={y + height / 2 - 10}
+            y={y + height / 2 - 8}
             textAnchor="middle"
             fill={textColor}
             fontSize={fontSize}
-            fontWeight="bold"
+            fontWeight="600"
           >
-            {payload.symbol || payload.name}
+            {payload.symbol}
           </text>
           <text
             x={x + width / 2}
-            y={y + height / 2 + 10}
+            y={y + height / 2 + 8}
             textAnchor="middle"
             fill={textColor}
             fontSize={smallFontSize}
@@ -108,11 +109,10 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
   };
 
   // Calculate total portfolio metrics
-  const allInvestments = investmentData.flatMap(category => category.children);
-  const totalValue = allInvestments.reduce((sum, inv) => sum + inv.value, 0);
-  const gainers = allInvestments.filter(inv => inv.change > 0).length;
-  const losers = allInvestments.filter(inv => inv.change < 0).length;
-  const avgReturn = allInvestments.reduce((sum, inv) => sum + inv.change, 0) / allInvestments.length;
+  const totalValue = investmentData.reduce((sum, inv) => sum + inv.value, 0);
+  const gainers = investmentData.filter(inv => inv.change > 0).length;
+  const losers = investmentData.filter(inv => inv.change < 0).length;
+  const avgReturn = investmentData.reduce((sum, inv) => sum + inv.change, 0) / investmentData.length;
 
   return (
     <div className="bg-[var(--card-bg)] border border-[var(--subtle-border)] rounded-lg">
@@ -140,7 +140,7 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
       <div className="h-80 p-4">
         <ResponsiveContainer width="100%" height="100%">
           <Treemap
-            data={investmentData}
+            data={[{ name: 'Portfolio', children: investmentData }]}
             dataKey="value"
             aspectRatio={4/3}
             stroke="#fff"
