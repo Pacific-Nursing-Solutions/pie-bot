@@ -167,56 +167,18 @@ const UserDashboard = () => {
                     <td className="py-4 text-center hidden sm:table-cell w-1/8">
                       <div className="w-20 h-12 mx-auto">
                         <svg viewBox="0 0 80 48" className="w-full h-full">
-                          {/* Portfolio aggregate candle chart */}
-                          {Array.from({ length: 20 }, (_, i) => {
-                            const basePrice = 24 + Math.sin(i * 0.4) * 5;
-                            const volatility = 1.5 + Math.random() * 2;
-                            const high = basePrice + volatility;
-                            const low = basePrice - volatility;
-                            const open = basePrice + (Math.random() - 0.5) * volatility;
-                            const close = basePrice + (Math.random() - 0.5) * volatility;
-                            
-                            const x = i * 4;
-                            const yHigh = 48 - (high / 32) * 48;
-                            const yLow = 48 - (low / 32) * 48;
-                            const yOpen = 48 - (open / 32) * 48;
-                            const yClose = 48 - (close / 32) * 48;
-                            
-                            const isGreen = close > open;
-                            const color = isGreen ? '#22c55e' : '#ef4444';
-                            
-                            return (
-                              <g key={i}>
-                                <line 
-                                  x1={x} 
-                                  y1={yHigh} 
-                                  x2={x} 
-                                  y2={yLow} 
-                                  stroke={color} 
-                                  strokeWidth="0.5"
-                                />
-                                <rect 
-                                  x={x - 1} 
-                                  y={Math.min(yOpen, yClose)} 
-                                  width="2" 
-                                  height={Math.abs(yClose - yOpen) || 1}
-                                  fill={color}
-                                  opacity="0.8"
-                                />
-                              </g>
-                            );
-                          })}
                           <path 
-                            d={Array.from({ length: 20 }, (_, i) => {
-                              const x = i * 4;
-                              const y = 24 + Math.sin(i * 0.3) * 3;
-                              const scaledY = 48 - (y / 32) * 48;
+                            d={Array.from({ length: 40 }, (_, i) => {
+                              const x = i * 2;
+                              const y = 24 + Math.sin(i * 0.15) * 8 + Math.sin(i * 0.05) * 4 + (Math.random() - 0.5) * 2;
+                              const scaledY = 48 - (y / 48) * 48;
                               return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
                             }).join(' ')}
-                            stroke="#3b82f6" 
-                            strokeWidth="1" 
+                            stroke="#22c55e" 
+                            strokeWidth="2" 
                             fill="none"
-                            opacity="0.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                       </div>
@@ -298,59 +260,18 @@ const UserDashboard = () => {
                               <td className="py-3 text-center hidden sm:table-cell w-1/8">
                                 <div className="w-20 h-12 mx-auto">
                                   <svg viewBox="0 0 80 48" className="w-full h-full">
-                                    {/* Generate detailed 15-minute candle data */}
-                                    {Array.from({ length: 20 }, (_, i) => {
-                                      const basePrice = 24 + Math.sin(i * 0.3) * 6;
-                                      const volatility = 2 + Math.random() * 3;
-                                      const high = basePrice + volatility;
-                                      const low = basePrice - volatility;
-                                      const open = basePrice + (Math.random() - 0.5) * volatility;
-                                      const close = basePrice + (Math.random() - 0.5) * volatility;
-                                      
-                                      const x = i * 4;
-                                      const yHigh = 48 - (high / 32) * 48;
-                                      const yLow = 48 - (low / 32) * 48;
-                                      const yOpen = 48 - (open / 32) * 48;
-                                      const yClose = 48 - (close / 32) * 48;
-                                      
-                                      const isGreen = close > open;
-                                      const color = isGreen ? '#22c55e' : '#ef4444';
-                                      
-                                      return (
-                                        <g key={i}>
-                                          {/* Wick */}
-                                          <line 
-                                            x1={x} 
-                                            y1={yHigh} 
-                                            x2={x} 
-                                            y2={yLow} 
-                                            stroke={color} 
-                                            strokeWidth="0.5"
-                                          />
-                                          {/* Body */}
-                                          <rect 
-                                            x={x - 1} 
-                                            y={Math.min(yOpen, yClose)} 
-                                            width="2" 
-                                            height={Math.abs(yClose - yOpen) || 1}
-                                            fill={color}
-                                            opacity="0.8"
-                                          />
-                                        </g>
-                                      );
-                                    })}
-                                    {/* Moving average line */}
                                     <path 
-                                      d={Array.from({ length: 20 }, (_, i) => {
-                                        const x = i * 4;
-                                        const y = 24 + Math.sin(i * 0.2) * 4;
-                                        const scaledY = 48 - (y / 32) * 48;
+                                      d={Array.from({ length: 40 }, (_, i) => {
+                                        const x = i * 2;
+                                        const y = 24 + Math.sin((i + index) * 0.2) * 10 + Math.sin(i * 0.1) * 5 + (Math.random() - 0.5) * 3;
+                                        const scaledY = 48 - (y / 48) * 48;
                                         return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
                                       }).join(' ')}
-                                      stroke="#6366f1" 
-                                      strokeWidth="1" 
+                                      stroke={valuePerformance.monthly >= 0 ? '#22c55e' : '#ef4444'} 
+                                      strokeWidth="2" 
                                       fill="none"
-                                      opacity="0.7"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
                                     />
                                   </svg>
                                 </div>
