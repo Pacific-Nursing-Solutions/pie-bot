@@ -76,30 +76,8 @@ const UserDashboard = () => {
     }
   ]);
 
-  const [poolPositions] = useState<PoolPosition[]>([
-    {
-      id: 1,
-      name: "Startup Accelerator Pool",
-      type: "Early Stage",
-      returns: 125000,
-      totalCommitted: 500000,
-      deployed: 350000,
-      companies: 8
-    },
-    {
-      id: 2,
-      name: "AI/ML Investment Pool",
-      type: "Sector Focus",
-      returns: 87000,
-      totalCommitted: 250000,
-      deployed: 180000,
-      companies: 5
-    }
-  ]);
-
   const totalNetWorth = 3879000;
   const totalPortfolioValue = 3174000;
-  const totalPoolValue = 705000;
 
   return (
     <div className="space-y-6">
