@@ -126,34 +126,34 @@ const AnalyticsDashboard = () => {
 
   // ROI data - single line showing performance over 30-day increments with drop at 90 days
   const growthData = [
-    { days: '30', roi: 20.4 },
-    { days: '60', roi: 18.2 },
-    { days: '90', roi: -8.7 }, // Big losing month 90 days ago
-    { days: '120', roi: -2.1 },
-    { days: '150', roi: 6.8 },
-    { days: '180', roi: 12.3 },
-    { days: '210', roi: 18.4 },
-    { days: '240', roi: 14.2 },
-    { days: '270', roi: 16.9 },
-    { days: '300', roi: 11.5 },
+    { days: '360', roi: 9.8 },
     { days: '330', roi: 15.3 },
-    { days: '360', roi: 9.8 }
+    { days: '300', roi: 11.5 },
+    { days: '270', roi: 16.9 },
+    { days: '240', roi: 14.2 },
+    { days: '210', roi: 18.4 },
+    { days: '180', roi: 12.3 },
+    { days: '150', roi: 6.8 },
+    { days: '120', roi: -2.1 },
+    { days: '90', roi: -8.7 }, // Big losing month 90 days ago
+    { days: '60', roi: 18.2 },
+    { days: '30', roi: 20.4 }
   ];
 
   // Distribution payments data with same X-axis and drop at 90 days
   const distributionData = [
-    { period: '30', amount: 3600 },
-    { period: '60', amount: 3400 },
-    { period: '90', amount: 1200 }, // Big drop 90 days ago
-    { period: '120', amount: 1800 },
-    { period: '150', amount: 2650 },
-    { period: '180', amount: 2400 },
-    { period: '210', amount: 3100 },
-    { period: '240', amount: 2200 },
-    { period: '270', amount: 2750 },
-    { period: '300', amount: 1950 },
+    { period: '360', amount: 1850 },
     { period: '330', amount: 2850 },
-    { period: '360', amount: 1850 }
+    { period: '300', amount: 1950 },
+    { period: '270', amount: 2750 },
+    { period: '240', amount: 2200 },
+    { period: '210', amount: 3100 },
+    { period: '180', amount: 2400 },
+    { period: '150', amount: 2650 },
+    { period: '120', amount: 1800 },
+    { period: '90', amount: 1200 }, // Big drop 90 days ago
+    { period: '60', amount: 3400 },
+    { period: '30', amount: 3600 }
   ];
 
   return (
