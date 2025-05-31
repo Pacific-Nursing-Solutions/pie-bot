@@ -134,8 +134,8 @@ const UserDashboard = () => {
                   <tr className="border-b border-gray-200 dark:border-gray-700">
                     <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell"></th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell"></th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                   </tr>
@@ -175,7 +175,7 @@ const UserDashboard = () => {
                     <td className="py-4 text-right w-1/6">
                       <button 
                         onClick={() => setShowPoolSection(!showPoolSection)}
-                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center"
+                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center justify-end"
                       >
                         {showPoolSection ? 'Collapse' : 'Expand'}
                         {showPoolSection ? <ChevronUp className="w-4 h-4 ml-1" /> : <ChevronDown className="w-4 h-4 ml-1" />}
@@ -249,7 +249,7 @@ const UserDashboard = () => {
                               </td>
                               <td className="py-3 text-right w-1/6">
                                 <Link href={`/company/${company.id}/dashboard`}>
-                                  <button className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm">
+                                  <button className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center justify-end">
                                     View Details
                                   </button>
                                 </Link>
