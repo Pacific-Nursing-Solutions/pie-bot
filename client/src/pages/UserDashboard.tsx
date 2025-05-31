@@ -155,7 +155,7 @@ const UserDashboard = () => {
                       </div>
                     </td>
                     <td className="py-4 text-right hidden lg:table-cell">
-                      <div className="text-xs space-y-1">
+                      <div className="text-xs flex flex-col lg:flex-row lg:space-x-4 space-y-1 lg:space-y-0">
                         <div className="text-green-400">1D: +2.1%</div>
                         <div className="text-green-400">7D: +5.8%</div>
                         <div className="text-red-400">30D: -1.2%</div>
@@ -233,7 +233,7 @@ const UserDashboard = () => {
                                 </div>
                               </td>
                               <td className="py-3 text-right hidden lg:table-cell">
-                                <div className="text-xs space-y-1">
+                                <div className="text-xs flex flex-col xl:flex-row xl:space-x-4 space-y-1 xl:space-y-0">
                                   <div className={valuePerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
                                     1D: {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
                                   </div>
