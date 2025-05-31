@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-interface StockData {
+interface PortfolioPosition {
+  name: string;
   symbol: string;
-  company?: string;
-  price?: number;
+  value: number;
   change: number;
-  marketCap?: number;
+  percentage: number; // Percentage of total portfolio
 }
 
 interface TreemapChartProps {
@@ -16,121 +16,55 @@ interface TreemapChartProps {
 const TreemapChart = ({ data, title }: TreemapChartProps) => {
   const [selectedPeriod, setSelectedPeriod] = useState<'Day' | 'Week' | 'Month' | 'Year'>('Week');
 
-  // Sample stock data that matches the image
-  const stockData: StockData[] = [
-    { symbol: 'AAPL', company: 'Apple Inc.', price: 130.03, change: -1.39, marketCap: 2.07 },
-    { symbol: 'GOOGL', company: 'Alphabet Inc.', change: -2.09 },
-    { symbol: 'MSFT', company: 'Microsoft Corp.', change: -0.74 },
-    { symbol: 'JNJ', company: 'Johnson & Johnson', change: -0.03 },
-    { symbol: 'NVDA', company: 'NVIDIA Corp.', change: -7.14 },
-    { symbol: 'BAC', company: 'Bank of America', change: 0.18 },
-    { symbol: 'MRK', company: 'Merck & Co.', change: 0.23 },
-    { symbol: 'BAC-PE', change: 1.05 },
-    { symbol: 'MCD', company: 'McDonald\'s Corp.', change: -0.27 },
-    { symbol: 'CSCO', company: 'Cisco Systems', change: 0.11 },
-    { symbol: 'DHR', company: 'Danaher Corp.', change: 0.39 },
-    { symbol: 'TOM', change: 1.39 },
-    { symbol: 'CVX', company: 'Chevron Corp.', change: 1.26 },
-    { symbol: 'JPM-PD', change: -0.92 },
-    { symbol: 'KO', company: 'Coca-Cola Co.', change: 0.61 },
-    { symbol: 'AVGO', company: 'Broadcom Inc.', change: 0.2 },
-    { symbol: 'TMUS', company: 'T-Mobile US', change: 0.69 },
-    { symbol: 'ADBE', change: -0.09 },
-    { symbol: 'BMY', change: -0.48 },
-    { symbol: 'SCHW', change: 0.65 },
-    { symbol: 'PM', change: 0.35 },
-    { symbol: 'META', company: 'Meta Platforms', change: -0.98 },
-    { symbol: 'LLY', company: 'Eli Lilly', change: -0.82 },
-    { symbol: 'BHP', company: 'BHP Group', change: 1.11 },
-    { symbol: 'ACN', change: -0.29 },
-    { symbol: 'HON', change: 0.48 },
-    { symbol: 'LMT', change: 0.46 },
-    { symbol: 'CAT', change: 1.36 },
-    { symbol: 'BRK-B', company: 'Berkshire Hathaway', change: -0.31 },
-    { symbol: 'V', company: 'Visa Inc.', change: 0.22 },
-    { symbol: 'TSLA', company: 'Tesla Inc.', change: -11.41 },
-    { symbol: 'NVO', company: 'Novo Nordisk', change: -0.56 },
-    { symbol: 'BML-PH', change: -0.31 },
-    { symbol: 'ORCL', company: 'Oracle Corp.', change: 0.16 },
-    { symbol: 'NEE', change: -0.2 },
-    { symbol: 'SAP', change: 0.02 },
-    { symbol: 'AXP', change: 0.43 },
-    { symbol: 'BML-PG', change: -0.63 },
-    { symbol: 'VZ', company: 'Verizon', change: 1.19 },
-    { symbol: 'RY', change: 0.51 },
-    { symbol: 'TD', change: 0.69 },
-    { symbol: 'PLD', change: -0.20 },
-    { symbol: 'ASML', company: 'ASML Holding', change: -2.57 },
-    { symbol: 'T', company: 'AT&T Inc.', change: 1.52 },
-    { symbol: 'C-PJ', change: -0.28 },
-    { symbol: 'MDT', change: 0.18 },
-    { symbol: 'BNY', change: 0.82 },
-    { symbol: 'CI', change: -0.06 },
-    { symbol: 'BAC-PK', change: -1.2 },
-    { symbol: 'TMO', company: 'Thermo Fisher', change: 0.88 },
-    { symbol: 'LIN', company: 'Linde plc', change: -0.12 },
-    { symbol: 'CRM', change: 0.94 },
-    { symbol: 'BUD', change: 0.62 },
-    { symbol: 'AMD', change: -1.90 },
-    { symbol: 'JPM-PC', change: -0.87 },
-    { symbol: 'PEP', company: 'PepsiCo Inc.', change: 0.44 },
-    { symbol: 'DE', change: 1.12 },
-    { symbol: 'EQNR', change: 1.45 },
-    { symbol: 'WMT', company: 'Walmart Inc.', change: -0.02 }
+  // Portfolio positions based on actual investment data
+  const portfolioPositions: PortfolioPosition[] = [
+    { name: 'TechStart Inc.', symbol: 'TSI', value: 2450000, change: 8.5, percentage: 35.2 },
+    { name: 'AI Solutions LLC', symbol: 'AIS', value: 980000, change: 3.2, percentage: 14.1 },
+    { name: 'GreenTech Ventures', symbol: 'GTV', value: 890000, change: -2.1, percentage: 12.8 },
+    { name: 'BioTech Alpha', symbol: 'BTA', value: 650000, change: 5.7, percentage: 9.3 },
+    { name: 'FinTech Partners', symbol: 'FTP', value: 520000, change: -1.8, percentage: 7.5 },
+    { name: 'CloudOps Inc.', symbol: 'COI', value: 450000, change: 4.2, percentage: 6.5 },
+    { name: 'DataFlow Corp', symbol: 'DFC', value: 380000, change: -0.9, percentage: 5.5 },
+    { name: 'CyberSec Ltd', symbol: 'CSL', value: 290000, change: 2.1, percentage: 4.2 },
+    { name: 'RoboTech Ventures', symbol: 'RTV', value: 210000, change: -3.4, percentage: 3.0 },
+    { name: 'SpaceTech Alpha', symbol: 'STA', value: 125000, change: 1.8, percentage: 1.8 }
   ];
 
-  // Calculate tile sizes based on market cap or use equal sizes
-  const calculateTileSize = (stock: StockData, index: number) => {
-    // Create varied sizes for visual interest
-    const baseSizes = [120, 100, 80, 140, 90, 70, 110, 85, 95, 75];
-    return baseSizes[index % baseSizes.length] || 90;
+  // Calculate proportional sizes based on portfolio percentage
+  const calculateSize = (position: PortfolioPosition) => {
+    // Base the size on the percentage of portfolio
+    const minSize = 80;
+    const maxSize = 200;
+    const sizeRange = maxSize - minSize;
+    return minSize + (position.percentage / 100) * sizeRange;
   };
-
-  // Arrange tiles in a grid-like pattern
-  const arrangeTiles = (): Array<StockData & { x: number; y: number; width: number; height: number }> => {
-    const tiles: Array<StockData & { x: number; y: number; width: number; height: number }> = [];
-    let x = 0;
-    let y = 0;
-    let rowHeight = 0;
-    const containerWidth = 800; // Approximate container width
-
-    stockData.forEach((stock, index) => {
-      const size = calculateTileSize(stock, index);
-      
-      // Check if we need to wrap to next row
-      if (x + size > containerWidth) {
-        x = 0;
-        y += rowHeight + 2; // 2px gap
-        rowHeight = 0;
-      }
-      
-      tiles.push({
-        ...stock,
-        x,
-        y,
-        width: size,
-        height: 60 + (Math.abs(stock.change) * 2), // Vary height slightly based on change
-      });
-      
-      x += size + 2; // 2px gap
-      rowHeight = Math.max(rowHeight, 60 + (Math.abs(stock.change) * 2));
-    });
-    
-    return tiles;
-  };
-
-  const tiles = arrangeTiles();
 
   const getBackgroundColor = (change: number) => {
     if (change > 0) {
-      return change > 1 ? '#22c55e' : '#86efac'; // Darker green for bigger gains
-    } else {
-      return change < -1 ? '#ef4444' : '#fca5a5'; // Darker red for bigger losses
+      // Green shades for gains
+      if (change > 5) return '#16a34a'; // Dark green for big gains
+      if (change > 2) return '#22c55e'; // Medium green
+      return '#86efac'; // Light green for small gains
+    } else if (change < 0) {
+      // Red shades for losses
+      if (change < -5) return '#dc2626'; // Dark red for big losses
+      if (change < -2) return '#ef4444'; // Medium red
+      return '#fca5a5'; // Light red for small losses
     }
+    return '#e5e7eb'; // Neutral gray for no change
   };
 
   const getTextColor = (change: number) => {
-    return Math.abs(change) > 0.5 ? '#ffffff' : '#000000';
+    return Math.abs(change) > 1 ? '#ffffff' : '#000000';
+  };
+
+  const formatValue = (value: number) => {
+    if (value >= 1000000) {
+      return `$${(value / 1000000).toFixed(1)}M`;
+    } else if (value >= 1000) {
+      return `$${(value / 1000).toFixed(0)}K`;
+    }
+    return `$${value.toFixed(0)}`;
   };
 
   return (
@@ -156,55 +90,79 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
         </div>
       </div>
       
-      <div className="h-80 p-4 overflow-hidden">
-        <div className="relative w-full h-full">
-          <svg width="100%" height="100%" viewBox="0 0 800 320">
-            {tiles.map((tile, index) => (
-              <g key={tile.symbol}>
-                <rect
-                  x={tile.x}
-                  y={tile.y}
-                  width={tile.width}
-                  height={tile.height}
-                  fill={getBackgroundColor(tile.change)}
-                  stroke="#ffffff"
-                  strokeWidth="1"
-                  rx="2"
-                />
-                <text
-                  x={tile.x + tile.width / 2}
-                  y={tile.y + tile.height / 2 - 8}
-                  textAnchor="middle"
-                  fill={getTextColor(tile.change)}
-                  fontSize={Math.min(tile.width / 8, 14)}
-                  fontWeight="bold"
-                >
-                  {tile.symbol}
-                </text>
-                <text
-                  x={tile.x + tile.width / 2}
-                  y={tile.y + tile.height / 2 + 8}
-                  textAnchor="middle"
-                  fill={getTextColor(tile.change)}
-                  fontSize={Math.min(tile.width / 10, 12)}
-                >
-                  {tile.change >= 0 ? '+' : ''}{tile.change.toFixed(2)}%
-                </text>
-                {tile.company && tile.width > 100 && (
-                  <text
-                    x={tile.x + tile.width / 2}
-                    y={tile.y + tile.height - 8}
-                    textAnchor="middle"
-                    fill={getTextColor(tile.change)}
-                    fontSize="8"
-                    opacity="0.8"
-                  >
-                    {tile.company.length > 12 ? tile.company.substring(0, 12) + '...' : tile.company}
-                  </text>
-                )}
-              </g>
-            ))}
-          </svg>
+      <div className="p-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          {portfolioPositions.map((position) => {
+            const size = calculateSize(position);
+            const bgColor = getBackgroundColor(position.change);
+            const textColor = getTextColor(position.change);
+            
+            return (
+              <div
+                key={position.symbol}
+                className="relative rounded-lg border border-white/20 p-3 hover:scale-105 transition-transform cursor-pointer"
+                style={{
+                  backgroundColor: bgColor,
+                  color: textColor,
+                  minHeight: `${Math.max(size * 0.7, 80)}px`,
+                  flexBasis: `${Math.max(size * 0.6, 120)}px`
+                }}
+                title={`${position.name} - ${formatValue(position.value)} (${position.percentage}% of portfolio)`}
+              >
+                <div className="flex flex-col h-full justify-between">
+                  <div>
+                    <div className="font-bold text-sm mb-1">{position.symbol}</div>
+                    <div className="text-xs opacity-90 mb-2 leading-tight">
+                      {position.name.length > 15 ? position.name.substring(0, 15) + '...' : position.name}
+                    </div>
+                  </div>
+                  
+                  <div className="mt-auto">
+                    <div className="text-xs font-medium mb-1">
+                      {position.change >= 0 ? '+' : ''}{position.change.toFixed(1)}%
+                    </div>
+                    <div className="text-xs opacity-80">
+                      {position.percentage}% of portfolio
+                    </div>
+                    <div className="text-xs opacity-80">
+                      {formatValue(position.value)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Portfolio Summary */}
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-[var(--grid-line)]">
+          <div className="text-center">
+            <div className="text-sm text-[var(--text-secondary)]">Total Value</div>
+            <div className="text-lg font-bold text-[var(--text-primary)]">
+              {formatValue(portfolioPositions.reduce((sum, pos) => sum + pos.value, 0))}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-sm text-[var(--text-secondary)]">Gainers</div>
+            <div className="text-lg font-bold text-green-600">
+              {portfolioPositions.filter(pos => pos.change > 0).length}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-sm text-[var(--text-secondary)]">Losers</div>
+            <div className="text-lg font-bold text-red-600">
+              {portfolioPositions.filter(pos => pos.change < 0).length}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-sm text-[var(--text-secondary)]">Avg Return</div>
+            <div className={`text-lg font-bold ${
+              portfolioPositions.reduce((sum, pos) => sum + pos.change, 0) / portfolioPositions.length >= 0 
+                ? 'text-green-600' : 'text-red-600'
+            }`}>
+              {((portfolioPositions.reduce((sum, pos) => sum + pos.change, 0) / portfolioPositions.length)).toFixed(1)}%
+            </div>
+          </div>
         </div>
       </div>
       
