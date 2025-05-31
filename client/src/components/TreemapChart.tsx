@@ -5,11 +5,18 @@ interface TreemapChartProps {
   title: string;
 }
 
+interface Investment {
+  name: string;
+  symbol: string;
+  change: number;
+  value: number;
+}
+
 const TreemapChart = ({ data, title }: TreemapChartProps) => {
   const [selectedPeriod, setSelectedPeriod] = useState<'Day' | 'Week' | 'Month' | 'Year'>('Day');
 
   // Investment data with position values for proportional sizing
-  const investments = [
+  const investments: Investment[] = [
     { name: 'TechStart Inc.', symbol: 'TSI', change: 8.5, value: 2450000 },
     { name: 'AI Solutions LLC', symbol: 'AIS', change: 3.2, value: 980000 },
     { name: 'GreenTech Ventures', symbol: 'GTV', change: -2.1, value: 890000 },
@@ -26,14 +33,72 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
 
   const totalValue = investments.reduce((sum, inv) => sum + inv.value, 0);
 
-  const getColor = (change: number) => {
-    if (change > 0) {
-      // Green for gains
-      return change > 4 ? '#16a34a' : change > 2 ? '#22c55e' : '#86efac';
-    } else {
-      // Red for losses
-      return change < -2 ? '#dc2626' : '#ef4444';
+  // Simple treemap layout algorithm (squarified treemap approximation)
+  const createTreemapLayout = () => {
+    const container = { width: 600, height: 400 };
+    const sortedData = [...investments].sort((a, b) => b.value - a.value);
+    
+    const rectangles: Array<Investment & { x: number; y: number; width: number; height: number }> = [];
+    
+    let x = 0, y = 0;
+    let rowHeight = 0;
+    const padding = 2;
+    
+    for (let i = 0; i < sortedData.length; i++) {
+      const item = sortedData[i];
+      const area = (item.value / totalValue) * (container.width * container.height);
+      const aspectRatio = container.width / container.height;
+      
+      // Simple width/height calculation based on area
+      let width = Math.sqrt(area * aspectRatio);
+      let height = area / width;
+      
+      // Adjust for remaining space
+      if (x + width > container.width) {
+        x = 0;
+        y += rowHeight + padding;
+        rowHeight = 0;
+      }
+      
+      // Clamp to remaining space
+      if (x + width > container.width) {
+        width = container.width - x;
+        height = area / width;
+      }
+      
+      if (y + height > container.height) {
+        height = container.height - y;
+      }
+      
+      rectangles.push({
+        ...item,
+        x,
+        y,
+        width: Math.max(width - padding, 20),
+        height: Math.max(height - padding, 20)
+      });
+      
+      x += width;
+      rowHeight = Math.max(rowHeight, height);
     }
+    
+    return rectangles;
+  };
+
+  const rectangles = createTreemapLayout();
+
+  const getColor = (change: number) => {
+    // R-style gradient: red (negative) -> white (0) -> green (positive)
+    if (change > 0) {
+      // Green scale for positive changes
+      const intensity = Math.min(change / 8, 1);
+      return `hsl(120, ${50 + intensity * 50}%, ${60 - intensity * 20}%)`;
+    } else if (change < 0) {
+      // Red scale for negative changes
+      const intensity = Math.min(Math.abs(change) / 8, 1);
+      return `hsl(0, ${50 + intensity * 50}%, ${60 - intensity * 20}%)`;
+    }
+    return '#ffffff'; // White for zero change
   };
 
   const formatValue = (value: number) => {
@@ -43,14 +108,6 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
       return `$${(value / 1000).toFixed(0)}K`;
     }
     return `$${value.toFixed(0)}`;
-  };
-
-  const getSquareSize = (value: number) => {
-    const percentage = (value / totalValue) * 100;
-    // Scale from 80px to 180px based on portfolio percentage
-    const minSize = 80;
-    const maxSize = 180;
-    return minSize + (percentage / 40) * (maxSize - minSize); // 40% is roughly max for largest position
   };
 
   return (
@@ -77,32 +134,58 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
       </div>
       
       <div className="p-6">
-        <div className="flex flex-wrap gap-2 justify-center">
-          {investments.map((investment) => {
-            const size = getSquareSize(investment.value);
-            return (
-              <div
-                key={investment.symbol}
-                className="flex flex-col items-center justify-center rounded border border-white/20 transition-transform hover:scale-105"
-                style={{
-                  backgroundColor: getColor(investment.change),
-                  color: Math.abs(investment.change) > 1 ? '#ffffff' : '#000000',
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  minWidth: '80px',
-                  minHeight: '80px'
-                }}
-              >
-                <div className="text-sm font-bold">{investment.symbol}</div>
-                <div className="text-xs">
-                  {investment.change >= 0 ? '+' : ''}{investment.change.toFixed(1)}%
-                </div>
-                <div className="text-xs mt-1 opacity-90">
-                  {formatValue(investment.value)}
-                </div>
-              </div>
-            );
-          })}
+        <div className="relative w-full h-96 overflow-hidden">
+          <svg width="100%" height="100%" viewBox="0 0 600 400" className="bg-gray-50 dark:bg-gray-800 rounded">
+            {rectangles.map((rect) => (
+              <g key={rect.symbol}>
+                <rect
+                  x={rect.x}
+                  y={rect.y}
+                  width={rect.width}
+                  height={rect.height}
+                  fill={getColor(rect.change)}
+                  stroke="#ffffff"
+                  strokeWidth="2"
+                  className="transition-opacity hover:opacity-80"
+                />
+                {rect.width > 40 && rect.height > 30 && (
+                  <>
+                    <text
+                      x={rect.x + rect.width / 2}
+                      y={rect.y + rect.height / 2 - 8}
+                      textAnchor="middle"
+                      fontSize="12"
+                      fontWeight="bold"
+                      fill={Math.abs(rect.change) > 3 ? '#ffffff' : '#000000'}
+                    >
+                      {rect.symbol}
+                    </text>
+                    <text
+                      x={rect.x + rect.width / 2}
+                      y={rect.y + rect.height / 2 + 6}
+                      textAnchor="middle"
+                      fontSize="10"
+                      fill={Math.abs(rect.change) > 3 ? '#ffffff' : '#000000'}
+                    >
+                      {rect.change >= 0 ? '+' : ''}{rect.change.toFixed(1)}%
+                    </text>
+                    {rect.height > 45 && (
+                      <text
+                        x={rect.x + rect.width / 2}
+                        y={rect.y + rect.height / 2 + 18}
+                        textAnchor="middle"
+                        fontSize="9"
+                        fill={Math.abs(rect.change) > 3 ? '#ffffff' : '#000000'}
+                        opacity="0.8"
+                      >
+                        {formatValue(rect.value)}
+                      </text>
+                    )}
+                  </>
+                )}
+              </g>
+            ))}
+          </svg>
         </div>
       </div>
     </div>
