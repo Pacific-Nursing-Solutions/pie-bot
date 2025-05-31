@@ -135,8 +135,8 @@ const UserDashboard = () => {
                     <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Percentage Equity</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                   </tr>
                 </thead>
@@ -162,15 +162,15 @@ const UserDashboard = () => {
                         <div className="text-red-400">30D: -1.2%</div>
                       </div>
                     </td>
-                    <td className="py-4 text-right hidden md:table-cell">
-                      <div className="text-blue-400 font-medium">100%</div>
-                    </td>
                     <td className="py-4 text-right hidden sm:table-cell">
                       <div className="w-16 h-8">
                         <svg viewBox="0 0 64 32" className="w-full h-full">
                           <path d="M0,16 L16,20 L32,12 L48,8 L64,14" stroke="#22c55e" strokeWidth="2" fill="none"/>
                         </svg>
                       </div>
+                    </td>
+                    <td className="py-4 text-right hidden md:table-cell">
+                      <div className="text-blue-400 font-medium">100%</div>
                     </td>
                     <td className="py-4 text-right">
                       <button 
@@ -196,8 +196,8 @@ const UserDashboard = () => {
                         <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
-                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Percentage Equity</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
+                        <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
                         <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                       </tr>
                     </thead>
@@ -242,9 +242,6 @@ const UserDashboard = () => {
                                   </div>
                                 </div>
                               </td>
-                              <td className="py-3 text-right hidden md:table-cell">
-                                <div className="text-blue-400 font-medium">{company.userEquityPercentage}%</div>
-                              </td>
                               <td className="py-3 text-right hidden sm:table-cell">
                                 <div className="w-16 h-8">
                                   <svg viewBox="0 0 64 32" className="w-full h-full">
@@ -256,6 +253,9 @@ const UserDashboard = () => {
                                     />
                                   </svg>
                                 </div>
+                              </td>
+                              <td className="py-3 text-right hidden md:table-cell">
+                                <div className="text-blue-400 font-medium">{company.userEquityPercentage}%</div>
                               </td>
                               <td className="py-3 text-right">
                                 <Link href={`/company/${company.id}/dashboard`}>
