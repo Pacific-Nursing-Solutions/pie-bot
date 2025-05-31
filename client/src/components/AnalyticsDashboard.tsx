@@ -170,7 +170,7 @@ const AnalyticsDashboard = () => {
         />
         
         <SimpleMetric
-          label="Total Equity Holdings"
+          label="ROI"
           value="16.2%"
           sparklineData={equityHoldingsData}
           trend="up"
@@ -190,14 +190,20 @@ const AnalyticsDashboard = () => {
       <div className="grid grid-cols-1 gap-6">
         <TreemapChart 
           data={[
-            { name: 'TechStart Inc.', value: 2450000, gain: 325000, isGain: true },
-            { name: 'AI Solutions LLC', value: 980000, gain: 78000, isGain: true },
-            { name: 'GreenTech Ventures', value: 470000, gain: -12000, isGain: false },
-            { name: 'Startup Pool', value: 260000, gain: 28000, isGain: true },
-            { name: 'Advisory Shares', value: 145000, gain: 15000, isGain: true },
-            { name: 'Previous Exit', value: 89000, gain: -25000, isGain: false }
+            { name: 'TechStart Inc.', value: 2450000, gain: 8500, isGain: true },
+            { name: 'AI Solutions LLC', value: 980000, gain: 3200, isGain: true },
+            { name: 'GreenTech Ventures', value: 470000, gain: -2100, isGain: false },
+            { name: 'Startup Pool', value: 260000, gain: 1800, isGain: true },
+            { name: 'Advisory Shares', value: 145000, gain: 650, isGain: true },
+            { name: 'Previous Exit', value: 89000, gain: -1200, isGain: false },
+            { name: 'Seed Investment A', value: 185000, gain: 2400, isGain: true },
+            { name: 'Angel Round B', value: 125000, gain: -850, isGain: false },
+            { name: 'Convertible Note C', value: 95000, gain: 1100, isGain: true },
+            { name: 'SAFE Agreement D', value: 75000, gain: 350, isGain: true },
+            { name: 'Options Package E', value: 55000, gain: -420, isGain: false },
+            { name: 'Warrant Holdings F', value: 42000, gain: 280, isGain: true }
           ]}
-          title="Total Gains and Losses of Assets"
+          title="Weekly Performance - All Investments"
         />
       </div>
 
@@ -232,12 +238,12 @@ const AnalyticsDashboard = () => {
         
         <DataTable
           title="Company Performance"
-          headers={["Company", "Change", "Runway", "Status"]}
+          headers={["Company", "Monthly Cashflow", "Runway", "Status"]}
           rows={[
-            ["TechStart Inc.", "+15.3%", "14 mo", "Growing"],
-            ["AI Solutions LLC", "+8.7%", "18 mo", "Stable"],
-            ["GreenTech Ventures", "-2.1%", "12 mo", "Review"],
-            ["Startup Pool", "+12.4%", "N/A", "Strong"]
+            ["TechStart Inc.", "-$2.4K", "14 mo", "Growing"],
+            ["AI Solutions LLC", "+$1.2K", "18 mo", "Stable"],
+            ["GreenTech Ventures", "-$850", "12 mo", "Review"],
+            ["Startup Pool", "-$450", "N/A", "Strong"]
           ]}
         />
       </div>

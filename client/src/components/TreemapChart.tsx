@@ -99,11 +99,12 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
           >
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: '#2a2a2a', 
-                border: '1px solid #444',
+                backgroundColor: '#f8f9fa', 
+                border: '1px solid #dee2e6',
                 borderRadius: '6px',
                 fontSize: '12px',
-                color: '#ffffff'
+                color: '#212529',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
               }}
               formatter={(value, name, props) => [
                 `${props.payload.isGain ? '+' : ''}$${(props.payload.gain / 1000).toFixed(0)}K`,
