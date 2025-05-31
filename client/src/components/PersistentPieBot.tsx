@@ -325,11 +325,7 @@ const PieTerminal = () => {
           <Terminal className="w-4 h-4 text-slate-300" />
           <span className="text-slate-200">Pie Bot Terminal v0.0.1</span>
         </div>
-        <div className="flex space-x-1">
-          <div className="w-3 h-3 bg-rose-400 rounded-full"></div>
-          <div className="w-3 h-3 bg-amber-400 rounded-full"></div>
-          <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
-        </div>
+        <div className="flex space-x-1"></div>
       </div>
 
       {/* Terminal Content */}

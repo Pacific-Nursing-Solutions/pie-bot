@@ -5,6 +5,7 @@ import SimpleMetric from './SimpleMetric';
 import WalletSnapshot from './WalletSnapshot';
 import EquityGrowthChart from './EquityGrowthChart';
 import DistributionsChart from './DistributionsChart';
+import CompensationChart from './CompensationChart';
 import TreemapChart from './TreemapChart';
 import HoldingsOverview from './HoldingsOverview';
 import { 
@@ -157,6 +158,22 @@ const AnalyticsDashboard = () => {
     { period: '30', amount: 3600 }
   ];
 
+  // Monthly compensation data using same X-axis numbers
+  const compensationData = [
+    { month: '360', totalCompensation: 82000, cashCompensation: 45000, equityCompensation: 37000 },
+    { month: '330', totalCompensation: 89000, cashCompensation: 48000, equityCompensation: 41000 },
+    { month: '300', totalCompensation: 95000, cashCompensation: 52000, equityCompensation: 43000 },
+    { month: '270', totalCompensation: 103000, cashCompensation: 55000, equityCompensation: 48000 },
+    { month: '240', totalCompensation: 118000, cashCompensation: 58000, equityCompensation: 60000 },
+    { month: '210', totalCompensation: 127000, cashCompensation: 62000, equityCompensation: 65000 },
+    { month: '180', totalCompensation: 134000, cashCompensation: 65000, equityCompensation: 69000 },
+    { month: '150', totalCompensation: 142000, cashCompensation: 68000, equityCompensation: 74000 },
+    { month: '120', totalCompensation: 156000, cashCompensation: 72000, equityCompensation: 84000 },
+    { month: '90', totalCompensation: 89000, cashCompensation: 45000, equityCompensation: 44000 }, // Drop at same time as distributions
+    { month: '60', totalCompensation: 183000, cashCompensation: 78000, equityCompensation: 105000 },
+    { month: '30', totalCompensation: 197000, cashCompensation: 82000, equityCompensation: 115000 }
+  ];
+
   // Holdings overview data
   const holdingsPositions = [
     {
@@ -223,6 +240,9 @@ const AnalyticsDashboard = () => {
         <EquityGrowthChart data={growthData} />
         <DistributionsChart data={distributionData} />
       </div>
+
+      {/* Monthly Compensation Chart */}
+      <CompensationChart data={compensationData} />
 
 
 
