@@ -85,45 +85,68 @@ const HoldingsOverview = ({ positions, portfolioSparkline }: HoldingsOverviewPro
       {/* Individual Positions */}
       {isExpanded && (
         <div className="divide-y divide-[var(--grid-line)]">
-          {/* Headers - Responsive */}
-          <div className="px-6 py-3 text-xs text-[var(--text-secondary)]">
-            <div className="hidden lg:grid grid-cols-12 gap-4">
-              <div className="col-span-1">#</div>
-              <div className="col-span-3">Name</div>
+          {/* Headers - Responsive Grid */}
+          <div className="px-6 py-3 text-xs text-[var(--text-secondary)] hidden sm:block">
+            <div className="hidden xl:grid grid-cols-8 gap-4">
+              <div className="col-span-2">Company</div>
+              <div className="col-span-1">Equity %</div>
+              <div className="col-span-1">Value</div>
+              <div className="col-span-1">Market Cap</div>
               <div className="col-span-1">24h %</div>
               <div className="col-span-1">7d %</div>
-              <div className="col-span-2">Market Cap</div>
-              <div className="col-span-2">Volume(24h)</div>
-              <div className="col-span-1">Supply</div>
-              <div className="col-span-1">Last 7 Days</div>
+              <div className="col-span-1">Actions</div>
             </div>
-            <div className="lg:hidden grid grid-cols-4 gap-4">
-              <div className="col-span-1">#</div>
-              <div className="col-span-1">Name</div>
+            <div className="hidden lg:grid xl:hidden grid-cols-6 gap-4">
+              <div className="col-span-2">Company</div>
+              <div className="col-span-1">Equity %</div>
+              <div className="col-span-1">Value</div>
               <div className="col-span-1">24h %</div>
-              <div className="col-span-1">Chart</div>
+              <div className="col-span-1">Actions</div>
+            </div>
+            <div className="hidden md:grid lg:hidden grid-cols-5 gap-4">
+              <div className="col-span-2">Company</div>
+              <div className="col-span-1">Equity %</div>
+              <div className="col-span-1">Value</div>
+              <div className="col-span-1">Actions</div>
+            </div>
+            <div className="md:hidden grid grid-cols-3 gap-4">
+              <div className="col-span-1">Company</div>
+              <div className="col-span-1">Equity %</div>
+              <div className="col-span-1">Actions</div>
             </div>
           </div>
 
           {/* Position Rows - Responsive */}
-          {positions.map((position) => (
+          {positions.map((position, index) => (
             <div key={position.id} className="px-6 py-4 items-center hover:bg-[var(--subtle-border)] transition-colors">
-              {/* Large screens - full layout */}
-              <div className="hidden lg:grid grid-cols-12 gap-4 items-center">
-                <div className="col-span-1">
-                  <span className="text-sm text-[var(--text-secondary)]">{position.id}</span>
-                </div>
-                
-                <div className="col-span-3">
+              {/* Extra large screens - all columns */}
+              <div className="hidden xl:grid grid-cols-8 gap-4 items-center">
+                <div className="col-span-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 bg-[var(--primary-brown)] rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-xs">{position.symbol[0]}</span>
+                    <div className="w-8 h-8 bg-[var(--primary-brown)] rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">{position.name.charAt(0)}</span>
                     </div>
                     <div>
                       <div className="font-medium text-[var(--text-primary)]">{position.name}</div>
                       <div className="text-xs text-[var(--text-secondary)]">{position.symbol}</div>
                     </div>
                   </div>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm font-medium text-[var(--text-primary)]">
+                    {(15.5 - index * 2.3).toFixed(1)}%
+                  </span>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm text-[var(--text-primary)]">
+                    ${formatNumber(position.marketCap / 10)}
+                  </span>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm text-[var(--text-primary)]">{formatNumber(position.marketCap)}</span>
                 </div>
 
                 <div className="col-span-1">
@@ -138,50 +161,37 @@ const HoldingsOverview = ({ positions, portfolioSparkline }: HoldingsOverviewPro
                   </span>
                 </div>
 
-                <div className="col-span-2">
-                  <span className="text-sm text-[var(--text-primary)]">{formatNumber(position.marketCap)}</span>
-                </div>
-
-                <div className="col-span-2">
-                  <span className="text-sm text-[var(--text-primary)]">{formatNumber(position.volume24h)}</span>
-                </div>
-
                 <div className="col-span-1">
-                  <span className="text-sm text-[var(--text-primary)]">{formatNumber(position.supply)}</span>
-                </div>
-
-                <div className="col-span-1">
-                  <div className="w-20 h-8">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={position.sparklineData}>
-                        <Line
-                          type="monotone"
-                          dataKey="value"
-                          stroke={position.change7d >= 0 ? '#22c55e' : '#ef4444'}
-                          strokeWidth={1.5}
-                          dot={false}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
+                  <button className="text-[var(--primary-brown)] hover:text-[var(--primary-brown-dark)] text-sm">
+                    View Details
+                  </button>
                 </div>
               </div>
 
-              {/* Small screens - compact layout */}
-              <div className="lg:hidden grid grid-cols-4 gap-4 items-center">
-                <div className="col-span-1">
-                  <span className="text-sm text-[var(--text-secondary)]">{position.id}</span>
-                </div>
-                
-                <div className="col-span-1">
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 bg-[var(--primary-brown)] rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-xs">{position.symbol[0]}</span>
+              {/* Large screens - 6 columns */}
+              <div className="hidden lg:grid xl:hidden grid-cols-6 gap-4 items-center">
+                <div className="col-span-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-[var(--primary-brown)] rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">{position.name.charAt(0)}</span>
                     </div>
                     <div>
-                      <div className="font-medium text-[var(--text-primary)] text-sm">{position.symbol}</div>
+                      <div className="font-medium text-[var(--text-primary)]">{position.name}</div>
+                      <div className="text-xs text-[var(--text-secondary)]">{position.symbol}</div>
                     </div>
                   </div>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm font-medium text-[var(--text-primary)]">
+                    {(15.5 - index * 2.3).toFixed(1)}%
+                  </span>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm text-[var(--text-primary)]">
+                    ${formatNumber(position.marketCap / 10)}
+                  </span>
                 </div>
 
                 <div className="col-span-1">
@@ -191,19 +201,68 @@ const HoldingsOverview = ({ positions, portfolioSparkline }: HoldingsOverviewPro
                 </div>
 
                 <div className="col-span-1">
-                  <div className="w-16 h-6">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={position.sparklineData}>
-                        <Line
-                          type="monotone"
-                          dataKey="value"
-                          stroke={position.change7d >= 0 ? '#22c55e' : '#ef4444'}
-                          strokeWidth={1.5}
-                          dot={false}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
+                  <button className="text-[var(--primary-brown)] hover:text-[var(--primary-brown-dark)] text-sm">
+                    View Details
+                  </button>
+                </div>
+              </div>
+
+              {/* Medium screens - 5 columns */}
+              <div className="hidden md:grid lg:hidden grid-cols-5 gap-4 items-center">
+                <div className="col-span-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-[var(--primary-brown)] rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">{position.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <div className="font-medium text-[var(--text-primary)]">{position.name}</div>
+                      <div className="text-xs text-[var(--text-secondary)]">{position.symbol}</div>
+                    </div>
                   </div>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm font-medium text-[var(--text-primary)]">
+                    {(15.5 - index * 2.3).toFixed(1)}%
+                  </span>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm text-[var(--text-primary)]">
+                    ${formatNumber(position.marketCap / 10)}
+                  </span>
+                </div>
+
+                <div className="col-span-1">
+                  <button className="text-[var(--primary-brown)] hover:text-[var(--primary-brown-dark)] text-sm">
+                    View Details
+                  </button>
+                </div>
+              </div>
+
+              {/* Small screens - 3 columns */}
+              <div className="md:hidden grid grid-cols-3 gap-4 items-center">
+                <div className="col-span-1">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-[var(--primary-brown)] rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">{position.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <div className="font-medium text-[var(--text-primary)] text-sm">{position.symbol}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-span-1">
+                  <span className="text-sm font-medium text-[var(--text-primary)]">
+                    {(15.5 - index * 2.3).toFixed(1)}%
+                  </span>
+                </div>
+
+                <div className="col-span-1">
+                  <button className="text-[var(--primary-brown)] hover:text-[var(--primary-brown-dark)] text-sm">
+                    Details
+                  </button>
                 </div>
               </div>
             </div>

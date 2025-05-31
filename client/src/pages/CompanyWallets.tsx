@@ -12,6 +12,7 @@ import WalletManager from '@/components/WalletManager';
 
 const CompanyWallets = () => {
   const { id } = useParams<{ id: string }>();
+  const [walletsExpanded, setWalletsExpanded] = useState(false);
   
   // Mock company data - in production this would come from your API
   const [company] = useState({
@@ -65,27 +66,37 @@ const CompanyWallets = () => {
         </Link>
       </div>
 
-      {/* Company Wallet Management */}
+      {/* Wallets - Collapsible */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center space-x-3">
-            <Wallet className="w-5 h-5 text-emerald-600" />
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Company Wallet Management
-            </h2>
+        <button 
+          className="w-full px-6 py-4 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          onClick={() => setWalletsExpanded(!walletsExpanded)}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Wallet className="w-5 h-5 text-emerald-600" />
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                Wallets
+              </h2>
+            </div>
+            <div className="text-gray-400">
+              {walletsExpanded ? '−' : '+'}
+            </div>
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-            Manage wallets for {company.name}. Connect company X accounts, import existing wallets, or create new ones.
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-left">
+            Manage wallets for {company.name}. Connect company accounts, import existing wallets, or create new ones.
           </p>
-        </div>
+        </button>
         
-        <div className="p-6">
-          <WalletManager 
-            walletType="company" 
-            companyId={company.id}
-            companyName={company.name}
-          />
-        </div>
+        {walletsExpanded && (
+          <div className="p-6">
+            <WalletManager 
+              walletType="company" 
+              companyId={company.id}
+              companyName={company.name}
+            />
+          </div>
+        )}
       </div>
 
       {/* Security Notice */}
