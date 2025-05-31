@@ -209,12 +209,6 @@ const AnalyticsDashboard = () => {
 
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
-      {/* Holdings Overview - Full Width */}
-      <HoldingsOverview 
-        positions={holdingsPositions}
-        portfolioSparkline={portfolioSparklineData}
-      />
-
       {/* Market Heatmap */}
       <TreemapChart 
         data={[]}
@@ -273,7 +267,7 @@ const AnalyticsDashboard = () => {
       {/* System Alerts */}
       <div className="bg-[var(--card-bg)] border border-[var(--subtle-border)] rounded-lg">
         <div className="px-6 py-4 border-b border-[var(--grid-line)]">
-          <h3 className="text-lg font-medium text-[var(--text-primary)]">Performance</h3>
+          <h3 className="text-lg font-medium text-[var(--text-primary)]">Holdings Dashboard</h3>
         </div>
         <div className="p-6">
           <div className="space-y-3">

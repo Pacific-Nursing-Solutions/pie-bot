@@ -220,6 +220,33 @@ const UserDashboard = () => {
         )}
       </div>
 
+      {/* Analytics Dashboard */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <div className="flex items-center">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mr-3">
+              Holdings Dashboard
+            </h2>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Live Performance</span>
+            </div>
+          </div>
+          <button 
+            onClick={() => setIsAnalyticsMinimized(!isAnalyticsMinimized)}
+            className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+          >
+            {isAnalyticsMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {!isAnalyticsMinimized && (
+          <div className="p-6">
+            <AnalyticsDashboard />
+          </div>
+        )}
+      </div>
+
       {/* Wallets Section */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
@@ -287,33 +314,6 @@ const UserDashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* Analytics Dashboard */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <div className="flex items-center">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mr-3">
-              System Analytics
-            </h2>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm text-gray-500 dark:text-gray-400">Live Performance</span>
-            </div>
-          </div>
-          <button 
-            onClick={() => setIsAnalyticsMinimized(!isAnalyticsMinimized)}
-            className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
-          >
-            {isAnalyticsMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
-          </button>
-        </div>
-
-        {!isAnalyticsMinimized && (
-          <div className="p-6">
-            <AnalyticsDashboard />
           </div>
         )}
       </div>
