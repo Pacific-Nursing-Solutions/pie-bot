@@ -44,6 +44,7 @@ const UserDashboard = () => {
   const [isWalletsMinimized, setIsWalletsMinimized] = useState(false);
   const [isAnalyticsMinimized, setIsAnalyticsMinimized] = useState(false);
   const [showPoolSection, setShowPoolSection] = useState(true);
+  const [showCompensationSection, setShowCompensationSection] = useState(false);
   
   // Portfolio data
   const [companyPositions] = useState<CompanyPosition[]>([
@@ -154,16 +155,16 @@ const UserDashboard = () => {
                     </td>
                     <td className="py-4 text-right hidden lg:table-cell">
                       <div className="text-xs space-y-1">
-                        <div className="text-green-400">+2.1%</div>
-                        <div className="text-green-400">+5.8%</div>
-                        <div className="text-red-400">-1.2%</div>
+                        <div className="text-green-400">1D: +2.1%</div>
+                        <div className="text-green-400">7D: +5.8%</div>
+                        <div className="text-red-400">30D: -1.2%</div>
                       </div>
                     </td>
                     <td className="py-4 text-right hidden md:table-cell">
                       <div className="text-xs space-y-1">
-                        <div className="text-gray-400">0.0%</div>
-                        <div className="text-gray-400">0.0%</div>
-                        <div className="text-gray-400">0.0%</div>
+                        <div className="text-gray-400">1D: 0.0%</div>
+                        <div className="text-gray-400">7D: 0.0%</div>
+                        <div className="text-gray-400">30D: 0.0%</div>
                       </div>
                     </td>
                     <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
@@ -235,26 +236,26 @@ const UserDashboard = () => {
                               <td className="py-3 text-right hidden lg:table-cell">
                                 <div className="text-xs space-y-1">
                                   <div className={valuePerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
+                                    1D: {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
                                   </div>
                                   <div className={valuePerformance.weekly >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    {valuePerformance.weekly >= 0 ? '+' : ''}{valuePerformance.weekly.toFixed(1)}%
+                                    7D: {valuePerformance.weekly >= 0 ? '+' : ''}{valuePerformance.weekly.toFixed(1)}%
                                   </div>
                                   <div className={valuePerformance.monthly >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    {valuePerformance.monthly >= 0 ? '+' : ''}{valuePerformance.monthly.toFixed(1)}%
+                                    30D: {valuePerformance.monthly >= 0 ? '+' : ''}{valuePerformance.monthly.toFixed(1)}%
                                   </div>
                                 </div>
                               </td>
                               <td className="py-3 text-right hidden md:table-cell">
                                 <div className="text-xs space-y-1">
                                   <div className={equityPerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    {equityPerformance.daily >= 0 ? '+' : ''}{equityPerformance.daily.toFixed(1)}%
+                                    1D: {equityPerformance.daily >= 0 ? '+' : ''}{equityPerformance.daily.toFixed(1)}%
                                   </div>
                                   <div className={equityPerformance.weekly >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    {equityPerformance.weekly >= 0 ? '+' : ''}{equityPerformance.weekly.toFixed(1)}%
+                                    7D: {equityPerformance.weekly >= 0 ? '+' : ''}{equityPerformance.weekly.toFixed(1)}%
                                   </div>
                                   <div className={equityPerformance.monthly >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                    {equityPerformance.monthly >= 0 ? '+' : ''}{equityPerformance.monthly.toFixed(1)}%
+                                    30D: {equityPerformance.monthly >= 0 ? '+' : ''}{equityPerformance.monthly.toFixed(1)}%
                                   </div>
                                 </div>
                               </td>
@@ -286,6 +287,103 @@ const UserDashboard = () => {
                 </div>
               </div>
             )}
+          </div>
+        )}
+      </div>
+
+      {/* Compensation Tracking */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            Compensation & Contributions
+          </h2>
+          <button 
+            onClick={() => setShowCompensationSection(!showCompensationSection)}
+            className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+          >
+            {showCompensationSection ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {!showCompensationSection && (
+          <div className="p-6">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Time Contributed</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Capital Contributed</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Total Earned</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Cash Compensation</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Equity Compensation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {companyPositions.map((company) => {
+                    // Generate mock compensation data
+                    const timeContributed = Math.floor(Math.random() * 2000) + 500; // 500-2500 hours
+                    const capitalContributed = Math.floor(Math.random() * 100000) + 10000; // $10K-$110K
+                    const totalEarned = Math.floor(Math.random() * 500000) + 100000; // $100K-$600K
+                    const cashComp = Math.floor(totalEarned * (0.3 + Math.random() * 0.4)); // 30-70%
+                    const equityComp = totalEarned - cashComp;
+                    
+                    return (
+                      <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td className="py-3">
+                          <div className="flex items-center">
+                            <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
+                              <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
+                            </div>
+                            <div>
+                              <div className="font-medium text-gray-900 dark:text-gray-100">{company.name}</div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">{company.entityType}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3 text-right">
+                          <div className="font-medium">{timeContributed.toLocaleString()}h</div>
+                          <div className="text-xs text-gray-500">~{Math.floor(timeContributed/40)} weeks</div>
+                        </td>
+                        <td className="py-3 text-right">
+                          <div className="font-medium">${capitalContributed.toLocaleString()}</div>
+                          <div className="text-xs text-gray-500">Cash & assets</div>
+                        </td>
+                        <td className="py-3 text-right font-semibold">${totalEarned.toLocaleString()}</td>
+                        <td className="py-3 text-right">
+                          <div className="font-medium text-green-600">${cashComp.toLocaleString()}</div>
+                          <div className="text-xs text-gray-500">{Math.round((cashComp/totalEarned)*100)}%</div>
+                        </td>
+                        <td className="py-3 text-right">
+                          <div className="font-medium text-blue-600">${equityComp.toLocaleString()}</div>
+                          <div className="text-xs text-gray-500">{Math.round((equityComp/totalEarned)*100)}%</div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  
+                  {/* Totals Row */}
+                  <tr className="border-t-2 border-gray-300 dark:border-gray-600 bg-gray-800/30 dark:bg-gray-700/30">
+                    <td className="py-4 font-semibold text-gray-900 dark:text-gray-100">Portfolio Totals</td>
+                    <td className="py-4 text-right font-semibold">
+                      {companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 2000) + 500), 0).toLocaleString()}h
+                    </td>
+                    <td className="py-4 text-right font-semibold">
+                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 100000) + 10000), 0).toLocaleString()}
+                    </td>
+                    <td className="py-4 text-right font-semibold">
+                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 500000) + 100000), 0).toLocaleString()}
+                    </td>
+                    <td className="py-4 text-right font-semibold text-green-600">
+                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 200000) + 50000), 0).toLocaleString()}
+                    </td>
+                    <td className="py-4 text-right font-semibold text-blue-600">
+                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 300000) + 100000), 0).toLocaleString()}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
