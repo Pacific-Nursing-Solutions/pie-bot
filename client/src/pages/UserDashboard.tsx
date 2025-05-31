@@ -37,15 +37,7 @@ interface CompanyPosition {
   };
 }
 
-interface PoolPosition {
-  id: number;
-  name: string;
-  type: string;
-  returns: number;
-  totalCommitted: number;
-  deployed: number;
-  companies: number;
-}
+
 
 const UserDashboard = () => {
   const [isPortfolioMinimized, setIsPortfolioMinimized] = useState(false);
@@ -169,14 +161,14 @@ const UserDashboard = () => {
                 </div>
               </div>
 
-              {/* Companies & Pools */}
+              {/* Companies */}
               <div className="text-center">
                 <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">
-                  {companyPositions.length + poolPositions.length}
+                  {companyPositions.length}
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Holdings</div>
                 <div className="text-xs text-slate-500 dark:text-slate-400">
-                  {companyPositions.length} companies • {poolPositions.length} pools
+                  {companyPositions.length} companies
                 </div>
               </div>
 
@@ -348,60 +340,7 @@ const UserDashboard = () => {
         )}
       </div>
 
-      {/* Pool Positions */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <div className="flex items-center">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mr-3">
-              Pool Positions
-            </h2>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {poolPositions.length} positions
-            </span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Link href="/pools">
-              <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                View All <ChevronRight className="w-4 h-4 ml-1" />
-              </button>
-            </Link>
-            <button 
-              onClick={() => setShowPoolSection(!showPoolSection)}
-              className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
-            >
-              {showPoolSection ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
-
-        {showPoolSection && (
-          <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {poolPositions.map((pool) => (
-                <Link key={pool.id} href={`/pool/${pool.id}`}>
-                  <div className="bg-purple-50 dark:bg-purple-950/30 p-4 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-950/50 transition-colors cursor-pointer">
-                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{pool.name}</h3>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Returns</span>
-                        <span className="font-medium text-purple-600 dark:text-purple-400">${pool.returns.toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Committed</span>
-                        <span className="font-medium">${pool.totalCommitted.toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Companies</span>
-                        <span className="font-medium">{pool.companies}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+  
     </div>
   );
 };
