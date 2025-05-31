@@ -143,7 +143,7 @@ const UserDashboard = () => {
                 <tbody>
                   {/* Portfolio Summary Row - Always Visible */}
                   <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-800/30 dark:bg-gray-700/30">
-                    <td className="py-4">
+                    <td className="py-4 w-1/4">
                       <div className="flex items-center">
                         <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center mr-3">
                           <span className="text-white text-xs font-bold">P</span>
@@ -154,25 +154,25 @@ const UserDashboard = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
-                    <td className="py-4 text-right hidden lg:table-cell">
-                      <div className="text-xs flex flex-col lg:flex-row lg:space-x-4 space-y-1 lg:space-y-0">
+                    <td className="py-4 text-right font-semibold w-1/6">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
+                    <td className="py-4 text-center hidden lg:table-cell w-1/3">
+                      <div className="text-xs flex flex-row justify-center space-x-6">
                         <div className="text-green-400">1D: +2.1%</div>
                         <div className="text-green-400">7D: +5.8%</div>
                         <div className="text-red-400">30D: -1.2%</div>
                       </div>
                     </td>
-                    <td className="py-4 text-right hidden sm:table-cell">
-                      <div className="w-16 h-8">
+                    <td className="py-4 text-center hidden sm:table-cell w-1/8">
+                      <div className="w-16 h-8 mx-auto">
                         <svg viewBox="0 0 64 32" className="w-full h-full">
                           <path d="M0,16 L16,20 L32,12 L48,8 L64,14" stroke="#22c55e" strokeWidth="2" fill="none"/>
                         </svg>
                       </div>
                     </td>
-                    <td className="py-4 text-right hidden md:table-cell">
+                    <td className="py-4 text-center hidden md:table-cell w-1/8">
                       <div className="text-blue-400 font-medium">100%</div>
                     </td>
-                    <td className="py-4 text-right">
+                    <td className="py-4 text-right w-1/6">
                       <button 
                         onClick={() => setShowPoolSection(!showPoolSection)}
                         className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center"
