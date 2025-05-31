@@ -117,11 +117,11 @@ const AnalyticsDashboard = () => {
     { days: '30', value: 16.2 }
   ];
 
-  // Wallet holdings data
+  // Wallet holdings data - removed pool positions
   const walletHoldings = [
     { company: 'TechStart Inc.', walletAddress: '0x1234...5678', equityValue: 225000, percentage: 18.5 },
     { company: 'AI Solutions LLC', walletAddress: '0xabcd...efgh', equityValue: 100040, percentage: 12.2 },
-    { company: 'Startup Pool', walletAddress: '0x9876...1234', equityValue: 131140, percentage: 8.3 }
+    { company: 'GreenTech Ventures', walletAddress: '0xdef0...9abc', equityValue: 127500, percentage: 25.0 }
   ];
 
   // ROI data - single line showing performance over 30-day increments with drop at 90 days

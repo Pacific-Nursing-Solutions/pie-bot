@@ -20,13 +20,13 @@ type TimeperiodType = 'day' | 'week' | 'month' | 'year';
 const TreemapChart = ({ data, title }: TreemapChartProps) => {
   const [timePeriod, setTimePeriod] = useState<TimeperiodType>('week');
   const CustomizedContent = (props: any) => {
-    const { root, depth, x, y, width, height, index, payload, colors } = props;
+    const { root, depth, x, y, width, height, index, payload } = props;
 
     if (!payload) {
       return null;
     }
 
-    // Category headers (depth 0)
+    // Category headers (depth 0) - light background with category name
     if (depth === 0 && payload.children) {
       return (
         <g>
@@ -39,28 +39,28 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
               fill: '#f8f9fa',
               stroke: '#dee2e6',
               strokeWidth: 2,
-              fillOpacity: 0.1,
+              fillOpacity: 0.3,
             }}
           />
           <text 
-            x={x + 8} 
-            y={y + 16} 
-            fill="#6c757d"
-            fontSize={12}
+            x={x + 6} 
+            y={y + 18} 
+            fill="#495057"
+            fontSize={11}
             fontWeight="bold"
           >
-            {payload.category}
+            {payload.category || payload.name}
           </text>
         </g>
       );
     }
 
-    // Individual investments (depth 1)
-    if (depth === 1) {
+    // Individual investments (depth 1) - colored by performance
+    if (depth === 1 && !payload.children) {
       const isGain = payload.isGain || false;
       const name = payload.name || '';
       const gain = payload.gain || 0;
-      const gainPercent = ((gain / payload.value) * 100).toFixed(2);
+      const gainPercent = payload.value > 0 ? ((gain / payload.value) * 100).toFixed(1) : '0.0';
 
       return (
         <g>
@@ -74,28 +74,28 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
               stroke: '#fff',
               strokeWidth: 1,
               strokeOpacity: 1,
-              fillOpacity: 0.8,
+              fillOpacity: 0.9,
             }}
           />
-          {width > 50 && height > 30 ? (
+          {width > 40 && height > 25 ? (
             <text 
               x={x + width / 2} 
-              y={y + height / 2 - 5} 
+              y={y + height / 2 - 3} 
               textAnchor="middle"
               fill="#fff"
-              fontSize={width > 100 ? 11 : 9}
+              fontSize={width > 80 ? 10 : 8}
               fontWeight="bold"
             >
-              {name.length > 8 ? name.substring(0, 8) + '...' : name}
+              {name.length > 12 ? name.substring(0, 10) + '...' : name}
             </text>
           ) : null}
-          {width > 50 && height > 45 ? (
+          {width > 50 && height > 40 ? (
             <text 
               x={x + width / 2} 
-              y={y + height / 2 + 10} 
+              y={y + height / 2 + 12} 
               textAnchor="middle"
               fill="#fff"
-              fontSize={8}
+              fontSize={7}
             >
               {isGain ? '+' : ''}{gainPercent}%
             </text>
@@ -139,6 +139,7 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
             stroke="#fff"
             fill="#8884d8"
             content={<CustomizedContent />}
+            nameKey="name"
           >
             <Tooltip 
               contentStyle={{ 
