@@ -148,13 +148,13 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
                   strokeWidth="2"
                   className="transition-opacity hover:opacity-80"
                 />
-                {rect.width > 40 && rect.height > 30 && (
+                {rect.width > 30 && rect.height > 25 && (
                   <>
                     <text
                       x={rect.x + rect.width / 2}
-                      y={rect.y + rect.height / 2 - 8}
+                      y={rect.y + rect.height / 2 - 6}
                       textAnchor="middle"
-                      fontSize="12"
+                      fontSize={rect.width > 60 ? "12" : "10"}
                       fontWeight="bold"
                       fill={Math.abs(rect.change) > 3 ? '#ffffff' : '#000000'}
                     >
@@ -162,19 +162,19 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
                     </text>
                     <text
                       x={rect.x + rect.width / 2}
-                      y={rect.y + rect.height / 2 + 6}
+                      y={rect.y + rect.height / 2 + 8}
                       textAnchor="middle"
-                      fontSize="10"
+                      fontSize={rect.width > 60 ? "10" : "8"}
                       fill={Math.abs(rect.change) > 3 ? '#ffffff' : '#000000'}
                     >
                       {rect.change >= 0 ? '+' : ''}{rect.change.toFixed(1)}%
                     </text>
-                    {rect.height > 45 && (
+                    {rect.height > 35 && rect.width > 50 && (
                       <text
                         x={rect.x + rect.width / 2}
-                        y={rect.y + rect.height / 2 + 18}
+                        y={rect.y + rect.height / 2 + 20}
                         textAnchor="middle"
-                        fontSize="9"
+                        fontSize="8"
                         fill={Math.abs(rect.change) > 3 ? '#ffffff' : '#000000'}
                         opacity="0.8"
                       >

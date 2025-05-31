@@ -221,26 +221,7 @@ const AnalyticsDashboard = () => {
         title="Market Performance Heatmap"
       />
 
-      {/* Portfolio-Level Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <SimpleMetric
-          label="Total Portfolio Value"
-          value="$4.16M"
-          sparklineData={portfolioValueData}
-          trend="up"
-          startDate="30 days"
-          endDate="360 days"
-        />
-        
-        <SimpleMetric
-          label="ROI"
-          value="16.2%"
-          sparklineData={equityHoldingsData}
-          trend="up"
-          startDate="30 days"
-          endDate="360 days"
-        />
-      </div>
+
 
       {/* Portfolio Holdings and Performance Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
