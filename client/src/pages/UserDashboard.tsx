@@ -297,9 +297,26 @@ const UserDashboard = () => {
       {/* Compensation Tracking */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-            Compensation & Contributions
-          </h2>
+          <div className="flex items-center space-x-4">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              Compensation & Contributions
+            </h2>
+            <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              {(['7d', '30d', '1y'] as const).map((period) => (
+                <button
+                  key={period}
+                  onClick={() => setCompensationPeriod(period)}
+                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                    compensationPeriod === period
+                      ? 'bg-orange-600 text-white'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                  }`}
+                >
+                  {period === '7d' ? '7 Days' : period === '30d' ? '30 Days' : '1 Year'}
+                </button>
+              ))}
+            </div>
+          </div>
           <button 
             onClick={() => setShowCompensationSection(!showCompensationSection)}
             className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
