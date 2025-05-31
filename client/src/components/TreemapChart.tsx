@@ -88,17 +88,21 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
   const rectangles = createTreemapLayout();
 
   const getColor = (change: number) => {
-    // R-style gradient: red (negative) -> white (0) -> green (positive)
+    // Gradient from bright red (losses) through neutral to bright green (gains)
     if (change > 0) {
-      // Green scale for positive changes
-      const intensity = Math.min(change / 8, 1);
-      return `hsl(120, ${50 + intensity * 50}%, ${60 - intensity * 20}%)`;
+      // Positive changes: light green to bright green
+      const intensity = Math.min(change / 10, 1); // Normalize to 0-1
+      const lightness = 75 - (intensity * 40); // 75% to 35% lightness
+      const saturation = 40 + (intensity * 50); // 40% to 90% saturation
+      return `hsl(120, ${saturation}%, ${lightness}%)`;
     } else if (change < 0) {
-      // Red scale for negative changes
-      const intensity = Math.min(Math.abs(change) / 8, 1);
-      return `hsl(0, ${50 + intensity * 50}%, ${60 - intensity * 20}%)`;
+      // Negative changes: light red to bright red
+      const intensity = Math.min(Math.abs(change) / 10, 1); // Normalize to 0-1
+      const lightness = 75 - (intensity * 40); // 75% to 35% lightness
+      const saturation = 40 + (intensity * 50); // 40% to 90% saturation
+      return `hsl(0, ${saturation}%, ${lightness}%)`;
     }
-    return '#ffffff'; // White for zero change
+    return '#f5f5f5'; // Very light gray for zero change
   };
 
   const formatValue = (value: number) => {
