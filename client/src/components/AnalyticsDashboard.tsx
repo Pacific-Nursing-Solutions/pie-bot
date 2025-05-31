@@ -87,34 +87,34 @@ const AnalyticsDashboard = () => {
 
   // Portfolio value data over 30-day increments with major drop at 90 days
   const portfolioValueData = [
-    { days: '30', value: 4160000 },
-    { days: '60', value: 4140000 },
-    { days: '90', value: 3850000 }, // Big drop 90 days ago
-    { days: '120', value: 3920000 },
-    { days: '150', value: 4050000 },
-    { days: '180', value: 4020000 },
-    { days: '210', value: 4100000 },
-    { days: '240', value: 3950000 },
-    { days: '270', value: 3980000 },
-    { days: '300', value: 3800000 },
+    { days: '360', value: 3750000 },
     { days: '330', value: 3900000 },
-    { days: '360', value: 3750000 }
+    { days: '300', value: 3800000 },
+    { days: '270', value: 3980000 },
+    { days: '240', value: 3950000 },
+    { days: '210', value: 4100000 },
+    { days: '180', value: 4020000 },
+    { days: '150', value: 4050000 },
+    { days: '120', value: 3920000 },
+    { days: '90', value: 3850000 }, // Big drop 90 days ago
+    { days: '60', value: 4140000 },
+    { days: '30', value: 4160000 }
   ];
 
   // Equity holdings percentage over same time periods
   const equityHoldingsData = [
-    { days: '30', value: 16.2 },
-    { days: '60', value: 16.1 },
-    { days: '90', value: 14.8 }, // Corresponding drop
-    { days: '120', value: 15.2 },
-    { days: '150', value: 15.8 },
-    { days: '180', value: 15.6 },
-    { days: '210', value: 16.0 },
-    { days: '240', value: 15.4 },
-    { days: '270', value: 15.7 },
-    { days: '300', value: 14.9 },
+    { days: '360', value: 14.2 },
     { days: '330', value: 15.3 },
-    { days: '360', value: 14.2 }
+    { days: '300', value: 14.9 },
+    { days: '270', value: 15.7 },
+    { days: '240', value: 15.4 },
+    { days: '210', value: 16.0 },
+    { days: '180', value: 15.6 },
+    { days: '150', value: 15.8 },
+    { days: '120', value: 15.2 },
+    { days: '90', value: 14.8 }, // Corresponding drop
+    { days: '60', value: 16.1 },
+    { days: '30', value: 16.2 }
   ];
 
   // Wallet holdings data
