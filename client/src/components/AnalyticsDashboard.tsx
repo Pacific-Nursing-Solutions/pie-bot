@@ -190,18 +190,56 @@ const AnalyticsDashboard = () => {
       <div className="grid grid-cols-1 gap-6">
         <TreemapChart 
           data={[
-            { name: 'TechStart Inc.', value: 2450000, gain: 8500, isGain: true },
-            { name: 'AI Solutions LLC', value: 980000, gain: 3200, isGain: true },
-            { name: 'GreenTech Ventures', value: 470000, gain: -2100, isGain: false },
-            { name: 'Startup Pool', value: 260000, gain: 1800, isGain: true },
-            { name: 'Advisory Shares', value: 145000, gain: 650, isGain: true },
-            { name: 'Previous Exit', value: 89000, gain: -1200, isGain: false },
-            { name: 'Seed Investment A', value: 185000, gain: 2400, isGain: true },
-            { name: 'Angel Round B', value: 125000, gain: -850, isGain: false },
-            { name: 'Convertible Note C', value: 95000, gain: 1100, isGain: true },
-            { name: 'SAFE Agreement D', value: 75000, gain: 350, isGain: true },
-            { name: 'Options Package E', value: 55000, gain: -420, isGain: false },
-            { name: 'Warrant Holdings F', value: 42000, gain: 280, isGain: true }
+            {
+              name: 'Startups',
+              category: 'Startups',
+              value: 4065000,
+              gain: 0,
+              isGain: true,
+              children: [
+                { name: 'TechStart Inc.', value: 2450000, gain: 8500, isGain: true, category: 'Startups' },
+                { name: 'AI Solutions LLC', value: 980000, gain: 3200, isGain: true, category: 'Startups' },
+                { name: 'GreenTech Ventures', value: 470000, gain: -2100, isGain: false, category: 'Startups' },
+                { name: 'BioTech Alpha', value: 165000, gain: 950, isGain: true, category: 'Startups' }
+              ]
+            },
+            {
+              name: 'Investment Pools',
+              category: 'Investment Pools',
+              value: 387000,
+              gain: 0,
+              isGain: true,
+              children: [
+                { name: 'Startup Pool', value: 260000, gain: 1800, isGain: true, category: 'Investment Pools' },
+                { name: 'VC Fund A', value: 85000, gain: -420, isGain: false, category: 'Investment Pools' },
+                { name: 'Angel Pool', value: 42000, gain: 280, isGain: true, category: 'Investment Pools' }
+              ]
+            },
+            {
+              name: 'Equity Securities',
+              category: 'Equity Securities',
+              value: 465000,
+              gain: 0,
+              isGain: true,
+              children: [
+                { name: 'Seed Round A', value: 185000, gain: 2400, isGain: true, category: 'Equity Securities' },
+                { name: 'Advisory Shares', value: 145000, gain: 650, isGain: true, category: 'Equity Securities' },
+                { name: 'Options Package', value: 95000, gain: 1100, isGain: true, category: 'Equity Securities' },
+                { name: 'Warrant Holdings', value: 40000, gain: -320, isGain: false, category: 'Equity Securities' }
+              ]
+            },
+            {
+              name: 'Convertible Securities',
+              category: 'Convertible Securities',
+              value: 282000,
+              gain: 0,
+              isGain: true,
+              children: [
+                { name: 'Angel Round B', value: 125000, gain: -850, isGain: false, category: 'Convertible Securities' },
+                { name: 'Convertible Note C', value: 95000, gain: 1100, isGain: true, category: 'Convertible Securities' },
+                { name: 'SAFE Agreement D', value: 62000, gain: 380, isGain: true, category: 'Convertible Securities' }
+              ]
+            }
           ]}
           title="Weekly Performance - All Investments"
         />

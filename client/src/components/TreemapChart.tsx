@@ -6,6 +6,8 @@ interface TreemapData {
   value: number;
   gain: number;
   isGain: boolean;
+  category?: string;
+  children?: TreemapData[];
 }
 
 interface TreemapChartProps {
@@ -20,69 +22,89 @@ const TreemapChart = ({ data, title }: TreemapChartProps) => {
   const CustomizedContent = (props: any) => {
     const { root, depth, x, y, width, height, index, payload, colors } = props;
 
-    // Handle undefined payload or missing properties
-    if (!payload || depth !== 1) {
+    if (!payload) {
+      return null;
+    }
+
+    // Category headers (depth 0)
+    if (depth === 0 && payload.children) {
       return (
-        <rect
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          style={{
-            fill: '#c8956d',
-            stroke: '#fff',
-            strokeWidth: 1,
-            strokeOpacity: 1,
-            fillOpacity: 0.8,
-          }}
-        />
+        <g>
+          <rect
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            style={{
+              fill: '#f8f9fa',
+              stroke: '#dee2e6',
+              strokeWidth: 2,
+              fillOpacity: 0.1,
+            }}
+          />
+          <text 
+            x={x + 8} 
+            y={y + 16} 
+            fill="#6c757d"
+            fontSize={12}
+            fontWeight="bold"
+          >
+            {payload.category}
+          </text>
+        </g>
       );
     }
 
-    const isGain = payload.isGain || false;
-    const name = payload.name || '';
-    const gain = payload.gain || 0;
+    // Individual investments (depth 1)
+    if (depth === 1) {
+      const isGain = payload.isGain || false;
+      const name = payload.name || '';
+      const gain = payload.gain || 0;
+      const gainPercent = ((gain / payload.value) * 100).toFixed(2);
 
-    return (
-      <g>
-        <rect
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          style={{
-            fill: isGain ? '#86efac' : '#fca5a5',
-            stroke: '#fff',
-            strokeWidth: 2,
-            strokeOpacity: 1,
-            fillOpacity: 0.8,
-          }}
-        />
-        {width > 60 ? (
-          <text 
-            x={x + width / 2} 
-            y={y + height / 2} 
-            textAnchor="middle"
-            fill="#fff"
-            fontSize={width > 80 ? 12 : 10}
-            fontWeight="bold"
-          >
-            {name}
-          </text>
-        ) : null}
-        {height > 40 ? (
-          <text 
-            x={x + width / 2} 
-            y={y + height / 2 + 15} 
-            textAnchor="middle"
-            fill="#fff"
-            fontSize={9}
-          >
-            {isGain ? '+' : ''}${(gain / 1000).toFixed(0)}K
-          </text>
-        ) : null}
-      </g>
-    );
+      return (
+        <g>
+          <rect
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            style={{
+              fill: isGain ? '#22c55e' : '#ef4444',
+              stroke: '#fff',
+              strokeWidth: 1,
+              strokeOpacity: 1,
+              fillOpacity: 0.8,
+            }}
+          />
+          {width > 50 && height > 30 ? (
+            <text 
+              x={x + width / 2} 
+              y={y + height / 2 - 5} 
+              textAnchor="middle"
+              fill="#fff"
+              fontSize={width > 100 ? 11 : 9}
+              fontWeight="bold"
+            >
+              {name.length > 8 ? name.substring(0, 8) + '...' : name}
+            </text>
+          ) : null}
+          {width > 50 && height > 45 ? (
+            <text 
+              x={x + width / 2} 
+              y={y + height / 2 + 10} 
+              textAnchor="middle"
+              fill="#fff"
+              fontSize={8}
+            >
+              {isGain ? '+' : ''}{gainPercent}%
+            </text>
+          ) : null}
+        </g>
+      );
+    }
+
+    return null;
   };
 
   return (

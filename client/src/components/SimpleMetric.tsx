@@ -62,10 +62,10 @@ const SimpleMetric = ({ label, value, sparklineData, trend, startDate, endDate }
             <Line
               type="monotone"
               dataKey="value"
-              stroke={trend === 'up' ? 'var(--data-success)' : trend === 'down' ? 'var(--data-danger)' : '#c8956d'}
+              stroke="#c8956d"
               strokeWidth={2}
-              dot={{ fill: trend === 'up' ? 'var(--data-success)' : trend === 'down' ? 'var(--data-danger)' : '#c8956d', strokeWidth: 0, r: 2 }}
-              activeDot={{ r: 4, fill: trend === 'up' ? 'var(--data-success)' : trend === 'down' ? 'var(--data-danger)' : '#c8956d' }}
+              dot={{ fill: '#c8956d', strokeWidth: 0, r: 2 }}
+              activeDot={{ r: 4, fill: '#c8956d' }}
             />
           </LineChart>
         </ResponsiveContainer>
