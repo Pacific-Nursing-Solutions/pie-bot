@@ -130,9 +130,10 @@ const UserDashboard = () => {
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-700">
                     <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Equity %</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Value Performance</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">Equity Performance</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Market Cap</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                   </tr>
                 </thead>
@@ -150,9 +151,28 @@ const UserDashboard = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 text-right font-semibold">100%</td>
+                    <td className="py-4 text-right hidden lg:table-cell">
+                      <div className="text-xs space-y-1">
+                        <div className="text-green-600">+2.1%</div>
+                        <div className="text-green-600">+5.8%</div>
+                        <div className="text-red-600">-1.2%</div>
+                      </div>
+                    </td>
+                    <td className="py-4 text-right hidden md:table-cell">
+                      <div className="text-xs space-y-1">
+                        <div className="text-gray-600">0.0%</div>
+                        <div className="text-gray-600">0.0%</div>
+                        <div className="text-gray-600">0.0%</div>
+                      </div>
+                    </td>
                     <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
-                    <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.marketCap, 0).toLocaleString()}</td>
+                    <td className="py-4 text-right hidden sm:table-cell">
+                      <div className="w-16 h-8">
+                        <svg viewBox="0 0 64 32" className="w-full h-full">
+                          <path d="M0,16 L16,20 L32,12 L48,8 L64,14" stroke="#22c55e" strokeWidth="2" fill="none"/>
+                        </svg>
+                      </div>
+                    </td>
                     <td className="py-4 text-right">
                       <button 
                         onClick={() => setShowPoolSection(!showPoolSection)}
@@ -165,31 +185,83 @@ const UserDashboard = () => {
                   </tr>
 
                   {/* Individual Company Positions - Expandable */}
-                  {showPoolSection && companyPositions.map((company) => (
-                    <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <td className="py-3 pl-8">
-                        <div className="flex items-center">
-                          <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
-                            <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-900 dark:text-gray-100">{company.name}</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">{company.entityType}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-3 text-right font-medium">{company.userEquityPercentage}%</td>
-                      <td className="py-3 text-right font-medium">${company.userEquityValue.toLocaleString()}</td>
-                      <td className="py-3 text-right">${company.marketCap.toLocaleString()}</td>
-                      <td className="py-3 text-right">
-                        <Link href={`/company/${company.id}/dashboard`}>
-                          <button className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm">
-                            View Details
-                          </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
+                  {showPoolSection && [...companyPositions]
+                    .sort((a, b) => b.userEquityValue - a.userEquityValue)
+                    .map((company, index) => {
+                      // Generate mock performance data for each company
+                      const valuePerformance = {
+                        daily: (Math.random() - 0.5) * 6, // -3% to +3%
+                        weekly: (Math.random() - 0.5) * 12, // -6% to +6%
+                        monthly: (Math.random() - 0.5) * 20 // -10% to +10%
+                      };
+                      const equityPerformance = {
+                        daily: (Math.random() - 0.5) * 2, // -1% to +1%
+                        weekly: (Math.random() - 0.5) * 4, // -2% to +2%
+                        monthly: (Math.random() - 0.5) * 8 // -4% to +4%
+                      };
+                      
+                      return (
+                        <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                          <td className="py-3 pl-8">
+                            <div className="flex items-center">
+                              <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
+                                <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
+                              </div>
+                              <div>
+                                <div className="font-medium text-gray-900 dark:text-gray-100">{company.name}</div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400">{company.userEquityPercentage}% equity</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 text-right hidden lg:table-cell">
+                            <div className="text-xs space-y-1">
+                              <div className={valuePerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
+                              </div>
+                              <div className={valuePerformance.weekly >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                {valuePerformance.weekly >= 0 ? '+' : ''}{valuePerformance.weekly.toFixed(1)}%
+                              </div>
+                              <div className={valuePerformance.monthly >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                {valuePerformance.monthly >= 0 ? '+' : ''}{valuePerformance.monthly.toFixed(1)}%
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 text-right hidden md:table-cell">
+                            <div className="text-xs space-y-1">
+                              <div className={equityPerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                {equityPerformance.daily >= 0 ? '+' : ''}{equityPerformance.daily.toFixed(1)}%
+                              </div>
+                              <div className={equityPerformance.weekly >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                {equityPerformance.weekly >= 0 ? '+' : ''}{equityPerformance.weekly.toFixed(1)}%
+                              </div>
+                              <div className={equityPerformance.monthly >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                {equityPerformance.monthly >= 0 ? '+' : ''}{equityPerformance.monthly.toFixed(1)}%
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 text-right font-medium">${company.userEquityValue.toLocaleString()}</td>
+                          <td className="py-3 text-right hidden sm:table-cell">
+                            <div className="w-16 h-8">
+                              <svg viewBox="0 0 64 32" className="w-full h-full">
+                                <path 
+                                  d={`M0,${16 + Math.sin(index) * 8} L16,${16 + Math.sin(index + 1) * 8} L32,${16 + Math.sin(index + 2) * 8} L48,${16 + Math.sin(index + 3) * 8} L64,${16 + Math.sin(index + 4) * 8}`}
+                                  stroke={valuePerformance.monthly >= 0 ? '#22c55e' : '#ef4444'} 
+                                  strokeWidth="2" 
+                                  fill="none"
+                                />
+                              </svg>
+                            </div>
+                          </td>
+                          <td className="py-3 text-right">
+                            <Link href={`/company/${company.id}/dashboard`}>
+                              <button className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm">
+                                View Details
+                              </button>
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
