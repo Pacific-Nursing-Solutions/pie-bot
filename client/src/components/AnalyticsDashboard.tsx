@@ -6,6 +6,7 @@ import WalletSnapshot from './WalletSnapshot';
 import EquityGrowthChart from './EquityGrowthChart';
 import DistributionsChart from './DistributionsChart';
 import TreemapChart from './TreemapChart';
+import HoldingsOverview from './HoldingsOverview';
 import { 
   AlertTriangle,
   CheckCircle,
@@ -156,38 +157,65 @@ const AnalyticsDashboard = () => {
     { period: '30', amount: 3600 }
   ];
 
+  // Holdings overview data
+  const holdingsPositions = [
+    {
+      id: 1,
+      name: 'TechStart Inc.',
+      symbol: 'TSI',
+      change24h: -2.17,
+      change7d: -4.24,
+      marketCap: 2450000,
+      volume24h: 57287083,
+      supply: 19870000,
+      sparklineData: portfolioValueData.slice(6).map(d => ({ value: d.value / 1000 }))
+    },
+    {
+      id: 2,
+      name: 'AI Solutions LLC',
+      symbol: 'ASL',
+      change24h: -4.36,
+      change7d: -1.35,
+      marketCap: 980000,
+      volume24h: 25371333,
+      supply: 12072000,
+      sparklineData: portfolioValueData.slice(4).map(d => ({ value: d.value / 2000 }))
+    },
+    {
+      id: 3,
+      name: 'GreenTech Ventures',
+      symbol: 'GTV',
+      change24h: 0.02,
+      change7d: 0.02,
+      marketCap: 470000,
+      volume24h: 10123686,
+      supply: 15303000,
+      sparklineData: portfolioValueData.slice(2).map(d => ({ value: d.value / 3000 }))
+    },
+    {
+      id: 4,
+      name: 'Startup Pool',
+      symbol: 'SP',
+      change24h: 1.24,
+      change7d: 2.15,
+      marketCap: 260000,
+      volume24h: 5428971,
+      supply: 8350000,
+      sparklineData: portfolioValueData.map(d => ({ value: d.value / 4000 }))
+    }
+  ];
+
+  const portfolioSparklineData = portfolioValueData.map(d => ({ value: d.value }));
+
   return (
     <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
-      {/* Portfolio-Level Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <SimpleMetric
-          label="Total Portfolio Value"
-          value="$4.16M"
-          sparklineData={portfolioValueData}
-          trend="up"
-          startDate="30 days"
-          endDate="360 days"
+      {/* Holdings Overview and Heatmap */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <HoldingsOverview 
+          positions={holdingsPositions}
+          portfolioSparkline={portfolioSparklineData}
         />
         
-        <SimpleMetric
-          label="ROI"
-          value="16.2%"
-          sparklineData={equityHoldingsData}
-          trend="up"
-          startDate="30 days"
-          endDate="360 days"
-        />
-      </div>
-
-      {/* Portfolio Holdings and Performance Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <PortfolioChart projects={portfolioProjects} />
-        <EquityGrowthChart data={growthData} />
-        <DistributionsChart data={distributionData} />
-      </div>
-
-      {/* Gains and Losses Treemap */}
-      <div className="grid grid-cols-1 gap-6">
         <TreemapChart 
           data={[
             {
@@ -244,6 +272,36 @@ const AnalyticsDashboard = () => {
           title="Weekly Performance - All Investments"
         />
       </div>
+
+      {/* Portfolio-Level Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <SimpleMetric
+          label="Total Portfolio Value"
+          value="$4.16M"
+          sparklineData={portfolioValueData}
+          trend="up"
+          startDate="30 days"
+          endDate="360 days"
+        />
+        
+        <SimpleMetric
+          label="ROI"
+          value="16.2%"
+          sparklineData={equityHoldingsData}
+          trend="up"
+          startDate="30 days"
+          endDate="360 days"
+        />
+      </div>
+
+      {/* Portfolio Holdings and Performance Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <PortfolioChart projects={portfolioProjects} />
+        <EquityGrowthChart data={growthData} />
+        <DistributionsChart data={distributionData} />
+      </div>
+
+
 
       {/* Wallet Snapshot and Individual Ownership */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
