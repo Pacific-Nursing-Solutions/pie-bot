@@ -140,7 +140,7 @@ const UserDashboard = () => {
                 </thead>
                 <tbody>
                   {/* Portfolio Summary Row - Always Visible */}
-                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
+                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-800/30 dark:bg-gray-700/30">
                     <td className="py-4">
                       <div className="flex items-center">
                         <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center mr-3">
@@ -154,16 +154,16 @@ const UserDashboard = () => {
                     </td>
                     <td className="py-4 text-right hidden lg:table-cell">
                       <div className="text-xs space-y-1">
-                        <div className="text-green-600">+2.1%</div>
-                        <div className="text-green-600">+5.8%</div>
-                        <div className="text-red-600">-1.2%</div>
+                        <div className="text-green-400">+2.1%</div>
+                        <div className="text-green-400">+5.8%</div>
+                        <div className="text-red-400">-1.2%</div>
                       </div>
                     </td>
                     <td className="py-4 text-right hidden md:table-cell">
                       <div className="text-xs space-y-1">
-                        <div className="text-gray-600">0.0%</div>
-                        <div className="text-gray-600">0.0%</div>
-                        <div className="text-gray-600">0.0%</div>
+                        <div className="text-gray-400">0.0%</div>
+                        <div className="text-gray-400">0.0%</div>
+                        <div className="text-gray-400">0.0%</div>
                       </div>
                     </td>
                     <td className="py-4 text-right font-semibold">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
