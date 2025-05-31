@@ -50,34 +50,20 @@ const HoldingsOverview = ({ positions, portfolioSparkline }: HoldingsOverviewPro
         </div>
       </div>
 
-      {/* Portfolio Overview */}
+      {/* Portfolio Summary Stats */}
       <div className="px-6 py-4 border-b border-[var(--grid-line)]">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-[var(--primary-brown)] rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">P</span>
-            </div>
-            <div>
-              <span className="font-medium text-[var(--text-primary)]">Total Portfolio</span>
-              <div className="flex items-center gap-4 text-sm text-[var(--text-secondary)]">
-                <span className="text-red-500">-2.8%</span>
-                <span className="text-red-500">-5.2%</span>
-                <span>{formatNumber(4160000)}</span>
-              </div>
-            </div>
+        <div className="grid grid-cols-3 gap-8 text-center">
+          <div>
+            <h4 className="text-sm text-[var(--text-secondary)] mb-2">Equity %</h4>
+            <p className="text-2xl font-bold text-[var(--text-primary)]">40.5%</p>
           </div>
-          <div className="w-32 h-12">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={portfolioSparkline}>
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#c8956d"
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+          <div>
+            <h4 className="text-sm text-[var(--text-secondary)] mb-2">Value</h4>
+            <p className="text-2xl font-bold text-[var(--text-primary)]">$2,115,000</p>
+          </div>
+          <div>
+            <h4 className="text-sm text-[var(--text-secondary)] mb-2">Market Cap</h4>
+            <p className="text-2xl font-bold text-[var(--text-primary)]">$11,500,000</p>
           </div>
         </div>
       </div>
