@@ -413,11 +413,9 @@ const UserDashboard = () => {
                         </td>
                         <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium">{timeContributed.toLocaleString()}h</div>
-                          <div className="text-xs text-gray-500">~{Math.floor(timeContributed/40)} weeks</div>
                         </td>
                         <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium">${capitalContributed.toLocaleString()}</div>
-                          <div className="text-xs text-gray-500">Cash & assets</div>
                         </td>
                         <td className="py-3 px-3 text-right font-semibold w-1/6">${totalEarned.toLocaleString()}</td>
                         <td className="py-3 px-3 text-right w-1/6">
