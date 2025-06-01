@@ -120,7 +120,7 @@ const UserDashboard = () => {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
-            Your Holdings Overview
+            Portfolio
           </h2>
           <button 
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
