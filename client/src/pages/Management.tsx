@@ -200,8 +200,42 @@ const Management = () => {
       status: 'pending',
       description: "Team communication and notifications",
       lastSync: "Pending setup"
+    },
+    {
+      id: 5,
+      name: "Dentity",
+      type: "Identity Verification",
+      status: 'disconnected',
+      description: "Decentralized identity verification and KYC",
+      lastSync: "Never"
+    },
+    {
+      id: 6,
+      name: "Worldcoin",
+      type: "Identity Verification",
+      status: 'disconnected',
+      description: "Proof of personhood and identity verification",
+      lastSync: "Never"
+    },
+    {
+      id: 7,
+      name: "Civic",
+      type: "Identity Verification",
+      status: 'disconnected',
+      description: "Identity verification and compliance solutions",
+      lastSync: "Never"
+    },
+    {
+      id: 8,
+      name: "BrightID",
+      type: "Identity Verification",
+      status: 'disconnected',
+      description: "Social identity network for humans",
+      lastSync: "Never"
     }
   ]);
+
+  const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
 
   const [personalContributions] = useState<PersonalContribution[]>([
     {
@@ -669,36 +703,69 @@ const Management = () => {
 
         {!isIntegrationsMinimized && (
           <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
               {integrations.map((integration) => (
-                <div key={integration.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-violet-400 to-violet-500 rounded-lg flex items-center justify-center text-white">
-                        {integration.name[0]}
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{integration.name}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{integration.type}</p>
-                      </div>
-                    </div>
-                    <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(integration.status)}`}>
-                      {integration.status}
-                    </span>
+                <div 
+                  key={integration.id} 
+                  className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors"
+                  onClick={() => setSelectedIntegration(integration)}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className={`w-3 h-3 rounded-full ${
+                      integration.status === 'connected' ? 'bg-green-500' :
+                      integration.status === 'pending' ? 'bg-yellow-500' :
+                      'bg-gray-400'
+                    }`}></div>
+                    <span className="font-medium text-gray-900 dark:text-gray-100">{integration.name}</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">{integration.type}</span>
                   </div>
-                  
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{integration.description}</p>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      Last sync: {integration.lastSync}
-                    </span>
-                    <button className="text-violet-600 hover:text-violet-700 text-sm font-medium">
-                      Configure
-                    </button>
-                  </div>
+                  <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(integration.status)}`}>
+                    {integration.status}
+                  </span>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Integration Details Popup */}
+        {selectedIntegration && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setSelectedIntegration(null)}>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-gradient-to-r from-violet-400 to-violet-500 rounded-lg flex items-center justify-center text-white">
+                    {selectedIntegration.name[0]}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{selectedIntegration.name}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{selectedIntegration.type}</p>
+                  </div>
+                </div>
+                <span className={`px-3 py-1 text-sm rounded-full ${getStatusColor(selectedIntegration.status)}`}>
+                  {selectedIntegration.status}
+                </span>
+              </div>
+              
+              <p className="text-gray-600 dark:text-gray-400 mb-4">{selectedIntegration.description}</p>
+              
+              <div className="mb-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Last sync: {selectedIntegration.lastSync}
+                </p>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <button 
+                  onClick={() => setSelectedIntegration(null)}
+                  className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                >
+                  Close
+                </button>
+                <button className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors">
+                  {selectedIntegration.status === 'connected' ? 'Manage' : 'Connect'}
+                </button>
+              </div>
             </div>
           </div>
         )}
