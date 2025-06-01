@@ -131,50 +131,98 @@ const UserDashboard = () => {
         </div>
 
         {!isPortfolioMinimized && (
-          <div className="p-4 sm:p-6">
-            {/* Portfolio Total Summary - Top Line */}
-            <div className="mb-6 p-4 bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-950/20 dark:to-amber-950/20 rounded-lg border border-orange-200 dark:border-orange-800">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-white text-sm font-bold">P</span>
-                  </div>
-                  <div>
-                    <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">Portfolio</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">{companyPositions.length} companies</div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    ${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-green-600 dark:text-green-400">+5.8% (7d)</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Individual Holdings Table */}
+          <div className="p-6">
+            {/* Portfolio Summary - Always Visible */}
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-700">
                     <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
-                    <th className="text-center py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell">Performance</th>
-                    <th className="text-center py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell">Chart</th>
-                    <th className="text-center py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
-                    <th className="text-center py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden xl:table-cell">Circulating Supply</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell"></th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell"></th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden xl:table-cell">Circulating Supply</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Portfolio Summary Row - Always Visible */}
+                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-800/30 dark:bg-gray-700/30">
+                    <td className="py-4 w-1/4">
+                      <div className="flex items-center">
+                        <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center mr-3">
+                          <span className="text-white text-xs font-bold">P</span>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900 dark:text-gray-100">Total Portfolio</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{companyPositions.length} companies</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-4 text-right font-semibold w-1/6">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
+                    <td className="py-4 text-center hidden lg:table-cell w-1/3">
+                      <div className="text-xs flex flex-row justify-center space-x-6">
+                        <div className="text-green-400">1D: +2.1%</div>
+                        <div className="text-green-400">7D: +5.8%</div>
+                        <div className="text-red-400">30D: -1.2%</div>
+                      </div>
+                    </td>
+                    <td className="py-4 text-center hidden sm:table-cell w-1/8">
+                      <div className="w-20 h-12 mx-auto">
+                        <svg viewBox="0 0 80 48" className="w-full h-full">
+                          <path 
+                            d={(() => {
+                              const seed = 12345; // Fixed seed for consistent but random-looking data
+                              let lastPrice = 24;
+                              const trend = 0.98 + Math.random() * 0.04; // Slight upward trend
+                              
+                              return Array.from({ length: 40 }, (_, i) => {
+                                const x = i * 2;
+                                // Create realistic price movement
+                                const volatility = 0.8 + Math.sin(i * 0.1) * 0.3;
+                                const randomWalk = (Math.sin(seed + i * 1.7) + Math.sin(seed + i * 3.2) + Math.sin(seed + i * 0.8)) / 3;
+                                const priceChange = randomWalk * volatility * trend;
+                                lastPrice = Math.max(8, Math.min(40, lastPrice + priceChange));
+                                
+                                const scaledY = 48 - (lastPrice / 48) * 48;
+                                return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
+                              }).join(' ');
+                            })()}
+                            stroke="#22c55e" 
+                            strokeWidth="2" 
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </td>
+                    <td className="py-4 text-center hidden md:table-cell w-1/8">
+                      <div className="text-blue-400 font-medium">100%</div>
+                    </td>
+                    <td className="py-4 text-center hidden xl:table-cell w-1/6">
+                      <div className="text-center">
+                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
+                          {companyPositions.reduce((sum, c) => sum + Math.floor(c.marketCap / 1000), 0).toLocaleString()}M Tokens
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-1">
+                          <div className="bg-blue-500 h-2 rounded-full" style={{ width: '68%' }}></div>
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">68% of max supply</div>
+                      </div>
+                    </td>
+                    <td className="py-4 text-right w-1/6">
                       <button 
                         onClick={() => setShowPoolSection(!showPoolSection)}
-                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center justify-end ml-auto"
+                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center justify-end"
                       >
                         {showPoolSection ? 'Collapse' : 'Expand'}
                         {showPoolSection ? <ChevronUp className="w-4 h-4 ml-1" /> : <ChevronDown className="w-4 h-4 ml-1" />}
                       </button>
-                    </th>
+                    </td>
                   </tr>
-                </thead>
+                </tbody>
               </table>
             </div>
 
