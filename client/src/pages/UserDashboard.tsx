@@ -417,7 +417,9 @@ const UserDashboard = () => {
                         <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium">${capitalContributed.toLocaleString()}</div>
                         </td>
-                        <td className="py-3 px-3 text-right font-semibold w-1/6">${totalEarned.toLocaleString()}</td>
+                        <td className="py-3 px-3 text-right w-1/6">
+                          <div className="font-semibold">${totalEarned.toLocaleString()}</div>
+                        </td>
                         <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium text-green-600">${cashComp.toLocaleString()}</div>
                           <div className="text-xs text-gray-500">{Math.round((cashComp/totalEarned)*100)}%</div>
