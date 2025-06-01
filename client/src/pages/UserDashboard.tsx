@@ -381,12 +381,12 @@ const UserDashboard = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Time Contributed</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Capital Contributed</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Total Earned</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Cash Compensation</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Equity Compensation</th>
+                    <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/5">Company</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/6">Time Contributed</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/6">Capital Contributed</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/6">Total Earned</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/6">Cash Compensation</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/6">Equity Compensation</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -400,7 +400,7 @@ const UserDashboard = () => {
                     
                     return (
                       <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td className="py-3">
+                        <td className="py-3 px-3 w-1/5">
                           <div className="flex items-center">
                             <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
                               <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
@@ -411,20 +411,20 @@ const UserDashboard = () => {
                             </div>
                           </div>
                         </td>
-                        <td className="py-3 text-right">
+                        <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium">{timeContributed.toLocaleString()}h</div>
                           <div className="text-xs text-gray-500">~{Math.floor(timeContributed/40)} weeks</div>
                         </td>
-                        <td className="py-3 text-right">
+                        <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium">${capitalContributed.toLocaleString()}</div>
                           <div className="text-xs text-gray-500">Cash & assets</div>
                         </td>
-                        <td className="py-3 text-right font-semibold">${totalEarned.toLocaleString()}</td>
-                        <td className="py-3 text-right">
+                        <td className="py-3 px-3 text-right font-semibold w-1/6">${totalEarned.toLocaleString()}</td>
+                        <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium text-green-600">${cashComp.toLocaleString()}</div>
                           <div className="text-xs text-gray-500">{Math.round((cashComp/totalEarned)*100)}%</div>
                         </td>
-                        <td className="py-3 text-right">
+                        <td className="py-3 px-3 text-right w-1/6">
                           <div className="font-medium text-blue-600">${equityComp.toLocaleString()}</div>
                           <div className="text-xs text-gray-500">{Math.round((equityComp/totalEarned)*100)}%</div>
                         </td>
