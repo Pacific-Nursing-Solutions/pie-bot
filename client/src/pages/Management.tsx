@@ -81,6 +81,7 @@ const Management = () => {
   const [isIntegrationsMinimized, setIsIntegrationsMinimized] = useState(false);
   const [isContributionsMinimized, setIsContributionsMinimized] = useState(false);
   const [contributionTimeframe, setContributionTimeframe] = useState<'week' | 'month' | 'year' | 'all-time'>('month');
+  const [employeeActivityPeriod, setEmployeeActivityPeriod] = useState<'week' | 'month' | 'year'>('week');
 
   const [employees] = useState<Employee[]>([
     {
@@ -570,7 +571,24 @@ const Management = () => {
       {/* Employee Activity */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Employee Activity</h2>
+          <div className="flex items-center space-x-4">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Employee Activity</h2>
+            <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              {(['week', 'month', 'year'] as const).map((period) => (
+                <button
+                  key={period}
+                  onClick={() => setEmployeeActivityPeriod(period)}
+                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                    employeeActivityPeriod === period
+                      ? 'bg-violet-600 text-white'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400'
+                  }`}
+                >
+                  {period === 'week' ? 'Week' : period === 'month' ? 'Month' : 'Year'}
+                </button>
+              ))}
+            </div>
+          </div>
           <button 
             onClick={() => setIsEmployeesMinimized(!isEmployeesMinimized)}
             className="p-2 text-gray-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
