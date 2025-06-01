@@ -225,17 +225,15 @@ const AnalyticsDashboard = () => {
   const portfolioSparklineData = portfolioValueData.map(d => ({ value: d.value }));
 
   return (
-    <div className="space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-6">
+    <div className="space-y-4 sm:space-y-6 bg-[var(--dashboard-bg)] min-h-screen p-3 sm:p-6">
       {/* Market Heatmap */}
       <TreemapChart 
         data={[]}
         title="Market Performance Heatmap"
       />
 
-
-
       {/* Portfolio Holdings and Performance Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <PortfolioChart projects={portfolioProjects} />
         <EquityGrowthChart data={growthData} />
         <DistributionsChart data={distributionData} />
@@ -244,10 +242,8 @@ const AnalyticsDashboard = () => {
       {/* Monthly Compensation Chart */}
       <CompensationChart data={compensationData} />
 
-
-
       {/* Individual Ownership Charts */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {portfolioProjects.map((project) => (
           <PortfolioChart
             key={project.name}
@@ -259,7 +255,7 @@ const AnalyticsDashboard = () => {
       </div>
 
       {/* Data Tables Section - Removed financial details */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <DataTable
           title="Recent Activity"
           headers={["Date", "Type", "Company", "Status"]}

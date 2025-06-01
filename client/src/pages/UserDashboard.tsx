@@ -83,46 +83,50 @@ const UserDashboard = () => {
   const totalPortfolioValue = 3174000;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 p-3 sm:p-0">
       {/* Quick Navigation */}
-      <div className="flex items-center justify-center space-x-4 mb-8">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
         <Link href="/companies">
-          <button className="flex items-center px-4 py-2 bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-300 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-950/30 transition-colors">
-            <Building2 className="w-4 h-4 mr-2" />
-            Companies
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-300 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-950/30 transition-colors text-sm">
+            <Building2 className="w-4 h-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Companies</span>
+            <span className="sm:hidden">Co.</span>
           </button>
         </Link>
         <Link href="/management">
-          <button className="flex items-center px-4 py-2 bg-violet-50 dark:bg-violet-950/20 text-violet-600 dark:text-violet-300 rounded-lg hover:bg-violet-100 dark:hover:bg-violet-950/30 transition-colors">
-            <Users className="w-4 h-4 mr-2" />
-            Management
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-violet-50 dark:bg-violet-950/20 text-violet-600 dark:text-violet-300 rounded-lg hover:bg-violet-100 dark:hover:bg-violet-950/30 transition-colors text-sm">
+            <Users className="w-4 h-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Management</span>
+            <span className="sm:hidden">Mgmt</span>
           </button>
         </Link>
         <Link href="/documents">
-          <button className="flex items-center px-4 py-2 bg-sky-50 dark:bg-sky-950/20 text-sky-600 dark:text-sky-300 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-950/30 transition-colors">
-            <FileText className="w-4 h-4 mr-2" />
-            Documents
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-sky-50 dark:bg-sky-950/20 text-sky-600 dark:text-sky-300 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-950/30 transition-colors text-sm">
+            <FileText className="w-4 h-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Documents</span>
+            <span className="sm:hidden">Docs</span>
           </button>
         </Link>
         <Link href="/settings">
-          <button className="flex items-center px-4 py-2 bg-slate-50 dark:bg-slate-950/20 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-950/30 transition-colors">
-            <Settings className="w-4 h-4 mr-2" />
-            Settings
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-slate-50 dark:bg-slate-950/20 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-950/30 transition-colors text-sm">
+            <Settings className="w-4 h-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Settings</span>
+            <span className="sm:hidden">Set</span>
           </button>
         </Link>
       </div>
 
       {/* Holdings Overview */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
             Your Holdings Overview
           </h2>
           <button 
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
             className="p-2 text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
           >
-            {isPortfolioMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            {isPortfolioMinimized ? <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
         </div>
 

@@ -19,12 +19,12 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 shadow">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-3 sm:space-y-0">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           Monthly Total Compensation
         </h3>
-        <div className="flex items-center space-x-4 text-sm">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
             <span className="text-gray-600 dark:text-gray-400">Total</span>
@@ -40,18 +40,18 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
         </div>
       </div>
       
-      <div className="h-80">
+      <div className="h-64 sm:h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <LineChart data={data} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
             <XAxis 
               dataKey="month" 
               className="text-gray-600 dark:text-gray-400"
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 10 }}
             />
             <YAxis 
               className="text-gray-600 dark:text-gray-400"
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 10 }}
               tickFormatter={formatCurrency}
             />
             <Tooltip 
@@ -61,15 +61,16 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
                 backgroundColor: 'var(--card-bg)',
                 border: '1px solid var(--subtle-border)',
                 borderRadius: '8px',
-                color: 'var(--text-primary)'
+                color: 'var(--text-primary)',
+                fontSize: '12px'
               }}
             />
             <Line 
               type="monotone" 
               dataKey="totalCompensation" 
               stroke="#3b82f6" 
-              strokeWidth={3}
-              dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
+              strokeWidth={2}
+              dot={{ fill: '#3b82f6', strokeWidth: 1, r: 3 }}
               name="Total Compensation"
             />
             <Line 
@@ -77,7 +78,7 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
               dataKey="cashCompensation" 
               stroke="#10b981" 
               strokeWidth={2}
-              dot={{ fill: '#10b981', strokeWidth: 2, r: 3 }}
+              dot={{ fill: '#10b981', strokeWidth: 1, r: 2 }}
               name="Cash Compensation"
             />
             <Line 
@@ -85,31 +86,31 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
               dataKey="equityCompensation" 
               stroke="#8b5cf6" 
               strokeWidth={2}
-              dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 3 }}
+              dot={{ fill: '#8b5cf6', strokeWidth: 1, r: 2 }}
               name="Equity Compensation"
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-4">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="text-center">
-          <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">
             {formatCurrency(data[data.length - 1]?.totalCompensation || 0)}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Latest Month Total</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Latest Month Total</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+          <div className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">
             {formatCurrency(data[data.length - 1]?.cashCompensation || 0)}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Latest Month Cash</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Latest Month Cash</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+          <div className="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">
             {formatCurrency(data[data.length - 1]?.equityCompensation || 0)}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Latest Month Equity</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Latest Month Equity</div>
         </div>
       </div>
     </div>

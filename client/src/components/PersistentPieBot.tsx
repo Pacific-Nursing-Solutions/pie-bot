@@ -318,19 +318,19 @@ const PieTerminal = () => {
   };
 
   return (
-    <div className="bg-slate-800 text-emerald-300 font-mono text-sm rounded-lg overflow-hidden shadow-xl">
+    <div className="bg-slate-800 text-emerald-300 font-mono text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
       {/* Terminal Header */}
-      <div className="bg-slate-700 px-4 py-2 flex items-center justify-between">
+      <div className="bg-slate-700 px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Terminal className="w-4 h-4 text-slate-300" />
-          <span className="text-slate-200">Pie Bot Terminal v0.0.1</span>
+          <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-slate-300" />
+          <span className="text-slate-200 text-xs sm:text-sm">Pie Bot Terminal v0.0.1</span>
         </div>
         <div className="flex space-x-1"></div>
       </div>
 
       {/* Terminal Content */}
       <div 
-        className="p-4 h-96 overflow-y-auto cursor-text"
+        className="p-3 sm:p-4 h-64 sm:h-96 overflow-y-auto cursor-text"
         onClick={() => {
           const input = document.querySelector('input[placeholder="Enter command..."]') as HTMLInputElement;
           if (input) input.focus();
