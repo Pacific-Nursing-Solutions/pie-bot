@@ -816,10 +816,8 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
       const getRegisteredAgentCost = (agent: string) => {
         switch (agent) {
           case 'self': return 0;
-          case 'incfile': return 119;
-          case 'northwest-registered-agent': return 125;
-          case 'national-corporate-research': return 149;
-          default: return 149;
+          case 'northwest-registered-agent': return 139;
+          default: return 0;
         }
       };
 

@@ -353,14 +353,16 @@ const Companies = () => {
 const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
     companyName: '',
-    registeredAgent: 'national-corporate-research',
+    jurisdiction: 'wyoming',
+    entityType: 'LLC',
+    registeredAgent: 'northwest-registered-agent',
     organizer: '',
     organizerAddress: '',
     managementStructure: 'member-managed',
     businessPurpose: 'any lawful business purpose',
     initialMembers: [{ name: '', address: '', ownershipPercent: 100 }],
     expediteProcessing: false,
-    totalCost: 102 // $100 state fee + $2 processing
+    totalCost: 241 // $100 state fee + $2 processing + $139 registered agent
   });
 
   const [identityVerification, setIdentityVerification] = useState({
@@ -561,17 +563,21 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
           </label>
           <select 
             value={formData.registeredAgent}
-            onChange={(e) => setFormData(prev => ({ ...prev, registeredAgent: e.target.value }))}
+            onChange={(e) => {
+              const agent = e.target.value;
+              const agentCost = agent === 'self' ? 0 : 139;
+              setFormData(prev => ({ 
+                ...prev, 
+                registeredAgent: agent,
+                totalCost: 102 + agentCost
+              }));
+            }}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
           >
-            <option value="national-corporate-research">National Corporate Research (50-state coverage) - $149/year</option>
-            <option value="northwest-registered-agent">Northwest Registered Agent (50-state coverage) - $125/year</option>
-            <option value="incfile">Incfile Registered Agent (50-state coverage) - $119/year</option>
-            <option value="self">Act as my own registered agent (Wyoming address required) - $0/year</option>
+            <option value="">Select registered agent</option>
+            <option value="northwest-registered-agent">Northwest Registered Agent ($139/year)</option>
+            <option value="self">Act as my own registered agent</option>
           </select>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            Professional registered agent services provide mail forwarding and compliance monitoring across all 50 states.
-          </p>
         </div>
 
         <div>
@@ -697,18 +703,14 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             <span>Registered Agent (first year):</span>
             <span>
               {formData.registeredAgent === 'self' ? '$0.00' : 
-               formData.registeredAgent === 'incfile' ? '$119.00' :
-               formData.registeredAgent === 'northwest-registered-agent' ? '$125.00' :
-               formData.registeredAgent === 'national-corporate-research' ? '$149.00' : '$149.00'}
+               formData.registeredAgent === 'northwest-registered-agent' ? '$139.00' : '$0.00'}
             </span>
           </div>
           <div className="border-t border-gray-300 dark:border-gray-600 pt-2 flex justify-between font-medium">
             <span>Total:</span>
             <span>
               ${formData.registeredAgent === 'self' ? '102.00' : 
-                formData.registeredAgent === 'incfile' ? '221.00' :
-                formData.registeredAgent === 'northwest-registered-agent' ? '227.00' :
-                formData.registeredAgent === 'national-corporate-research' ? '251.00' : '251.00'}
+                formData.registeredAgent === 'northwest-registered-agent' ? '241.00' : '102.00'}
             </span>
           </div>
         </div>
