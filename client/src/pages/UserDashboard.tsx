@@ -366,7 +366,7 @@ const UserDashboard = () => {
             onClick={() => setShowCompensationSection(!showCompensationSection)}
             className="p-2 text-gray-500 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
           >
-            {showCompensationSection ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+            {showCompensationSection ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
           </button>
         </div>
 
