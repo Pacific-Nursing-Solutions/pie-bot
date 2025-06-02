@@ -40,6 +40,8 @@ const Companies = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showActiveOnly, setShowActiveOnly] = useState(true);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [showFormationModal, setShowFormationModal] = useState(false);
+  const [formationType, setFormationType] = useState<'form' | 'import'>('form');
   
   const [companies] = useState<Company[]>([
     {
@@ -129,7 +131,10 @@ const Companies = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Companies</h1>
         </div>
         
-        <button className="flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+        <button 
+          onClick={() => setShowFormationModal(true)}
+          className="flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
+        >
           <Plus className="w-4 h-4 mr-2" />
           Add Company
         </button>
@@ -284,7 +289,489 @@ const Companies = () => {
           </div>
         )}
       </div>
+
+      {/* Company Formation Modal */}
+      {showFormationModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Company</h2>
+              <button 
+                onClick={() => setShowFormationModal(false)}
+                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+              >
+                <ChevronUp className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-6">
+              {/* Formation Type Selection */}
+              <div className="mb-6">
+                <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                  <button
+                    onClick={() => setFormationType('form')}
+                    className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                      formationType === 'form'
+                        ? 'bg-orange-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                    }`}
+                  >
+                    Form New Wyoming LLC
+                  </button>
+                  <button
+                    onClick={() => setFormationType('import')}
+                    className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                      formationType === 'import'
+                        ? 'bg-orange-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                    }`}
+                  >
+                    Import Existing Company
+                  </button>
+                </div>
+              </div>
+
+              {formationType === 'form' ? (
+                <WyomingLLCForm onClose={() => setShowFormationModal(false)} />
+              ) : (
+                <ImportCompanyForm onClose={() => setShowFormationModal(false)} />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  );
+};
+
+const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
+  const [formData, setFormData] = useState({
+    companyName: '',
+    registeredAgent: 'Wyoming Registered Agents LLC',
+    organizer: '',
+    organizerAddress: '',
+    managementStructure: 'member-managed',
+    businessPurpose: 'any lawful business purpose',
+    initialMembers: [{ name: '', address: '', ownershipPercent: 100 }],
+    expediteProcessing: false,
+    totalCost: 102 // $100 state fee + $2 processing
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch('/api/companies/form-wyoming-llc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        const newCompany = await response.json();
+        console.log('Wyoming LLC formed successfully:', newCompany);
+        onClose();
+        // Refresh the page or update companies list
+        window.location.reload();
+      } else {
+        const error = await response.json();
+        alert('Formation failed: ' + error.message);
+      }
+    } catch (error) {
+      console.error('Formation error:', error);
+      alert('Network error during formation process');
+    }
+  };
+
+  const addMember = () => {
+    setFormData(prev => ({
+      ...prev,
+      initialMembers: [...prev.initialMembers, { name: '', address: '', ownershipPercent: 0 }]
+    }));
+  };
+
+  const updateMember = (index: number, field: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      initialMembers: prev.initialMembers.map((member, i) => 
+        i === index ? { ...member, [field]: value } : member
+      )
+    }));
+  };
+
+  const removeMember = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      initialMembers: prev.initialMembers.filter((_, i) => i !== index)
+    }));
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border-l-4 border-blue-400">
+        <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Wyoming LLC Formation</h3>
+        <p className="text-sm text-blue-700 dark:text-blue-300">
+          Form your LLC in Wyoming with blockchain-ready equity management. Processing typically takes 1-2 business days.
+        </p>
+      </div>
+
+      {/* Basic Information */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Company Name *
+          </label>
+          <input 
+            type="text" 
+            required
+            value={formData.companyName}
+            onChange={(e) => setFormData(prev => ({ ...prev, companyName: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="Enter company name (will add 'LLC' suffix)"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Registered Agent
+          </label>
+          <select 
+            value={formData.registeredAgent}
+            onChange={(e) => setFormData(prev => ({ ...prev, registeredAgent: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+          >
+            <option value="Wyoming Registered Agents LLC">Wyoming Registered Agents LLC ($50/year)</option>
+            <option value="self">Act as my own registered agent</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Organizer Name *
+          </label>
+          <input 
+            type="text" 
+            required
+            value={formData.organizer}
+            onChange={(e) => setFormData(prev => ({ ...prev, organizer: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="Full legal name"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Organizer Address *
+          </label>
+          <input 
+            type="text" 
+            required
+            value={formData.organizerAddress}
+            onChange={(e) => setFormData(prev => ({ ...prev, organizerAddress: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="Full address"
+          />
+        </div>
+      </div>
+
+      {/* Management Structure */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Management Structure
+        </label>
+        <select 
+          value={formData.managementStructure}
+          onChange={(e) => setFormData(prev => ({ ...prev, managementStructure: e.target.value }))}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+        >
+          <option value="member-managed">Member-Managed</option>
+          <option value="manager-managed">Manager-Managed</option>
+        </select>
+      </div>
+
+      {/* Initial Members */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Initial Members
+          </label>
+          <button
+            type="button"
+            onClick={addMember}
+            className="flex items-center px-3 py-1 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            Add Member
+          </button>
+        </div>
+
+        {formData.initialMembers.map((member, index) => (
+          <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
+            <div>
+              <input 
+                type="text" 
+                required
+                value={member.name}
+                onChange={(e) => updateMember(index, 'name', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+                placeholder="Member name"
+              />
+            </div>
+            <div>
+              <input 
+                type="text" 
+                required
+                value={member.address}
+                onChange={(e) => updateMember(index, 'address', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+                placeholder="Address"
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <input 
+                type="number" 
+                required
+                min="0"
+                max="100"
+                value={member.ownershipPercent}
+                onChange={(e) => updateMember(index, 'ownershipPercent', parseFloat(e.target.value))}
+                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+                placeholder="% ownership"
+              />
+              {formData.initialMembers.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeMember(index)}
+                  className="p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Processing Options */}
+      <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+        <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Formation Summary</h3>
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span>Wyoming State Filing Fee:</span>
+            <span>$100.00</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Processing Fee:</span>
+            <span>$2.00</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Registered Agent (first year):</span>
+            <span>{formData.registeredAgent === 'self' ? '$0.00' : '$50.00'}</span>
+          </div>
+          <div className="border-t border-gray-300 dark:border-gray-600 pt-2 flex justify-between font-medium">
+            <span>Total:</span>
+            <span>${formData.registeredAgent === 'self' ? '102.00' : '152.00'}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Submit Buttons */}
+      <div className="flex justify-end space-x-4">
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
+        >
+          Form Wyoming LLC
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const ImportCompanyForm = ({ onClose }: { onClose: () => void }) => {
+  const [importData, setImportData] = useState({
+    companyName: '',
+    entityType: '',
+    state: '',
+    ein: '',
+    address: '',
+    founded: '',
+    documents: null as FileList | null
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const formData = new FormData();
+      Object.entries(importData).forEach(([key, value]) => {
+        if (key === 'documents' && value) {
+          Array.from(value).forEach(file => {
+            formData.append('documents', file);
+          });
+        } else if (value) {
+          formData.append(key, value.toString());
+        }
+      });
+
+      const response = await fetch('/api/companies/import', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        const importedCompany = await response.json();
+        console.log('Company imported successfully:', importedCompany);
+        onClose();
+        window.location.reload();
+      } else {
+        const error = await response.json();
+        alert('Import failed: ' + error.message);
+      }
+    } catch (error) {
+      console.error('Import error:', error);
+      alert('Network error during import process');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 border-l-4 border-green-400">
+        <h3 className="font-medium text-green-800 dark:text-green-200 mb-2">Import Existing Company</h3>
+        <p className="text-sm text-green-700 dark:text-green-300">
+          Add an existing company to your portfolio. Upload incorporation documents for verification.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Company Name *
+          </label>
+          <input 
+            type="text" 
+            required
+            value={importData.companyName}
+            onChange={(e) => setImportData(prev => ({ ...prev, companyName: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="Legal company name"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Entity Type *
+          </label>
+          <select 
+            required
+            value={importData.entityType}
+            onChange={(e) => setImportData(prev => ({ ...prev, entityType: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+          >
+            <option value="">Select entity type</option>
+            <option value="LLC">LLC</option>
+            <option value="C-Corp">C-Corporation</option>
+            <option value="S-Corp">S-Corporation</option>
+            <option value="Partnership">Partnership</option>
+            <option value="Sole Proprietorship">Sole Proprietorship</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            State of Incorporation *
+          </label>
+          <input 
+            type="text" 
+            required
+            value={importData.state}
+            onChange={(e) => setImportData(prev => ({ ...prev, state: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="e.g., Delaware, Wyoming"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            EIN (Optional)
+          </label>
+          <input 
+            type="text" 
+            value={importData.ein}
+            onChange={(e) => setImportData(prev => ({ ...prev, ein: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="XX-XXXXXXX"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Founded Year
+          </label>
+          <input 
+            type="number" 
+            min="1900"
+            max={new Date().getFullYear()}
+            value={importData.founded}
+            onChange={(e) => setImportData(prev => ({ ...prev, founded: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="YYYY"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Business Address
+          </label>
+          <input 
+            type="text" 
+            value={importData.address}
+            onChange={(e) => setImportData(prev => ({ ...prev, address: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+            placeholder="Full business address"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Upload Documents (Optional)
+        </label>
+        <input 
+          type="file" 
+          multiple
+          accept=".pdf,.doc,.docx"
+          onChange={(e) => setImportData(prev => ({ ...prev, documents: e.target.files }))}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+        />
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          Upload incorporation docs, operating agreements, etc. (PDF, DOC, DOCX)
+        </p>
+      </div>
+
+      <div className="flex justify-end space-x-4">
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
+        >
+          Import Company
+        </button>
+      </div>
+    </form>
   );
 };
 

@@ -736,7 +736,230 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
     }
   });
 
+  // COMPANY FORMATION ENDPOINTS
+  app.post("/api/companies/form-wyoming-llc", async (req, res) => {
+    try {
+      const wyomingLLCData = z.object({
+        companyName: z.string().min(1, "Company name is required"),
+        registeredAgent: z.string(),
+        organizer: z.string().min(1, "Organizer name is required"),
+        organizerAddress: z.string().min(1, "Organizer address is required"),
+        managementStructure: z.enum(["member-managed", "manager-managed"]),
+        businessPurpose: z.string().default("any lawful business purpose"),
+        initialMembers: z.array(z.object({
+          name: z.string().min(1, "Member name is required"),
+          address: z.string().min(1, "Member address is required"),
+          ownershipPercent: z.number().min(0).max(100)
+        })).min(1, "At least one member is required"),
+        expediteProcessing: z.boolean().default(false)
+      }).parse(req.body);
+
+      // Validate ownership percentages add up to 100%
+      const totalOwnership = wyomingLLCData.initialMembers.reduce((sum, member) => sum + member.ownershipPercent, 0);
+      if (Math.abs(totalOwnership - 100) > 0.01) {
+        return res.status(400).json({ 
+          error: `Ownership percentages must total 100%. Current total: ${totalOwnership}%` 
+        });
+      }
+
+      // Add "LLC" suffix if not present
+      const companyName = wyomingLLCData.companyName.endsWith(' LLC') ? 
+        wyomingLLCData.companyName : 
+        `${wyomingLLCData.companyName} LLC`;
+
+      // Create company record
+      const newCompany = await storage.createCompany({
+        name: companyName,
+        entityType: "Wyoming LLC",
+        userId: req.session.userId!,
+        valuation: 0,
+        authorizedShares: 1000000, // Default for LLC units
+        founded: new Date().getFullYear().toString()
+      });
+
+      // Create stakeholder records for each member
+      for (const member of wyomingLLCData.initialMembers) {
+        await storage.createStakeholder({
+          name: member.name,
+          role: "Member",
+          equityPercentage: member.ownershipPercent,
+          shares: Math.floor((member.ownershipPercent / 100) * 1000000),
+          companyId: newCompany.id,
+          address: member.address,
+          equityType: "Membership Units"
+        });
+      }
+
+      // Generate formation documents
+      const formationDocuments = await generateWyomingLLCDocuments(wyomingLLCData);
+      
+      // Store formation record
+      await storage.createDocument({
+        title: `${companyName} - Articles of Organization`,
+        type: "Formation Documents",
+        status: "Pending",
+        content: formationDocuments.articlesOfOrganization,
+        companyId: newCompany.id,
+        signed: false
+      });
+
+      await storage.createDocument({
+        title: `${companyName} - Operating Agreement`,
+        type: "Operating Agreement", 
+        status: "Draft",
+        content: formationDocuments.operatingAgreement,
+        companyId: newCompany.id,
+        signed: false
+      });
+
+      return res.json({
+        company: newCompany,
+        status: "Formation initiated",
+        estimatedCompletion: "1-2 business days",
+        filingFee: wyomingLLCData.registeredAgent === 'self' ? 102 : 152,
+        documents: [
+          "Articles of Organization",
+          "Operating Agreement",
+          "EIN Application (Form SS-4)"
+        ]
+      });
+
+    } catch (error) {
+      console.error("Wyoming LLC formation error:", error);
+      const errorResponse = handleZodError(error);
+      return res.status(errorResponse.message.includes("Internal") ? 500 : 400).json(errorResponse);
+    }
+  });
+
+  app.post("/api/companies/import", async (req, res) => {
+    try {
+      const importData = z.object({
+        companyName: z.string().min(1, "Company name is required"),
+        entityType: z.string().min(1, "Entity type is required"),
+        state: z.string().min(1, "State of incorporation is required"),
+        ein: z.string().optional(),
+        address: z.string().optional(),
+        founded: z.string().optional()
+      }).parse(req.body);
+
+      // Create company record
+      const importedCompany = await storage.createCompany({
+        name: importData.companyName,
+        entityType: `${importData.state} ${importData.entityType}`,
+        userId: req.session.userId!,
+        valuation: 0,
+        authorizedShares: 10000000, // Default
+        founded: importData.founded || new Date().getFullYear().toString()
+      });
+
+      // Create initial stakeholder record for the importing user
+      await storage.createStakeholder({
+        name: "Imported Owner", // This would be updated with actual data
+        role: "Founder",
+        equityPercentage: 100, // Placeholder - would be updated with actual equity data
+        shares: 10000000,
+        companyId: importedCompany.id,
+        address: importData.address || "",
+        equityType: importData.entityType === "LLC" ? "Membership Units" : "Common Stock"
+      });
+
+      return res.json({
+        company: importedCompany,
+        status: "Import completed",
+        message: "Company imported successfully. Please update equity information in the dashboard."
+      });
+
+    } catch (error) {
+      console.error("Company import error:", error);
+      const errorResponse = handleZodError(error);
+      return res.status(errorResponse.message.includes("Internal") ? 500 : 400).json(errorResponse);
+    }
+  });
+
   // Create the HTTP server
   const server = createServer(app);
   return server;
+}
+
+// Helper function to generate Wyoming LLC formation documents
+async function generateWyomingLLCDocuments(data: any) {
+  const articlesOfOrganization = `
+ARTICLES OF ORGANIZATION
+LIMITED LIABILITY COMPANY
+State of Wyoming
+
+Article I - Name
+The name of the Limited Liability Company is: ${data.companyName.endsWith(' LLC') ? data.companyName : data.companyName + ' LLC'}
+
+Article II - Registered Agent and Office
+The name and address of the registered agent is:
+${data.registeredAgent === 'self' ? data.organizer : 'Wyoming Registered Agents LLC'}
+${data.registeredAgent === 'self' ? data.organizerAddress : '30 N Gould St Ste R, Sheridan, WY 82801'}
+
+Article III - Management
+This Limited Liability Company will be ${data.managementStructure}.
+
+Article IV - Purpose
+The purpose of this Limited Liability Company is: ${data.businessPurpose}
+
+Article V - Members
+Initial Members:
+${data.initialMembers.map((member: any) => 
+  `${member.name} - ${member.ownershipPercent}% ownership\nAddress: ${member.address}`
+).join('\n\n')}
+
+Article VI - Organizer
+This Limited Liability Company is organized by:
+${data.organizer}
+${data.organizerAddress}
+
+Date: ${new Date().toLocaleDateString()}
+Organizer Signature: _________________________
+`;
+
+  const operatingAgreement = `
+OPERATING AGREEMENT
+${data.companyName.endsWith(' LLC') ? data.companyName : data.companyName + ' LLC'}
+
+This Operating Agreement is made on ${new Date().toLocaleDateString()} by and among the members listed below.
+
+ARTICLE 1 - FORMATION
+1.1 Formation: The Company was formed as a Wyoming Limited Liability Company.
+1.2 Name: ${data.companyName.endsWith(' LLC') ? data.companyName : data.companyName + ' LLC'}
+1.3 Purpose: ${data.businessPurpose}
+
+ARTICLE 2 - MEMBERS AND OWNERSHIP
+2.1 Initial Members and Ownership:
+${data.initialMembers.map((member: any) => 
+  `${member.name}: ${member.ownershipPercent}% ownership`
+).join('\n')}
+
+ARTICLE 3 - MANAGEMENT
+3.1 Management Structure: This LLC is ${data.managementStructure}.
+${data.managementStructure === 'member-managed' ? 
+  '3.2 Member Management: All members participate in management decisions.' :
+  '3.3 Manager Management: Management is delegated to appointed managers.'
+}
+
+ARTICLE 4 - CAPITAL CONTRIBUTIONS
+4.1 Initial Contributions: Members shall make initial contributions as agreed.
+
+ARTICLE 5 - DISTRIBUTIONS
+5.1 Distribution Policy: Distributions shall be made pro rata based on ownership percentages.
+
+ARTICLE 6 - TRANSFER OF INTERESTS
+6.1 Transfer Restrictions: Membership interests may not be transferred without consent of other members.
+
+This Operating Agreement shall be binding upon the members and their successors.
+
+Members:
+${data.initialMembers.map((member: any) => 
+  `${member.name}: ___________________________ Date: ___________`
+).join('\n')}
+`;
+
+  return {
+    articlesOfOrganization,
+    operatingAgreement
+  };
 }
