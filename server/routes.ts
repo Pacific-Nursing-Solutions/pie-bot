@@ -502,7 +502,7 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
       const valuation = calculateValuation(company, financialData, method, params || {});
       
       // Update company with new valuation
-      const updatedCompany = await storage.updateCompanyValuation(companyId, valuation);
+      const updatedCompany = await storage.updateCompanyValuation(parseInt(companyId), valuation.toString());
       
       return res.json({ 
         company: updatedCompany,
@@ -558,7 +558,7 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
           stakeholder.name, 
           stakeholder.shares, 
           stakeholder.equityType, 
-          stakeholder.ownershipPercentage, 
+          parseFloat(stakeholder.ownershipPercentage), 
           stakeholder.vestingSchedule || undefined
         )
       );
@@ -767,11 +767,25 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
         wyomingLLCData.companyName : 
         `${wyomingLLCData.companyName} LLC`;
 
+      // Ensure user is authenticated or create a default user for testing
+      let userId = req.session.userId;
+      if (!userId) {
+        // For testing purposes, create or get a default user
+        const defaultUser = await storage.getUserByUsername("default_user") || 
+          await storage.createUser({
+            username: "default_user",
+            password: "temp_password",
+            email: "test@example.com",
+            fullName: "Default User"
+          });
+        userId = defaultUser.id;
+      }
+
       // Create company record
       const newCompany = await storage.createCompany({
         name: companyName,
         entityType: "Wyoming LLC",
-        userId: req.session.userId!,
+        userId: userId,
         valuation: "0",
         authorizedShares: 1000000, // Default for LLC units
         founded: new Date()

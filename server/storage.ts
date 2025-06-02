@@ -99,10 +99,10 @@ export class DatabaseStorage implements IStorage {
     return company;
   }
 
-  async updateCompanyValuation(id: number, valuation: number): Promise<Company> {
+  async updateCompanyValuation(id: number, valuation: string): Promise<Company> {
     const [company] = await db
       .update(companies)
-      .set({ valuation: valuation.toString() })
+      .set({ valuation })
       .where(eq(companies.id, id))
       .returning();
     return company;
