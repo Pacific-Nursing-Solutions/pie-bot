@@ -370,7 +370,7 @@ const UserDashboard = () => {
           </button>
         </div>
 
-        {!showCompensationSection && (
+        {showCompensationSection && (
           <div className="p-6">
             <div className="overflow-x-auto">
               <table className="w-full">
