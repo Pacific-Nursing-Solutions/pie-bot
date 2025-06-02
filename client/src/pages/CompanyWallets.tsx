@@ -37,10 +37,10 @@ const CompanyWallets = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Link href="/companies">
+          <Link href="/">
             <button className="flex items-center px-3 py-2 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 rounded-lg transition-colors">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Companies
+              Back to Dashboard
             </button>
           </Link>
           <div className="flex items-center space-x-3">

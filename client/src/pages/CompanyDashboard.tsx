@@ -75,7 +75,7 @@ const CompanyDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center">
-              <Link href="/portfolio">
+              <Link href="/">
                 <button className="mr-4 p-2 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                   <ArrowLeft className="w-5 h-5" />
                 </button>

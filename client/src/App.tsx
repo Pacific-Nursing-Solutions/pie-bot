@@ -14,7 +14,7 @@ import Settings from "@/pages/Settings";
 import Pools from "@/pages/Pools";
 import Fundraising from "@/pages/Fundraising";
 import Documents from "@/pages/Documents";
-import Portfolio from "@/pages/Portfolio";
+
 import CompanyDashboard from "@/pages/CompanyDashboard";
 import CompanyPieBot from "@/pages/CompanyPieBot";
 import CompanyWallets from "@/pages/CompanyWallets";
@@ -35,7 +35,7 @@ function Router() {
       <Route path="/documents" component={Documents} />
       <Route path="/settings" component={Settings} />
       <Route path="/company-positions" component={CompanyPositions} />
-      <Route path="/portfolio" component={Portfolio} />
+
       <Route path="/company/:id/pie-bot" component={CompanyPieBot} />
       <Route path="/pie-bot" component={SimplePage} />
       <Route component={NotFound} />
