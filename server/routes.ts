@@ -812,11 +812,30 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
         signed: false
       });
 
+      // Calculate total cost based on registered agent selection
+      const getRegisteredAgentCost = (agent: string) => {
+        switch (agent) {
+          case 'self': return 0;
+          case 'incfile': return 119;
+          case 'northwest-registered-agent': return 125;
+          case 'national-corporate-research': return 149;
+          default: return 149;
+        }
+      };
+
+      const agentCost = getRegisteredAgentCost(wyomingLLCData.registeredAgent);
+      const totalCost = 102 + agentCost; // $100 state fee + $2 processing + agent cost
+
       return res.json({
         company: newCompany,
         status: "Formation initiated",
         estimatedCompletion: "1-2 business days",
-        filingFee: wyomingLLCData.registeredAgent === 'self' ? 102 : 152,
+        filingFee: totalCost,
+        registeredAgent: {
+          service: wyomingLLCData.registeredAgent,
+          cost: agentCost,
+          coverage: wyomingLLCData.registeredAgent === 'self' ? 'Wyoming only' : '50-state coverage'
+        },
         documents: [
           "Articles of Organization",
           "Operating Agreement",

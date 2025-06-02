@@ -347,7 +347,7 @@ const Companies = () => {
 const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
     companyName: '',
-    registeredAgent: 'Wyoming Registered Agents LLC',
+    registeredAgent: 'national-corporate-research',
     organizer: '',
     organizerAddress: '',
     managementStructure: 'member-managed',
@@ -433,16 +433,21 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Registered Agent
+            Registered Agent Service
           </label>
           <select 
             value={formData.registeredAgent}
             onChange={(e) => setFormData(prev => ({ ...prev, registeredAgent: e.target.value }))}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
           >
-            <option value="Wyoming Registered Agents LLC">Wyoming Registered Agents LLC ($50/year)</option>
-            <option value="self">Act as my own registered agent</option>
+            <option value="national-corporate-research">National Corporate Research (50-state coverage) - $149/year</option>
+            <option value="northwest-registered-agent">Northwest Registered Agent (50-state coverage) - $125/year</option>
+            <option value="incfile">Incfile Registered Agent (50-state coverage) - $119/year</option>
+            <option value="self">Act as my own registered agent (Wyoming address required) - $0/year</option>
           </select>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            Professional registered agent services provide mail forwarding and compliance monitoring across all 50 states.
+          </p>
         </div>
 
         <div>
@@ -566,13 +571,31 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
           </div>
           <div className="flex justify-between">
             <span>Registered Agent (first year):</span>
-            <span>{formData.registeredAgent === 'self' ? '$0.00' : '$50.00'}</span>
+            <span>
+              {formData.registeredAgent === 'self' ? '$0.00' : 
+               formData.registeredAgent === 'incfile' ? '$119.00' :
+               formData.registeredAgent === 'northwest-registered-agent' ? '$125.00' :
+               formData.registeredAgent === 'national-corporate-research' ? '$149.00' : '$149.00'}
+            </span>
           </div>
           <div className="border-t border-gray-300 dark:border-gray-600 pt-2 flex justify-between font-medium">
             <span>Total:</span>
-            <span>${formData.registeredAgent === 'self' ? '102.00' : '152.00'}</span>
+            <span>
+              ${formData.registeredAgent === 'self' ? '102.00' : 
+                formData.registeredAgent === 'incfile' ? '221.00' :
+                formData.registeredAgent === 'northwest-registered-agent' ? '227.00' :
+                formData.registeredAgent === 'national-corporate-research' ? '251.00' : '251.00'}
+            </span>
           </div>
         </div>
+        
+        {formData.registeredAgent !== 'self' && (
+          <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-950/20 rounded border-l-4 border-blue-400">
+            <p className="text-xs text-blue-700 dark:text-blue-300">
+              <strong>50-State Coverage:</strong> Your registered agent service will handle compliance in all states where you do business, including annual report filings and important legal notices.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Submit Buttons */}
