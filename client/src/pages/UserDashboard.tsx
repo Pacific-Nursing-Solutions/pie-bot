@@ -466,8 +466,22 @@ const UserDashboard = () => {
       </div>
 
       {/* Wallets Section */}
-      <div className="mb-8">
-        <ModernWalletManager walletType="personal" />
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallets</h2>
+          <button 
+            onClick={() => setIsWalletsMinimized(!isWalletsMinimized)}
+            className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            {isWalletsMinimized ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {!isWalletsMinimized && (
+          <div className="p-6">
+            <ModernWalletManager walletType="personal" />
+          </div>
+        )}
       </div>
 
   
