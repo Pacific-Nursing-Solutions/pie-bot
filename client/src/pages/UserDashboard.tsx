@@ -405,12 +405,17 @@ const UserDashboard = () => {
                     <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$805K</td>
                     <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$385K</td>
                     <td className="py-4 px-3 text-right">
-                      <span className="text-orange-600 hover:text-orange-700 cursor-pointer">Collapse ↑</span>
+                      <button 
+                        onClick={() => setShowCompensationDetails(!showCompensationDetails)}
+                        className="text-orange-600 hover:text-orange-700 cursor-pointer"
+                      >
+                        {showCompensationDetails ? 'Collapse ↑' : 'Expand ↓'}
+                      </button>
                     </td>
                   </tr>
 
                   {/* Individual Company Rows */}
-                  {companyPositions.map((company) => {
+                  {showCompensationDetails && companyPositions.map((company) => {
                     // Generate mock compensation data
                     const timeContributed = Math.floor(Math.random() * 2000) + 500; // 500-2500 hours
                     const capitalContributed = Math.floor(Math.random() * 100000) + 10000; // $10K-$110K
@@ -434,26 +439,7 @@ const UserDashboard = () => {
                       </tr>
                     );
                   })}
-                  
-                  {/* Totals Row */}
-                  <tr className="border-t-2 border-gray-300 dark:border-gray-600 bg-orange-50/50 dark:bg-orange-900/20">
-                    <td className="py-4 px-3 font-semibold text-gray-900 dark:text-gray-100">Compensation Totals</td>
-                    <td className="py-4 px-3 text-right font-semibold text-orange-600">
-                      4,200h
-                    </td>
-                    <td className="py-4 px-3 text-right font-semibold text-orange-600">
-                      $275K
-                    </td>
-                    <td className="py-4 px-3 text-right font-semibold text-orange-600">
-                      $805K
-                    </td>
-                    <td className="py-4 px-3 text-right font-semibold text-green-600">
-                      $385K
-                    </td>
-                    <td className="py-4 px-3 text-right font-semibold text-blue-600">
-                      $420K
-                    </td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>

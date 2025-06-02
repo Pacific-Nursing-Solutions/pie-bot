@@ -80,6 +80,7 @@ const Management = () => {
   const [isProjectsMinimized, setIsProjectsMinimized] = useState(false);
   const [isIntegrationsMinimized, setIsIntegrationsMinimized] = useState(false);
   const [isContributionsMinimized, setIsContributionsMinimized] = useState(false);
+  const [showContributionDetails, setShowContributionDetails] = useState(false);
   const [contributionTimeframe, setContributionTimeframe] = useState<'week' | 'month' | 'year' | 'all-time'>('month');
   const [employeeActivityPeriod, setEmployeeActivityPeriod] = useState<'week' | 'month' | 'year'>('week');
 
@@ -551,12 +552,17 @@ const Management = () => {
                     <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">80%</td>
                     <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$1.55M</td>
                     <td className="py-4 px-3 text-right">
-                      <span className="text-violet-600 hover:text-violet-700 cursor-pointer">Collapse ↑</span>
+                      <button 
+                        onClick={() => setShowContributionDetails(!showContributionDetails)}
+                        className="text-violet-600 hover:text-violet-700 cursor-pointer"
+                      >
+                        {showContributionDetails ? 'Collapse ↑' : 'Expand ↓'}
+                      </button>
                     </td>
                   </tr>
 
                   {/* Individual Contribution Rows */}
-                  {personalContributions.map((contribution) => (
+                  {showContributionDetails && personalContributions.map((contribution) => (
                     <tr key={contribution.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                       <td className="py-3 px-3">
                         <div>
