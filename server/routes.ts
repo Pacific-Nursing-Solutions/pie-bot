@@ -853,17 +853,22 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
   app.post("/api/companies/import", async (req, res) => {
     try {
       const importData = z.object({
-        companyName: z.string().min(1, "Company name is required"),
+        name: z.string().min(1, "Company name is required"),
         entityType: z.string().min(1, "Entity type is required"),
         state: z.string().min(1, "State of incorporation is required"),
+        jurisdiction: z.string().optional(),
         ein: z.string().optional(),
         address: z.string().optional(),
-        founded: z.string().optional()
+        founded: z.string().optional(),
+        industry: z.string().optional(),
+        status: z.string().optional(),
+        registeredAgent: z.string().optional(),
+        businessPurpose: z.string().optional()
       }).parse(req.body);
 
       // Create company record
       const importedCompany = await storage.createCompany({
-        name: importData.companyName,
+        name: importData.name,
         entityType: `${importData.state} ${importData.entityType}`,
         userId: req.session.userId!,
         valuation: 0,

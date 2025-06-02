@@ -13,7 +13,11 @@ import {
   Users,
   TrendingUp,
   FileText,
-  BarChart3
+  BarChart3,
+  Wallet,
+  Edit3,
+  Check,
+  X
 } from 'lucide-react';
 import AnalyticsDashboard from '../components/AnalyticsDashboard';
 import ModernWalletManager from '../components/ModernWalletManager';
@@ -48,6 +52,46 @@ const UserDashboard = () => {
   const [showCompensationSection, setShowCompensationSection] = useState(false);
   const [showCompensationDetails, setShowCompensationDetails] = useState(false);
   const [compensationPeriod, setCompensationPeriod] = useState<'7d' | '30d' | '1y'>('30d');
+  
+  // Wallet account management
+  const [activeWalletId, setActiveWalletId] = useState('personal');
+  const [showWalletDropdown, setShowWalletDropdown] = useState(false);
+  const [editingWalletId, setEditingWalletId] = useState<string | null>(null);
+  const [editingWalletName, setEditingWalletName] = useState('');
+  
+  const [walletAccounts, setWalletAccounts] = useState([
+    { id: 'personal', name: 'Personal Wallet', type: 'personal', connected: true },
+    { id: 'acme-corp', name: 'ACME Corp', type: 'company', connected: true },
+    { id: 'startup-llc', name: 'Startup LLC', type: 'company', connected: false },
+    { id: 'investment-fund', name: 'Investment Fund', type: 'company', connected: true }
+  ]);
+
+  const activeWallet = walletAccounts.find(w => w.id === activeWalletId);
+
+  const handleWalletSwitch = (walletId: string) => {
+    setActiveWalletId(walletId);
+    setShowWalletDropdown(false);
+  };
+
+  const startEditingWallet = (walletId: string, currentName: string) => {
+    setEditingWalletId(walletId);
+    setEditingWalletName(currentName);
+  };
+
+  const saveWalletName = () => {
+    setWalletAccounts(prev => prev.map(wallet => 
+      wallet.id === editingWalletId 
+        ? { ...wallet, name: editingWalletName }
+        : wallet
+    ));
+    setEditingWalletId(null);
+    setEditingWalletName('');
+  };
+
+  const cancelEditingWallet = () => {
+    setEditingWalletId(null);
+    setEditingWalletName('');
+  };
   
   // Portfolio data
   const [companyPositions] = useState<CompanyPosition[]>([
@@ -468,7 +512,114 @@ const UserDashboard = () => {
       {/* Wallets Section */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallets</h2>
+          <div className="flex items-center space-x-4">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallets</h2>
+            
+            {/* Wallet Account Switcher */}
+            <div className="relative">
+              <button
+                onClick={() => setShowWalletDropdown(!showWalletDropdown)}
+                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-lg hover:from-violet-700 hover:to-purple-700 transition-all"
+              >
+                <Wallet className="w-4 h-4" />
+                <span className="font-medium">{activeWallet?.name}</span>
+                <div className="flex items-center space-x-1">
+                  <div className={`w-2 h-2 rounded-full ${activeWallet?.connected ? 'bg-green-400' : 'bg-red-400'}`}></div>
+                  <ChevronDown className="w-4 h-4" />
+                </div>
+              </button>
+
+              {/* Dropdown Menu */}
+              {showWalletDropdown && (
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50">
+                  <div className="p-3 border-b border-gray-200 dark:border-gray-700">
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Switch Account</p>
+                  </div>
+                  
+                  <div className="max-h-64 overflow-y-auto">
+                    {walletAccounts.map((wallet) => (
+                      <div key={wallet.id} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <div 
+                          className="flex items-center space-x-3 flex-1 cursor-pointer"
+                          onClick={() => handleWalletSwitch(wallet.id)}
+                        >
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                            wallet.type === 'personal' 
+                              ? 'bg-violet-100 dark:bg-violet-900' 
+                              : 'bg-orange-100 dark:bg-orange-900'
+                          }`}>
+                            {wallet.type === 'personal' ? (
+                              <Wallet className={`w-4 h-4 ${wallet.type === 'personal' ? 'text-violet-600 dark:text-violet-400' : 'text-orange-600 dark:text-orange-400'}`} />
+                            ) : (
+                              <Building2 className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                            )}
+                          </div>
+                          
+                          <div className="flex-1">
+                            {editingWalletId === wallet.id ? (
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="text"
+                                  value={editingWalletName}
+                                  onChange={(e) => setEditingWalletName(e.target.value)}
+                                  className="flex-1 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-violet-500 dark:bg-gray-700 dark:text-gray-100"
+                                  autoFocus
+                                />
+                                <button
+                                  onClick={saveWalletName}
+                                  className="p-1 text-green-600 hover:text-green-700"
+                                >
+                                  <Check className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={cancelEditingWallet}
+                                  className="p-1 text-red-600 hover:text-red-700"
+                                >
+                                  <X className="w-4 h-4" />
+                                </button>
+                              </div>
+                            ) : (
+                              <div>
+                                <div className="flex items-center space-x-2">
+                                  <span className="font-medium text-gray-900 dark:text-gray-100">{wallet.name}</span>
+                                  {wallet.id === activeWalletId && (
+                                    <span className="px-2 py-0.5 text-xs bg-violet-100 dark:bg-violet-900 text-violet-700 dark:text-violet-300 rounded-full">Active</span>
+                                  )}
+                                </div>
+                                <div className="flex items-center space-x-2 mt-1">
+                                  <div className={`w-2 h-2 rounded-full ${wallet.connected ? 'bg-green-400' : 'bg-red-400'}`}></div>
+                                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                                    {wallet.connected ? 'Connected' : 'Disconnected'}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        {editingWalletId !== wallet.id && (
+                          <button
+                            onClick={() => startEditingWallet(wallet.id, wallet.name)}
+                            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 ml-2"
+                          >
+                            <Edit3 className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="p-3 border-t border-gray-200 dark:border-gray-700">
+                    <button className="w-full flex items-center justify-center space-x-2 py-2 text-sm text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors">
+                      <Plus className="w-4 h-4" />
+                      <span>Add New Wallet</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
           <button 
             onClick={() => setIsWalletsMinimized(!isWalletsMinimized)}
             className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -479,7 +630,10 @@ const UserDashboard = () => {
 
         {!isWalletsMinimized && (
           <div className="p-6">
-            <ModernWalletManager walletType="personal" />
+            <ModernWalletManager 
+              walletType={activeWallet?.type === 'personal' ? 'personal' : 'company'} 
+              companyName={activeWallet?.type === 'company' ? activeWallet.name : undefined}
+            />
           </div>
         )}
       </div>
