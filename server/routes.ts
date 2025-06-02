@@ -672,6 +672,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // CHAT/AI ENDPOINT
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { message, context } = z.object({
+        message: z.string(),
+        context: z.string().optional(),
+      }).parse(req.body);
+
+      if (!process.env.OPENAI_API_KEY) {
+        return res.status(500).json({ 
+          error: "OpenAI API key not configured. Please provide your OPENAI_API_KEY to enable AI chat functionality." 
+        });
+      }
+
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
+
+      const systemPrompt = context || `You are Pie Bot, an AI assistant specialized in startup equity management, legal processes, blockchain/Web3 integration, and financial operations. You help founders with:
+
+- Equity splits and dynamic equity calculations
+- Legal document generation (incorporation, agreements, etc.)
+- Blockchain tokenization and smart contracts
+- Fundraising and valuation analysis
+- Financial planning and runway calculations
+- ENS domain registration and wallet management
+
+Provide practical, actionable advice. Keep responses concise and focused on the user's specific question. If they ask about technical implementation, provide specific guidance.`;
+
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+        messages: [
+          {
+            role: "system",
+            content: systemPrompt
+          },
+          {
+            role: "user",
+            content: message
+          }
+        ],
+        max_tokens: 500,
+        temperature: 0.7,
+      });
+
+      const response = completion.choices[0]?.message?.content || "I'm having trouble processing that request right now.";
+
+      return res.json({ response });
+
+    } catch (error) {
+      console.error("OpenAI API error:", error);
+      
+      if (error instanceof Error && error.message.includes('API key')) {
+        return res.status(401).json({ 
+          error: "Invalid OpenAI API key. Please check your OPENAI_API_KEY environment variable." 
+        });
+      }
+      
+      return res.status(500).json({ 
+        error: "AI service temporarily unavailable. Try specific commands like 'help', 'equity split', or 'valuation'." 
+      });
+    }
+  });
+
   // Create the HTTP server
   const server = createServer(app);
   return server;
