@@ -41,9 +41,9 @@ interface CompanyPosition {
 
 
 const UserDashboard = () => {
-  const [isPortfolioMinimized, setIsPortfolioMinimized] = useState(false);
+  const [isPortfolioMinimized, setIsPortfolioMinimized] = useState(true);
   const [isWalletsMinimized, setIsWalletsMinimized] = useState(false);
-  const [isAnalyticsMinimized, setIsAnalyticsMinimized] = useState(false);
+  const [isAnalyticsMinimized, setIsAnalyticsMinimized] = useState(true);
   const [showPoolSection, setShowPoolSection] = useState(true);
   const [showCompensationSection, setShowCompensationSection] = useState(false);
   const [showCompensationDetails, setShowCompensationDetails] = useState(false);
