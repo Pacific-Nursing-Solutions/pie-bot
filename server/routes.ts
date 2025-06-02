@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
+import OpenAI from "openai";
 
 // Add userId to session
 declare module "express-session" {

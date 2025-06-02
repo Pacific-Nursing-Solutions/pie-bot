@@ -251,7 +251,7 @@ const PieTerminal = () => {
     }
   };
 
-  const executeCommand = (command: string) => {
+  const executeCommand = async (command: string) => {
     const timestamp = new Date().toLocaleTimeString();
     const newHistory = [...commandHistory];
     
@@ -263,6 +263,22 @@ const PieTerminal = () => {
     });
 
     const [cmd, ...args] = command.toLowerCase().split(' ');
+    
+    if (cmd === 'clear') {
+      setCommandHistory([
+        {
+          type: 'output',
+          content: '🥧 Pie Bot Terminal v0.0.1',
+          timestamp: new Date().toLocaleTimeString()
+        },
+        {
+          type: 'output',
+          content: 'Type "help" for available commands or ask me anything...',
+          timestamp: new Date().toLocaleTimeString()
+        }
+      ]);
+      return;
+    }
     
     if (commands[cmd as keyof typeof commands]) {
       const output = commands[cmd as keyof typeof commands](args);
@@ -276,11 +292,65 @@ const PieTerminal = () => {
         });
       }
     } else if (command.trim()) {
-      newHistory.push({
-        type: 'error',
-        content: `Command not found: ${cmd}. Type "help" for available commands.`,
-        timestamp
-      });
+      // Use OpenAI for natural language queries
+      try {
+        newHistory.push({
+          type: 'output',
+          content: '🥧 Thinking...',
+          timestamp
+        });
+        setCommandHistory([...newHistory]);
+
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: command,
+            context: 'You are Pie Bot, an AI assistant specialized in startup equity management, legal processes, blockchain/Web3 integration, and financial operations. You help founders with equity splits, legal document generation, tokenization, fundraising, and business management. Provide practical, actionable advice.'
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // Remove the "thinking" message
+          const updatedHistory = newHistory.slice(0, -1);
+          
+          // Split response into lines for better formatting
+          const responseLines = data.response.split('\n').filter(line => line.trim());
+          responseLines.forEach(line => {
+            updatedHistory.push({
+              type: 'output',
+              content: line,
+              timestamp
+            });
+          });
+          
+          setCommandHistory(updatedHistory);
+        } else {
+          const errorHistory = newHistory.slice(0, -1);
+          errorHistory.push({
+            type: 'error',
+            content: `Sorry, I'm having trouble connecting to my AI brain right now. Try specific commands like "help", "equity split", or "valuation".`,
+            timestamp
+          });
+          setCommandHistory(errorHistory);
+        }
+      } catch (error) {
+        const errorHistory = newHistory.slice(0, -1);
+        errorHistory.push({
+          type: 'error',
+          content: `Network error. Try specific commands like "help", "equity split", or "valuation".`,
+          timestamp
+        });
+        setCommandHistory(errorHistory);
+      }
+    }
+
+    if (command.trim() && !commands[cmd as keyof typeof commands] && cmd !== 'clear') {
+      // Don't set history here as it's handled in the OpenAI block above
+      return;
     }
 
     setCommandHistory(newHistory);
