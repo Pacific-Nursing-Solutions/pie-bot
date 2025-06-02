@@ -502,7 +502,7 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
       const valuation = calculateValuation(company, financialData, method, params || {});
       
       // Update company with new valuation
-      const updatedCompany = await storage.updateCompanyValuation(companyId, valuation.toString());
+      const updatedCompany = await storage.updateCompanyValuation(companyId, valuation);
       
       return res.json({ 
         company: updatedCompany,
@@ -772,20 +772,20 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
         name: companyName,
         entityType: "Wyoming LLC",
         userId: req.session.userId!,
-        valuation: 0,
+        valuation: "0",
         authorizedShares: 1000000, // Default for LLC units
-        founded: new Date().getFullYear().toString()
+        founded: new Date()
       });
 
       // Create stakeholder records for each member
       for (const member of wyomingLLCData.initialMembers) {
         await storage.createStakeholder({
           name: member.name,
+          email: member.address, // Using address as placeholder for email
           role: "Member",
-          equityPercentage: member.ownershipPercent,
+          ownershipPercentage: member.ownershipPercent.toString(),
           shares: Math.floor((member.ownershipPercent / 100) * 1000000),
           companyId: newCompany.id,
-          address: member.address,
           equityType: "Membership Units"
         });
       }
@@ -797,19 +797,15 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
       await storage.createDocument({
         title: `${companyName} - Articles of Organization`,
         type: "Formation Documents",
-        status: "Pending",
         content: formationDocuments.articlesOfOrganization,
-        companyId: newCompany.id,
-        signed: false
+        companyId: newCompany.id
       });
 
       await storage.createDocument({
         title: `${companyName} - Operating Agreement`,
         type: "Operating Agreement", 
-        status: "Draft",
         content: formationDocuments.operatingAgreement,
-        companyId: newCompany.id,
-        signed: false
+        companyId: newCompany.id
       });
 
       // Calculate total cost based on registered agent selection

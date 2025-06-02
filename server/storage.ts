@@ -34,7 +34,7 @@ export interface IStorage {
   getCompany(id: number): Promise<Company | undefined>;
   getCompaniesByUserId(userId: number): Promise<Company[]>;
   createCompany(company: InsertCompany): Promise<Company>;
-  updateCompanyValuation(id: number, valuation: number): Promise<Company>;
+  updateCompanyValuation(id: number, valuation: string): Promise<Company>;
   
   // Stakeholder operations
   getStakeholder(id: number): Promise<Stakeholder | undefined>;
