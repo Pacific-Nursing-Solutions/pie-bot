@@ -505,42 +505,37 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
         </div>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border-l-4 border-blue-400 mb-6">
-        <div className="flex justify-between items-start">
-          <div>
-            <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Wyoming LLC Formation</h3>
-            <p className="text-sm text-blue-700 dark:text-blue-300">
-              <strong>Why Wyoming?</strong> Business-friendly laws, no state income tax, strong privacy protection, and crypto-friendly regulations. Processing: 1-2 business days.
-            </p>
-            <div className="mt-2 flex items-center space-x-2">
-              <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Currently Available</span>
-              <span className="text-xs text-blue-600 dark:text-blue-400">Other states coming soon</span>
-            </div>
-          </div>
+      {/* Jurisdiction and Entity Type */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Jurisdiction
+          </label>
+          <select 
+            value={formData.jurisdiction}
+            onChange={(e) => setFormData(prev => ({ ...prev, jurisdiction: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+          >
+            <option value="">Select jurisdiction</option>
+            <option value="wyoming">Wyoming</option>
+            <option value="delaware">Delaware</option>
+          </select>
         </div>
-      </div>
 
-      {/* Entity Type Selection - Wyoming LLC Only */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-          Entity Type & Jurisdiction
-        </label>
-        <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                <Building2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              </div>
-              <div>
-                <div className="font-medium text-gray-900 dark:text-gray-100">Wyoming LLC</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Limited Liability Company</div>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">$102 - $251</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">State fee + processing</div>
-            </div>
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Entity Type
+          </label>
+          <select 
+            value={formData.entityType}
+            onChange={(e) => setFormData(prev => ({ ...prev, entityType: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+          >
+            <option value="">Select entity type</option>
+            <option value="LLC">LLC</option>
+            <option value="C-Corp">C-Corporation</option>
+            <option value="S-Corp">S-Corporation</option>
+          </select>
         </div>
       </div>
 
