@@ -310,23 +310,29 @@ const Companies = () => {
                 <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
                   <button
                     onClick={() => setFormationType('form')}
-                    className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
                       formationType === 'form'
-                        ? 'bg-orange-600 text-white'
+                        ? 'bg-orange-600 text-white shadow-sm'
                         : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
                     }`}
                   >
-                    Form New Wyoming LLC
+                    <div className="flex items-center justify-center space-x-2">
+                      <Plus className="w-4 h-4" />
+                      <span>Form New Company</span>
+                    </div>
                   </button>
                   <button
                     onClick={() => setFormationType('import')}
-                    className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
                       formationType === 'import'
-                        ? 'bg-orange-600 text-white'
+                        ? 'bg-orange-600 text-white shadow-sm'
                         : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
                     }`}
                   >
-                    Import Existing Company
+                    <div className="flex items-center justify-center space-x-2">
+                      <ExternalLink className="w-4 h-4" />
+                      <span>Import Existing</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -506,32 +512,36 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             <p className="text-sm text-blue-700 dark:text-blue-300">
               <strong>Why Wyoming?</strong> Business-friendly laws, no state income tax, strong privacy protection, and crypto-friendly regulations. Processing: 1-2 business days.
             </p>
+            <div className="mt-2 flex items-center space-x-2">
+              <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">Currently Available</span>
+              <span className="text-xs text-blue-600 dark:text-blue-400">Other states coming soon</span>
+            </div>
           </div>
-          <button
-            type="button"
-            onClick={startIdentityVerification}
-            disabled={identityVerification.isVerifying || identityVerification.isVerified}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
-              identityVerification.isVerified 
-                ? 'bg-green-600 text-white cursor-not-allowed'
-                : identityVerification.isVerifying
-                ? 'bg-gray-400 text-white cursor-not-allowed'
-                : 'bg-orange-600 text-white hover:bg-orange-700'
-            }`}
-          >
-            {identityVerification.isVerifying ? 'Verifying...' :
-             identityVerification.isVerified ? '✓ ID Verified' :
-             'Quick Fill with ID'}
-          </button>
         </div>
-        
-        {identityVerification.isVerified && (
-          <div className="mt-3 p-2 bg-green-50 dark:bg-green-950/20 rounded border border-green-200 dark:border-green-800">
-            <p className="text-xs text-green-700 dark:text-green-300">
-              Identity verified successfully. Form fields have been auto-populated with your verified information.
-            </p>
+      </div>
+
+      {/* Entity Type Selection - Wyoming LLC Only */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          Entity Type & Jurisdiction
+        </label>
+        <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                <Building2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div>
+                <div className="font-medium text-gray-900 dark:text-gray-100">Wyoming LLC</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">Limited Liability Company</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">$102 - $251</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">State fee + processing</div>
+            </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Basic Information */}
