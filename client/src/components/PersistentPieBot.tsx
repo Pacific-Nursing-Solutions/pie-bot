@@ -317,22 +317,31 @@ const PieTerminal = () => {
           // Remove the "thinking" message
           const updatedHistory = newHistory.slice(0, -1);
           
-          // Split response into lines for better formatting
-          const responseLines = data.response.split('\n').filter(line => line.trim());
-          responseLines.forEach(line => {
+          if (data.error) {
             updatedHistory.push({
-              type: 'output',
-              content: line,
+              type: 'error',
+              content: data.error,
               timestamp
             });
-          });
+          } else {
+            // Split response into lines for better formatting
+            const responseLines = data.response.split('\n').filter((line: string) => line.trim());
+            responseLines.forEach((line: string) => {
+              updatedHistory.push({
+                type: 'output',
+                content: line,
+                timestamp
+              });
+            });
+          }
           
           setCommandHistory(updatedHistory);
         } else {
+          const errorData = await response.json().catch(() => ({}));
           const errorHistory = newHistory.slice(0, -1);
           errorHistory.push({
             type: 'error',
-            content: `Sorry, I'm having trouble connecting to my AI brain right now. Try specific commands like "help", "equity split", or "valuation".`,
+            content: errorData.error || `Sorry, I'm having trouble connecting to my AI brain right now. Try specific commands like "help", "equity split", or "valuation".`,
             timestamp
           });
           setCommandHistory(errorHistory);
