@@ -486,19 +486,32 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border-l-4 border-blue-400">
+      {/* Progress Steps */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-center w-8 h-8 bg-orange-600 text-white rounded-full text-sm font-medium">1</div>
+          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Company Details</span>
+        </div>
+        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-600 mx-4"></div>
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-center w-8 h-8 bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-400 rounded-full text-sm font-medium">2</div>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Review & File</span>
+        </div>
+      </div>
+
+      <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border-l-4 border-blue-400 mb-6">
         <div className="flex justify-between items-start">
           <div>
             <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Wyoming LLC Formation</h3>
             <p className="text-sm text-blue-700 dark:text-blue-300">
-              Form your LLC in Wyoming with blockchain-ready equity management. Processing typically takes 1-2 business days.
+              <strong>Why Wyoming?</strong> Business-friendly laws, no state income tax, strong privacy protection, and crypto-friendly regulations. Processing: 1-2 business days.
             </p>
           </div>
           <button
             type="button"
             onClick={startIdentityVerification}
             disabled={identityVerification.isVerifying || identityVerification.isVerified}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
               identityVerification.isVerified 
                 ? 'bg-green-600 text-white cursor-not-allowed'
                 : identityVerification.isVerifying
@@ -506,9 +519,9 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
                 : 'bg-orange-600 text-white hover:bg-orange-700'
             }`}
           >
-            {identityVerification.isVerifying ? 'Starting...' :
+            {identityVerification.isVerifying ? 'Verifying...' :
              identityVerification.isVerified ? '✓ ID Verified' :
-             'Auto-Fill with ID Verification'}
+             'Quick Fill with ID'}
           </button>
         </div>
         
@@ -732,6 +745,8 @@ const ImportCompanyForm = ({ onClose }: { onClose: () => void }) => {
     ein: '',
     address: '',
     founded: '',
+    industry: '',
+    status: 'Active',
     documents: null as FileList | null
   });
 
@@ -739,20 +754,27 @@ const ImportCompanyForm = ({ onClose }: { onClose: () => void }) => {
     e.preventDefault();
     
     try {
-      const formData = new FormData();
-      Object.entries(importData).forEach(([key, value]) => {
-        if (key === 'documents' && value) {
-          Array.from(value).forEach(file => {
-            formData.append('documents', file);
-          });
-        } else if (value) {
-          formData.append(key, value.toString());
-        }
-      });
+      const payload = {
+        name: importData.companyName,
+        entityType: importData.entityType,
+        state: importData.state,
+        ein: importData.ein || undefined,
+        address: importData.address,
+        founded: importData.founded,
+        industry: importData.industry || 'Technology',
+        status: importData.status,
+        // Add required fields that might be missing
+        jurisdiction: importData.state,
+        registeredAgent: 'Self-serve',
+        businessPurpose: 'General business purposes'
+      };
 
       const response = await fetch('/api/companies/import', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {
@@ -866,6 +888,42 @@ const ImportCompanyForm = ({ onClose }: { onClose: () => void }) => {
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
             placeholder="Full business address"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Industry
+          </label>
+          <select 
+            value={importData.industry}
+            onChange={(e) => setImportData(prev => ({ ...prev, industry: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+          >
+            <option value="">Select industry</option>
+            <option value="Technology">Technology</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Finance">Finance</option>
+            <option value="Real Estate">Real Estate</option>
+            <option value="Retail">Retail</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Services">Services</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Company Status
+          </label>
+          <select 
+            value={importData.status}
+            onChange={(e) => setImportData(prev => ({ ...prev, status: e.target.value }))}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Dissolved">Dissolved</option>
+          </select>
         </div>
       </div>
 
