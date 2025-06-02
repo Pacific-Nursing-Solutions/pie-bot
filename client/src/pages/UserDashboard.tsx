@@ -407,7 +407,7 @@ const UserDashboard = () => {
                     <td className="py-4 px-3 text-right">
                       <button 
                         onClick={() => setShowCompensationDetails(!showCompensationDetails)}
-                        className="text-orange-600 hover:text-orange-700 cursor-pointer"
+                        className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 cursor-pointer"
                       >
                         {showCompensationDetails ? 'Collapse ↑' : 'Expand ↓'}
                       </button>
