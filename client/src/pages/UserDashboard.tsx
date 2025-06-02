@@ -353,8 +353,8 @@ const UserDashboard = () => {
                   onClick={() => setCompensationPeriod(period)}
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                     compensationPeriod === period
-                      ? 'bg-orange-600 text-white'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                      ? 'bg-slate-600 text-white'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-slate-600 dark:hover:text-slate-400'
                   }`}
                 >
                   {period === '7d' ? '7 Days' : period === '30d' ? '30 Days' : '1 Year'}
@@ -364,7 +364,7 @@ const UserDashboard = () => {
           </div>
           <button 
             onClick={() => setShowCompensationSection(!showCompensationSection)}
-            className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+            className="p-2 text-gray-500 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
           >
             {showCompensationSection ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </button>
@@ -452,7 +452,7 @@ const UserDashboard = () => {
           </div>
           <button 
             onClick={() => setIsAnalyticsMinimized(!isAnalyticsMinimized)}
-            className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+            className="p-2 text-gray-500 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
           >
             {isAnalyticsMinimized ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </button>
