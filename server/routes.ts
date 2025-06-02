@@ -852,6 +852,7 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
 
   app.post("/api/companies/import", async (req, res) => {
     try {
+      console.log("Import request body:", req.body);
       const importData = z.object({
         name: z.string().min(1, "Company name is required"),
         entityType: z.string().min(1, "Entity type is required"),
