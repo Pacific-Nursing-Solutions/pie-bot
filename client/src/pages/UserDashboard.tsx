@@ -94,13 +94,7 @@ const UserDashboard = () => {
             <span className="sm:hidden">Co.</span>
           </button>
         </Link>
-        <Link href="/management">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-violet-50 dark:bg-violet-950/20 text-violet-600 dark:text-violet-300 rounded-lg hover:bg-violet-100 dark:hover:bg-violet-950/30 transition-colors text-sm">
-            <Users className="w-4 h-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Management</span>
-            <span className="sm:hidden">Mgmt</span>
-          </button>
-        </Link>
+
         <Link href="/documents">
           <button className="flex items-center px-3 sm:px-4 py-2 bg-sky-50 dark:bg-sky-950/20 text-sky-600 dark:text-sky-300 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-950/30 transition-colors text-sm">
             <FileText className="w-4 h-4 mr-1 sm:mr-2" />
@@ -127,7 +121,7 @@ const UserDashboard = () => {
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
             className="p-2 text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
           >
-            {isPortfolioMinimized ? <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" />}
+            {isPortfolioMinimized ? <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
         </div>
 
@@ -454,16 +448,13 @@ const UserDashboard = () => {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mr-3">
               Holdings Dashboard
             </h2>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm text-gray-500 dark:text-gray-400">Live Performance</span>
-            </div>
+
           </div>
           <button 
             onClick={() => setIsAnalyticsMinimized(!isAnalyticsMinimized)}
             className="p-2 text-gray-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
           >
-            {isAnalyticsMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+            {isAnalyticsMinimized ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </button>
         </div>
 

@@ -9,7 +9,7 @@ import PieTerminal from "@/components/PersistentPieBot";
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
 import CompanyPositions from "@/pages/CompanyPositions";
-import Management from "@/pages/Management";
+
 import Settings from "@/pages/Settings";
 import Pools from "@/pages/Pools";
 import Fundraising from "@/pages/Fundraising";
@@ -31,7 +31,7 @@ function Router() {
       <Route path="/company/:id/fundraising" component={Fundraising} />
       <Route path="/company/:id/documents" component={Documents} />
       <Route path="/company/:id/wallets" component={CompanyWallets} />
-      <Route path="/management" component={Management} />
+
       <Route path="/documents" component={Documents} />
       <Route path="/settings" component={Settings} />
       <Route path="/company-positions" component={CompanyPositions} />
