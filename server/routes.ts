@@ -895,6 +895,65 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
     }
   });
 
+  // IDENTITY VERIFICATION ENDPOINTS
+  app.post("/api/identity/start-verification", async (req, res) => {
+    try {
+      const { purpose } = z.object({
+        purpose: z.string()
+      }).parse(req.body);
+
+      // For now, return a mock verification ID
+      // In production, this would integrate with services like Jumio, Onfido, or Persona
+      const verificationId = `verify_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+      return res.json({
+        verificationId,
+        status: "pending",
+        purpose
+      });
+
+    } catch (error) {
+      console.error("Identity verification start error:", error);
+      const errorResponse = handleZodError(error);
+      return res.status(errorResponse.message.includes("Internal") ? 500 : 400).json(errorResponse);
+    }
+  });
+
+  app.post("/api/identity/complete-verification", async (req, res) => {
+    try {
+      const verificationData = z.object({
+        verificationId: z.string(),
+        fullName: z.string(),
+        address: z.string(),
+        email: z.string(),
+        phone: z.string(),
+        dateOfBirth: z.string()
+      }).parse(req.body);
+
+      // In production, this would:
+      // 1. Submit documents to identity verification service
+      // 2. Perform KYC/AML checks
+      // 3. Verify government ID documents
+      // 4. Cross-reference with credit bureaus or other databases
+
+      return res.json({
+        verificationId: verificationData.verificationId,
+        status: "verified",
+        fullName: verificationData.fullName,
+        address: verificationData.address,
+        email: verificationData.email,
+        phone: verificationData.phone,
+        dateOfBirth: verificationData.dateOfBirth,
+        verifiedAt: new Date().toISOString()
+      });
+
+    } catch (error) {
+      console.error("Identity verification completion error:", error);
+      const errorResponse = handleZodError(error);
+      return res.status(errorResponse.message.includes("Internal") ? 500 : 400).json(errorResponse);
+    }
+  });
+
   // Create the HTTP server
   const server = createServer(app);
   return server;

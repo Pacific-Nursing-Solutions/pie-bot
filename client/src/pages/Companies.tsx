@@ -357,6 +357,84 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
     totalCost: 102 // $100 state fee + $2 processing
   });
 
+  const [identityVerification, setIdentityVerification] = useState({
+    isVerifying: false,
+    isVerified: false,
+    verificationId: null as string | null
+  });
+
+  const [showIdentityModal, setShowIdentityModal] = useState(false);
+
+  const startIdentityVerification = async () => {
+    setIdentityVerification(prev => ({ ...prev, isVerifying: true }));
+    
+    try {
+      const response = await fetch('/api/identity/start-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ purpose: 'wyoming_llc_formation' })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setIdentityVerification({
+          isVerifying: false,
+          isVerified: false,
+          verificationId: data.verificationId
+        });
+        setShowIdentityModal(true);
+      } else {
+        const error = await response.json();
+        alert('Identity verification failed to start: ' + error.message);
+        setIdentityVerification(prev => ({ ...prev, isVerifying: false }));
+      }
+    } catch (error) {
+      console.error('Identity verification error:', error);
+      alert('Network error starting identity verification');
+      setIdentityVerification(prev => ({ ...prev, isVerifying: false }));
+    }
+  };
+
+  const completeIdentityVerification = async (verificationData: any) => {
+    try {
+      const response = await fetch('/api/identity/complete-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          verificationId: identityVerification.verificationId,
+          ...verificationData
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Auto-populate form with verified identity data
+        setFormData(prev => ({
+          ...prev,
+          organizer: data.fullName,
+          organizerAddress: data.address,
+          initialMembers: [
+            {
+              name: data.fullName,
+              address: data.address,
+              ownershipPercent: 100
+            }
+          ]
+        }));
+
+        setIdentityVerification(prev => ({ ...prev, isVerified: true }));
+        setShowIdentityModal(false);
+      } else {
+        const error = await response.json();
+        alert('Identity verification failed: ' + error.message);
+      }
+    } catch (error) {
+      console.error('Identity verification completion error:', error);
+      alert('Network error completing identity verification');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -409,10 +487,38 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border-l-4 border-blue-400">
-        <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Wyoming LLC Formation</h3>
-        <p className="text-sm text-blue-700 dark:text-blue-300">
-          Form your LLC in Wyoming with blockchain-ready equity management. Processing typically takes 1-2 business days.
-        </p>
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Wyoming LLC Formation</h3>
+            <p className="text-sm text-blue-700 dark:text-blue-300">
+              Form your LLC in Wyoming with blockchain-ready equity management. Processing typically takes 1-2 business days.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={startIdentityVerification}
+            disabled={identityVerification.isVerifying || identityVerification.isVerified}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              identityVerification.isVerified 
+                ? 'bg-green-600 text-white cursor-not-allowed'
+                : identityVerification.isVerifying
+                ? 'bg-gray-400 text-white cursor-not-allowed'
+                : 'bg-orange-600 text-white hover:bg-orange-700'
+            }`}
+          >
+            {identityVerification.isVerifying ? 'Starting...' :
+             identityVerification.isVerified ? '✓ ID Verified' :
+             'Auto-Fill with ID Verification'}
+          </button>
+        </div>
+        
+        {identityVerification.isVerified && (
+          <div className="mt-3 p-2 bg-green-50 dark:bg-green-950/20 rounded border border-green-200 dark:border-green-800">
+            <p className="text-xs text-green-700 dark:text-green-300">
+              Identity verified successfully. Form fields have been auto-populated with your verified information.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Basic Information */}
