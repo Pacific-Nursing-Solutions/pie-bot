@@ -524,32 +524,22 @@ const Management = () => {
 
         {!isContributionsMinimized && (
           <div className="p-6">
-            {/* Aggregate Summary */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-violet-600 dark:text-violet-400">$1.55M</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Equity Value</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">42h</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Hours Contributed</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">$240K</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Capital & IP Value</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">80%</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Average Equity %</div>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {personalContributions.map((contribution) => (
-                <div key={contribution.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Type</th>
+                    <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
+                    <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Description</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Amount</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Equity %</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Equity Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {personalContributions.map((contribution) => (
+                    <tr key={contribution.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <td className="py-3 px-3">
                         <span className={`px-2 py-1 text-xs rounded-full font-medium ${
                           contribution.type === 'hours' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
                           contribution.type === 'capital' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300' :
@@ -559,30 +549,50 @@ const Management = () => {
                         }`}>
                           {contribution.type.toUpperCase()}
                         </span>
-                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{contribution.company}</h3>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{contribution.date}</span>
-                      </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{contribution.description}</p>
-                      {contribution.project && (
-                        <p className="text-xs text-violet-600 dark:text-violet-400 mb-2">Project: {contribution.project}</p>
-                      )}
-                      <div className="flex items-center space-x-4 text-sm">
-                        <span className="font-medium text-gray-900 dark:text-gray-100">
+                      </td>
+                      <td className="py-3 px-3">
+                        <div className="font-medium text-gray-900 dark:text-gray-100">{contribution.company}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">{contribution.date}</div>
+                      </td>
+                      <td className="py-3 px-3">
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{contribution.description}</div>
+                        {contribution.project && (
+                          <div className="text-xs text-violet-600 dark:text-violet-400 mt-1">Project: {contribution.project}</div>
+                        )}
+                      </td>
+                      <td className="py-3 px-3 text-right">
+                        <div className="font-medium text-gray-900 dark:text-gray-100">
                           {contribution.amount.toLocaleString()} {contribution.unit}
-                        </span>
-                        <span className="text-gray-500 dark:text-gray-400">•</span>
-                        <span className="text-violet-600 dark:text-violet-400">
-                          {contribution.equityPercentage}% equity
-                        </span>
-                        <span className="text-gray-500 dark:text-gray-400">•</span>
-                        <span className="font-medium text-emerald-600 dark:text-emerald-400">
-                          ${contribution.equityValue.toLocaleString()} value
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                        </div>
+                      </td>
+                      <td className="py-3 px-3 text-right">
+                        <div className="font-medium text-violet-600 dark:text-violet-400">
+                          {contribution.equityPercentage}%
+                        </div>
+                      </td>
+                      <td className="py-3 px-3 text-right">
+                        <div className="font-medium text-emerald-600 dark:text-emerald-400">
+                          ${contribution.equityValue.toLocaleString()}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  
+                  {/* Totals Row */}
+                  <tr className="border-t-2 border-gray-300 dark:border-gray-600 bg-violet-50/50 dark:bg-violet-900/20">
+                    <td className="py-4 px-3 font-semibold text-gray-900 dark:text-gray-100" colSpan={3}>Contribution Totals</td>
+                    <td className="py-4 px-3 text-right font-semibold text-violet-600">
+                      $240K Value
+                    </td>
+                    <td className="py-4 px-3 text-right font-semibold text-violet-600">
+                      80% Avg
+                    </td>
+                    <td className="py-4 px-3 text-right font-semibold text-emerald-600">
+                      $1.55M
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         )}

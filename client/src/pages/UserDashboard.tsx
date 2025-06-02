@@ -377,25 +377,7 @@ const UserDashboard = () => {
 
         {!showCompensationSection && (
           <div className="p-6">
-            {/* Aggregate Summary */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">4,200h</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Time</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">$275K</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Capital</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">$385K</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Cash</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">$420K</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Equity</div>
-              </div>
-            </div>
+
             
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -456,22 +438,22 @@ const UserDashboard = () => {
                   })}
                   
                   {/* Totals Row */}
-                  <tr className="border-t-2 border-gray-300 dark:border-gray-600 bg-gray-800/30 dark:bg-gray-700/30">
-                    <td className="py-4 font-semibold text-gray-900 dark:text-gray-100">Portfolio Totals</td>
-                    <td className="py-4 text-right font-semibold">
-                      {companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 2000) + 500), 0).toLocaleString()}h
+                  <tr className="border-t-2 border-gray-300 dark:border-gray-600 bg-orange-50/50 dark:bg-orange-900/20">
+                    <td className="py-4 px-3 font-semibold text-gray-900 dark:text-gray-100">Compensation Totals</td>
+                    <td className="py-4 px-3 text-right font-semibold text-orange-600">
+                      4,200h
                     </td>
-                    <td className="py-4 text-right font-semibold">
-                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 100000) + 10000), 0).toLocaleString()}
+                    <td className="py-4 px-3 text-right font-semibold text-orange-600">
+                      $275K
                     </td>
-                    <td className="py-4 text-right font-semibold">
-                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 500000) + 100000), 0).toLocaleString()}
+                    <td className="py-4 px-3 text-right font-semibold text-orange-600">
+                      $805K
                     </td>
-                    <td className="py-4 text-right font-semibold text-green-600">
-                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 200000) + 50000), 0).toLocaleString()}
+                    <td className="py-4 px-3 text-right font-semibold text-green-600">
+                      $385K
                     </td>
-                    <td className="py-4 text-right font-semibold text-blue-600">
-                      ${companyPositions.reduce((sum) => sum + (Math.floor(Math.random() * 300000) + 100000), 0).toLocaleString()}
+                    <td className="py-4 px-3 text-right font-semibold text-blue-600">
+                      $420K
                     </td>
                   </tr>
                 </tbody>
