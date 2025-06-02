@@ -18,7 +18,13 @@ import {
   TrendingDown,
   Activity,
   MessageSquare,
-  Wallet
+  Wallet,
+  Scale,
+  FileText,
+  Building,
+  Plus,
+  AlertTriangle,
+  Gavel
 } from 'lucide-react';
 import WalletManager from '@/components/WalletManager';
 
@@ -66,6 +72,38 @@ interface PersonalContribution {
   equityValue: number;
 }
 
+interface LegalAction {
+  id: number;
+  type: 'board_meeting' | 'shareholder_resolution' | 'equity_distribution' | 'incorporation' | 'amendment';
+  title: string;
+  description: string;
+  company: string;
+  dueDate: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  status: 'pending' | 'in_progress' | 'completed' | 'overdue';
+  requiredApprovals?: string[];
+  documents?: string[];
+}
+
+interface CompanyFormation {
+  entityType: 'delaware_c_corp' | 'delaware_llc' | 'wyoming_llc' | 'cayman_islands' | 'singapore_pte';
+  jurisdiction: string;
+  name: string;
+  dynamicEquity: {
+    enabled: boolean;
+    factors: {
+      timeCommitment: number;
+      capitalContribution: number;
+      ideaContribution: number;
+      executionRisk: number;
+    };
+    vestingSchedule: {
+      cliffMonths: number;
+      vestingYears: number;
+    };
+  };
+}
+
 interface Wallet {
   id: number;
   name: string;
@@ -83,6 +121,9 @@ const Management = () => {
   const [showContributionDetails, setShowContributionDetails] = useState(false);
   const [contributionTimeframe, setContributionTimeframe] = useState<'week' | 'month' | 'year' | 'all-time'>('month');
   const [employeeActivityPeriod, setEmployeeActivityPeriod] = useState<'week' | 'month' | 'year'>('week');
+  const [isLegalActionsMinimized, setIsLegalActionsMinimized] = useState(false);
+  const [showCompanyFormation, setShowCompanyFormation] = useState(false);
+  const [selectedCalendarProvider, setSelectedCalendarProvider] = useState<'google' | 'apple' | 'outlook' | null>(null);
 
   const [employees] = useState<Employee[]>([
     {
@@ -238,6 +279,55 @@ const Management = () => {
   ]);
 
   const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
+
+  const [legalActions] = useState<LegalAction[]>([
+    {
+      id: 1,
+      type: 'board_meeting',
+      title: 'Quarterly Board Meeting Q1 2024',
+      description: 'Review financial performance, approve equity grants, discuss strategic initiatives',
+      company: 'TechStart Inc.',
+      dueDate: '2024-04-15',
+      priority: 'high',
+      status: 'pending',
+      requiredApprovals: ['CEO', 'CFO', 'Independent Director'],
+      documents: ['Financial Report', 'Equity Grant Proposals']
+    },
+    {
+      id: 2,
+      type: 'shareholder_resolution',
+      title: 'Employee Stock Option Plan Amendment',
+      description: 'Increase option pool from 15% to 20% for employee incentives',
+      company: 'TechStart Inc.',
+      dueDate: '2024-04-30',
+      priority: 'medium',
+      status: 'in_progress',
+      requiredApprovals: ['Majority Shareholders'],
+      documents: ['Amended ESOP', 'Shareholder Consent Forms']
+    },
+    {
+      id: 3,
+      type: 'equity_distribution',
+      title: 'Founder Equity Finalization',
+      description: 'Finalize equity distribution based on dynamic equity calculations',
+      company: 'AI Solutions LLC',
+      dueDate: '2024-04-10',
+      priority: 'urgent',
+      status: 'overdue',
+      documents: ['Equity Distribution Agreement', 'Vesting Schedules']
+    },
+    {
+      id: 4,
+      type: 'incorporation',
+      title: 'Form New AI Research Subsidiary',
+      description: 'Incorporate Delaware C-Corp for AI research and development activities',
+      company: 'New Entity',
+      dueDate: '2024-05-15',
+      priority: 'medium',
+      status: 'pending',
+      documents: ['Articles of Incorporation', 'Bylaws', 'Initial Resolutions']
+    }
+  ]);
 
   const [personalContributions] = useState<PersonalContribution[]>([
     {
@@ -666,6 +756,286 @@ const Management = () => {
           </div>
         )}
       </div>
+
+      {/* Legal Actions & Company Formation */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <div className="flex items-center space-x-4">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Legal Actions & Compliance</h2>
+            <div className="flex space-x-2">
+              <button 
+                onClick={() => setShowCompanyFormation(true)}
+                className="flex items-center px-3 py-1 bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-sm"
+              >
+                <Building className="w-4 h-4 mr-1" />
+                Form Company
+              </button>
+              <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                {(['google', 'apple', 'outlook'] as const).map((provider) => (
+                  <button
+                    key={provider}
+                    onClick={() => setSelectedCalendarProvider(provider)}
+                    className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                      selectedCalendarProvider === provider
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                    }`}
+                  >
+                    {provider === 'google' ? 'Google' : provider === 'apple' ? 'Apple' : 'Outlook'}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <button 
+            onClick={() => setIsLegalActionsMinimized(!isLegalActionsMinimized)}
+            className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            {isLegalActionsMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {!isLegalActionsMinimized && (
+          <div className="p-6">
+            {/* Urgent Actions Alert */}
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <div className="flex items-center">
+                <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400 mr-3" />
+                <div>
+                  <h3 className="font-semibold text-red-800 dark:text-red-300">Action Required</h3>
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                    1 overdue action, 2 actions due within 7 days
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Legal Actions Grid */}
+            <div className="grid gap-4 md:grid-cols-2">
+              {legalActions.map((action) => (
+                <div key={action.id} className={`border rounded-lg p-4 ${
+                  action.status === 'overdue' ? 'border-red-300 bg-red-50 dark:bg-red-900/10' :
+                  action.priority === 'urgent' ? 'border-orange-300 bg-orange-50 dark:bg-orange-900/10' :
+                  action.priority === 'high' ? 'border-yellow-300 bg-yellow-50 dark:bg-yellow-900/10' :
+                  'border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600'
+                }`}>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                      {action.type === 'board_meeting' && <Gavel className="w-4 h-4 text-blue-600" />}
+                      {action.type === 'shareholder_resolution' && <Scale className="w-4 h-4 text-purple-600" />}
+                      {action.type === 'equity_distribution' && <TrendingUp className="w-4 h-4 text-green-600" />}
+                      {action.type === 'incorporation' && <Building className="w-4 h-4 text-orange-600" />}
+                      {action.type === 'amendment' && <FileText className="w-4 h-4 text-gray-600" />}
+                      <span className={`px-2 py-1 text-xs rounded-full font-medium ${
+                        action.priority === 'urgent' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
+                        action.priority === 'high' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' :
+                        action.priority === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' :
+                        'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
+                      }`}>
+                        {action.priority.toUpperCase()}
+                      </span>
+                    </div>
+                    <span className={`px-2 py-1 text-xs rounded-full font-medium ${
+                      action.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                      action.status === 'in_progress' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
+                      action.status === 'overdue' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
+                      'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
+                    }`}>
+                      {action.status.replace('_', ' ').toUpperCase()}
+                    </span>
+                  </div>
+                  
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{action.title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{action.description}</p>
+                  
+                  <div className="flex items-center justify-between text-sm">
+                    <div>
+                      <span className="text-gray-500 dark:text-gray-400">Company: </span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">{action.company}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500 dark:text-gray-400">Due: </span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100">{action.dueDate}</span>
+                    </div>
+                  </div>
+
+                  {action.requiredApprovals && (
+                    <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Required Approvals:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {action.requiredApprovals.map((approval, idx) => (
+                          <span key={idx} className="px-2 py-1 text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 rounded">
+                            {approval}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {action.documents && (
+                    <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Documents:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {action.documents.map((doc, idx) => (
+                          <span key={idx} className="px-2 py-1 text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded">
+                            {doc}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-4 flex space-x-2">
+                    <button className="flex-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                      View Details
+                    </button>
+                    <button className="px-3 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm">
+                      Schedule
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Company Formation Modal */}
+      {showCompanyFormation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Form New Company</h2>
+              <button 
+                onClick={() => setShowCompanyFormation(false)}
+                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+              >
+                <ChevronUp className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Company Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Company Name
+                </label>
+                <input 
+                  type="text" 
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+                  placeholder="Enter company name"
+                />
+              </div>
+
+              {/* Entity Type */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Entity Type
+                </label>
+                <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100">
+                  <option value="">Select entity type</option>
+                  <option value="delaware_c_corp">Delaware C-Corporation</option>
+                  <option value="delaware_llc">Delaware LLC</option>
+                  <option value="wyoming_llc">Wyoming LLC</option>
+                  <option value="cayman_islands">Cayman Islands</option>
+                  <option value="singapore_pte">Singapore Pte Ltd</option>
+                </select>
+              </div>
+
+              {/* Dynamic Equity Settings */}
+              <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Dynamic Equity Configuration</h3>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <input type="checkbox" id="enableDynamicEquity" className="rounded" />
+                    <label htmlFor="enableDynamicEquity" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Enable Dynamic Equity Distribution
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                        Time Commitment Weight
+                      </label>
+                      <input type="range" min="0" max="100" defaultValue="40" className="w-full" />
+                      <span className="text-xs text-gray-500">40%</span>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                        Capital Contribution Weight
+                      </label>
+                      <input type="range" min="0" max="100" defaultValue="30" className="w-full" />
+                      <span className="text-xs text-gray-500">30%</span>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                        Idea Contribution Weight
+                      </label>
+                      <input type="range" min="0" max="100" defaultValue="20" className="w-full" />
+                      <span className="text-xs text-gray-500">20%</span>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                        Execution Risk Weight
+                      </label>
+                      <input type="range" min="0" max="100" defaultValue="10" className="w-full" />
+                      <span className="text-xs text-gray-500">10%</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                        Cliff Period (months)
+                      </label>
+                      <input type="number" min="0" max="24" defaultValue="12" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700 dark:text-gray-100" />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                        Vesting Period (years)
+                      </label>
+                      <input type="number" min="1" max="8" defaultValue="4" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700 dark:text-gray-100" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Calendar Integration */}
+              <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Calendar Integration</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Connect your calendar to receive automated reminders for legal deadlines and board meetings.
+                </p>
+                <div className="flex space-x-2">
+                  <button className="flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Connect Google Calendar
+                  </button>
+                  <button className="flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Connect Apple Calendar
+                  </button>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex space-x-3 pt-4">
+                <button className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  Create Company
+                </button>
+                <button 
+                  onClick={() => setShowCompanyFormation(false)}
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Active Projects */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
