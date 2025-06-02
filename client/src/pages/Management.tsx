@@ -528,69 +528,62 @@ const Management = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Type</th>
                     <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                     <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Description</th>
                     <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Amount</th>
                     <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Equity %</th>
                     <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Equity Value</th>
+                    <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {/* Total Contributions Row */}
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <td className="py-4 px-3">
+                      <div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">Total</div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">Contributions</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{personalContributions.length} contributions</div>
+                      </div>
+                    </td>
+                    <td className="py-4 px-3 text-gray-500 dark:text-gray-400">Time, capital, and IP contributions</td>
+                    <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$240K</td>
+                    <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">80%</td>
+                    <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$1.55M</td>
+                    <td className="py-4 px-3 text-right">
+                      <span className="text-violet-600 hover:text-violet-700 cursor-pointer">Collapse ↑</span>
+                    </td>
+                  </tr>
+
+                  {/* Individual Contribution Rows */}
                   {personalContributions.map((contribution) => (
                     <tr key={contribution.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                       <td className="py-3 px-3">
-                        <span className={`px-2 py-1 text-xs rounded-full font-medium ${
-                          contribution.type === 'hours' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
-                          contribution.type === 'capital' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300' :
-                          contribution.type === 'sales' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300' :
-                          contribution.type === 'ip' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300' :
-                          'bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300'
-                        }`}>
-                          {contribution.type.toUpperCase()}
-                        </span>
-                      </td>
-                      <td className="py-3 px-3">
-                        <div className="font-medium text-gray-900 dark:text-gray-100">{contribution.company}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">{contribution.date}</div>
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-gray-100">{contribution.company}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{contribution.date} • {contribution.type.toUpperCase()}</div>
+                        </div>
                       </td>
                       <td className="py-3 px-3">
                         <div className="text-sm text-gray-600 dark:text-gray-400">{contribution.description}</div>
                         {contribution.project && (
-                          <div className="text-xs text-violet-600 dark:text-violet-400 mt-1">Project: {contribution.project}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Project: {contribution.project}</div>
                         )}
                       </td>
-                      <td className="py-3 px-3 text-right">
-                        <div className="font-medium text-gray-900 dark:text-gray-100">
-                          {contribution.amount.toLocaleString()} {contribution.unit}
-                        </div>
+                      <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">
+                        {contribution.amount.toLocaleString()} {contribution.unit}
                       </td>
-                      <td className="py-3 px-3 text-right">
-                        <div className="font-medium text-violet-600 dark:text-violet-400">
-                          {contribution.equityPercentage}%
-                        </div>
+                      <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">
+                        {contribution.equityPercentage}%
                       </td>
-                      <td className="py-3 px-3 text-right">
-                        <div className="font-medium text-emerald-600 dark:text-emerald-400">
-                          ${contribution.equityValue.toLocaleString()}
-                        </div>
+                      <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">
+                        ${contribution.equityValue.toLocaleString()}
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">
+                        -
                       </td>
                     </tr>
                   ))}
-                  
-                  {/* Totals Row */}
-                  <tr className="border-t-2 border-gray-300 dark:border-gray-600 bg-violet-50/50 dark:bg-violet-900/20">
-                    <td className="py-4 px-3 font-semibold text-gray-900 dark:text-gray-100" colSpan={3}>Contribution Totals</td>
-                    <td className="py-4 px-3 text-right font-semibold text-violet-600">
-                      $240K Value
-                    </td>
-                    <td className="py-4 px-3 text-right font-semibold text-violet-600">
-                      80% Avg
-                    </td>
-                    <td className="py-4 px-3 text-right font-semibold text-emerald-600">
-                      $1.55M
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>

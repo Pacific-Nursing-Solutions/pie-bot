@@ -391,35 +391,26 @@ const UserDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Compensation Summary Row - Always Visible */}
-                  <tr className="bg-orange-50/50 dark:bg-orange-900/20 border-b-2 border-orange-200 dark:border-orange-700">
-                    <td className="py-4 px-3 w-1/5">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center mr-3">
-                          <span className="text-white text-xs font-bold">C</span>
-                        </div>
-                        <div>
-                          <div className="font-semibold text-gray-900 dark:text-gray-100">Total Compensation</div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">{companyPositions.length} companies</div>
-                        </div>
+                  {/* Total Compensation Row */}
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <td className="py-4 px-3">
+                      <div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">Total</div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">Compensation</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{companyPositions.length} companies</div>
                       </div>
                     </td>
-                    <td className="py-4 px-3 text-right font-semibold text-orange-600 w-1/6">4,200h</td>
-                    <td className="py-4 px-3 text-right font-semibold text-orange-600 w-1/6">$275K</td>
-                    <td className="py-4 px-3 text-right font-semibold text-orange-600 w-1/6">$805K</td>
-                    <td className="py-4 px-3 text-right font-semibold text-orange-600 w-1/6">$385K</td>
-                    <td className="py-4 px-3 text-right w-1/6">
-                      <button 
-                        onClick={() => setShowCompensationDetails(!showCompensationDetails)}
-                        className="text-orange-600 hover:text-orange-700 dark:hover:text-orange-400 transition-colors"
-                      >
-                        {showCompensationDetails ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                      </button>
+                    <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">4,200h</td>
+                    <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$275K</td>
+                    <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$805K</td>
+                    <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$385K</td>
+                    <td className="py-4 px-3 text-right">
+                      <span className="text-orange-600 hover:text-orange-700 cursor-pointer">Collapse ↑</span>
                     </td>
                   </tr>
 
-                  {/* Individual Company Details - Expandable */}
-                  {showCompensationDetails && companyPositions.map((company) => {
+                  {/* Individual Company Rows */}
+                  {companyPositions.map((company) => {
                     // Generate mock compensation data
                     const timeContributed = Math.floor(Math.random() * 2000) + 500; // 500-2500 hours
                     const capitalContributed = Math.floor(Math.random() * 100000) + 10000; // $10K-$110K
@@ -429,37 +420,17 @@ const UserDashboard = () => {
                     
                     return (
                       <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td className="py-3 px-3 w-1/5">
-                          <div className="flex items-center">
-                            <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
-                              <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-900 dark:text-gray-100">{company.name}</div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400">{company.entityType}</div>
-                            </div>
+                        <td className="py-3 px-3">
+                          <div>
+                            <div className="font-medium text-gray-900 dark:text-gray-100">{company.name}</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">{company.entityType}</div>
                           </div>
                         </td>
-                        <td className="py-3 px-3 text-right w-1/6">
-                          <div className="font-medium">{timeContributed.toLocaleString()}h</div>
-                          <div className="text-xs text-transparent">placeholder</div>
-                        </td>
-                        <td className="py-3 px-3 text-right w-1/6">
-                          <div className="font-medium">${capitalContributed.toLocaleString()}</div>
-                          <div className="text-xs text-transparent">placeholder</div>
-                        </td>
-                        <td className="py-3 px-3 text-right w-1/6">
-                          <div className="font-semibold">${totalEarned.toLocaleString()}</div>
-                          <div className="text-xs text-transparent">placeholder</div>
-                        </td>
-                        <td className="py-3 px-3 text-right w-1/6">
-                          <div className="font-medium text-green-600">${cashComp.toLocaleString()}</div>
-                          <div className="text-xs text-gray-500">{Math.round((cashComp/totalEarned)*100)}%</div>
-                        </td>
-                        <td className="py-3 px-3 text-right w-1/6">
-                          <div className="font-medium text-blue-600">${equityComp.toLocaleString()}</div>
-                          <div className="text-xs text-gray-500">{Math.round((equityComp/totalEarned)*100)}%</div>
-                        </td>
+                        <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">{timeContributed.toLocaleString()}h</td>
+                        <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">${capitalContributed.toLocaleString()}</td>
+                        <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">${totalEarned.toLocaleString()}</td>
+                        <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">${cashComp.toLocaleString()}</td>
+                        <td className="py-3 px-3 text-right font-medium text-gray-900 dark:text-gray-100">${equityComp.toLocaleString()}</td>
                       </tr>
                     );
                   })}
