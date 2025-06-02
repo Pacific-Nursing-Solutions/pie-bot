@@ -524,6 +524,26 @@ const Management = () => {
 
         {!isContributionsMinimized && (
           <div className="p-6">
+            {/* Aggregate Summary */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-violet-600 dark:text-violet-400">$1.55M</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Total Equity Value</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">42h</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Hours Contributed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">$240K</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Capital & IP Value</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">80%</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Average Equity %</div>
+              </div>
+            </div>
+            
             <div className="space-y-4">
               {personalContributions.map((contribution) => (
                 <div key={contribution.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">

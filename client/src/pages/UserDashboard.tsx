@@ -377,6 +377,26 @@ const UserDashboard = () => {
 
         {!showCompensationSection && (
           <div className="p-6">
+            {/* Aggregate Summary */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">4,200h</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Total Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">$275K</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Total Capital</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600 dark:text-green-400">$385K</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Total Cash</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">$420K</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Total Equity</div>
+              </div>
+            </div>
+            
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
