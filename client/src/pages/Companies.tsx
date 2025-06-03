@@ -140,29 +140,60 @@ const Companies = () => {
         </button>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Portfolio Value</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">${totalValue.toLocaleString()}</p>
+      {/* Company Formation Inline Form */}
+      {showFormationForm && (
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Company</h2>
+            <button 
+              onClick={() => setShowFormationForm(false)}
+              className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            >
+              <ChevronUp className="w-5 h-5" />
+            </button>
+          </div>
+          
+          <div className="p-6">
+            {/* Formation Type Selection */}
+            <div className="mb-6">
+              <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                <button
+                  onClick={() => setFormationType('form')}
+                  className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                    formationType === 'form'
+                      ? 'bg-orange-600 text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <Plus className="w-4 h-4" />
+                    <span>Form New Company</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setFormationType('import')}
+                  className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                    formationType === 'import'
+                      ? 'bg-orange-600 text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Import Existing</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {formationType === 'form' ? (
+              <WyomingLLCForm onClose={() => setShowFormationForm(false)} />
+            ) : (
+              <ImportCompanyForm onClose={() => setShowFormationForm(false)} />
+            )}
+          </div>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Companies</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{activeCompanies}</p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Avg Equity %</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            {(companies.reduce((sum, c) => sum + c.userEquityPercentage, 0) / companies.length).toFixed(1)}%
-          </p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Debt</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            (${companies.reduce((sum, c) => sum + c.userDebtPosition, 0).toLocaleString()})
-          </p>
-        </div>
-      </div>
+      )}
 
       {/* Companies List */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
@@ -289,61 +320,6 @@ const Companies = () => {
           </div>
         )}
       </div>
-
-      {/* Company Formation Inline Form */}
-      {showFormationForm && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Company</h2>
-            <button 
-              onClick={() => setShowFormationForm(false)}
-              className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-            >
-              <ChevronUp className="w-5 h-5" />
-            </button>
-          </div>
-          
-          <div className="p-6">
-            {/* Formation Type Selection */}
-            <div className="mb-6">
-              <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-                <button
-                  onClick={() => setFormationType('form')}
-                  className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                    formationType === 'form'
-                      ? 'bg-orange-600 text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    <Plus className="w-4 h-4" />
-                    <span>Form New Company</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setFormationType('import')}
-                  className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                    formationType === 'import'
-                      ? 'bg-orange-600 text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    <ExternalLink className="w-4 h-4" />
-                    <span>Import Existing</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            {formationType === 'form' ? (
-              <WyomingLLCForm onClose={() => setShowFormationForm(false)} />
-            ) : (
-              <ImportCompanyForm onClose={() => setShowFormationForm(false)} />
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
