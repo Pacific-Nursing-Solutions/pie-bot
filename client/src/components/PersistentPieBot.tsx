@@ -455,7 +455,7 @@ const PieTerminal = () => {
 
         {/* Current Input Line */}
         <form onSubmit={handleSubmit} className="flex items-center mt-2">
-          <span className="text-orange-500 mr-2">pie.bot:~$</span>
+          <span className="text-orange-600 dark:text-orange-400 mr-2">pie.bot:~$</span>
           <input
             ref={(input) => {
               if (input) {
@@ -474,7 +474,7 @@ const PieTerminal = () => {
             value={currentInput}
             onChange={(e) => setCurrentInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent text-orange-300 border-none outline-none font-mono placeholder-slate-500"
+            className="flex-1 bg-transparent text-orange-600 dark:text-orange-400 border-none outline-none font-mono placeholder-slate-500"
             placeholder="Enter command..."
             autoFocus
           />

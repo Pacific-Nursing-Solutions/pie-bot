@@ -493,7 +493,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             <button
               type="button"
               onClick={() => askPieBot("Why is Wyoming such a favored jurisdiction for crypto companies and LLCs? What are the advantages compared to Delaware?")}
-              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              className="p-1 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
               title="Ask Pie Bot about jurisdiction choice"
             >
               <Bot className="w-4 h-4" />
