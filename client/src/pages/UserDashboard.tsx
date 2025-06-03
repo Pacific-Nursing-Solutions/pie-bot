@@ -132,7 +132,7 @@ const UserDashboard = () => {
       {/* Quick Navigation */}
       <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
         <Link href="/companies">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-300 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-950/30 transition-colors text-sm">
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-[#F4A261]/20 text-[#F4A261] rounded-lg hover:bg-[#F4A261]/30 transition-colors text-sm">
             <Building2 className="w-4 h-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Companies</span>
             <span className="sm:hidden">Co.</span>
@@ -140,14 +140,14 @@ const UserDashboard = () => {
         </Link>
 
         <Link href="/documents">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-sky-50 dark:bg-sky-950/20 text-sky-600 dark:text-sky-300 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-950/30 transition-colors text-sm">
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-[#FFD166]/20 text-[#FFD166] rounded-lg hover:bg-[#FFD166]/30 transition-colors text-sm">
             <FileText className="w-4 h-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Documents</span>
             <span className="sm:hidden">Docs</span>
           </button>
         </Link>
         <Link href="/settings">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-slate-50 dark:bg-slate-950/20 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-950/30 transition-colors text-sm">
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-[#2A9D8F]/20 text-[#2A9D8F] rounded-lg hover:bg-[#2A9D8F]/30 transition-colors text-sm">
             <Settings className="w-4 h-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Settings</span>
             <span className="sm:hidden">Set</span>
@@ -156,14 +156,14 @@ const UserDashboard = () => {
       </div>
 
       {/* Holdings Overview */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+      <div className="bg-[#1C1F2B] rounded-lg shadow border border-[#2A3441]">
+        <div className="px-4 sm:px-6 py-4 border-b border-[#2A3441] flex justify-between items-center">
+          <h2 className="text-lg sm:text-xl font-semibold text-[#E0E1DD]">
             Portfolio
           </h2>
           <button 
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
-            className="p-2 text-gray-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+            className="p-2 text-[#A0A3A8] hover:text-[#F4A261] transition-colors"
           >
             {isPortfolioMinimized ? <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
@@ -175,27 +175,27 @@ const UserDashboard = () => {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell"></th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell"></th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden xl:table-cell">Circulating Supply</th>
-                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
+                  <tr className="border-b border-[#2A3441]">
+                    <th className="text-left py-3 text-sm font-medium text-[#A0A3A8]">Company</th>
+                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8]">Value</th>
+                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden lg:table-cell"></th>
+                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden sm:table-cell"></th>
+                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden md:table-cell">% Equity</th>
+                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden xl:table-cell">Circulating Supply</th>
+                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8]">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {/* Portfolio Summary Row - Always Visible */}
-                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-800/30 dark:bg-gray-700/30">
+                  <tr className="border-b border-[#2A3441] bg-[#0D1B2A]/50">
                     <td className="py-4 w-1/4">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full flex items-center justify-center mr-3">
-                          <span className="text-white text-xs font-bold">P</span>
+                        <div className="w-8 h-8 bg-gradient-to-r from-[#F4A261] to-[#FFD166] rounded-full flex items-center justify-center mr-3">
+                          <span className="text-[#0D1B2A] text-xs font-bold">P</span>
                         </div>
                         <div>
-                          <div className="font-semibold text-gray-900 dark:text-gray-100">Total Portfolio</div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">{companyPositions.length} companies</div>
+                          <div className="font-semibold text-[#E0E1DD]">Total Portfolio</div>
+                          <div className="text-sm text-[#A0A3A8]">{companyPositions.length} companies</div>
                         </div>
                       </div>
                     </td>
@@ -300,13 +300,13 @@ const UserDashboard = () => {
                               <td className="py-3 text-right font-medium w-1/6">${company.userEquityValue.toLocaleString()}</td>
                               <td className="py-3 text-center hidden lg:table-cell w-1/3">
                                 <div className="text-xs flex flex-row justify-center space-x-6">
-                                  <div className={valuePerformance.daily >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                  <div className={valuePerformance.daily >= 0 ? 'text-[#2A9D8F]' : 'text-[#E76F51]'}>
                                     1D: {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
                                   </div>
-                                  <div className={valuePerformance.weekly >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                  <div className={valuePerformance.weekly >= 0 ? 'text-[#2A9D8F]' : 'text-[#E76F51]'}>
                                     7D: {valuePerformance.weekly >= 0 ? '+' : ''}{valuePerformance.weekly.toFixed(1)}%
                                   </div>
-                                  <div className={valuePerformance.monthly >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                  <div className={valuePerformance.monthly >= 0 ? 'text-[#2A9D8F]' : 'text-[#E76F51]'}>
                                     30D: {valuePerformance.monthly >= 0 ? '+' : ''}{valuePerformance.monthly.toFixed(1)}%
                                   </div>
                                 </div>
@@ -338,7 +338,7 @@ const UserDashboard = () => {
                                           return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
                                         }).join(' ');
                                       })()}
-                                      stroke={valuePerformance.monthly >= 0 ? '#22c55e' : '#ef4444'} 
+                                      stroke={valuePerformance.monthly >= 0 ? '#2A9D8F' : '#E76F51'} 
                                       strokeWidth="2" 
                                       fill="none"
                                       strokeLinecap="round"
@@ -348,7 +348,7 @@ const UserDashboard = () => {
                                 </div>
                               </td>
                               <td className="py-3 text-center hidden md:table-cell w-1/8">
-                                <div className="text-blue-400 font-medium">{company.userEquityPercentage}%</div>
+                                <div className="text-[#F4A261] font-medium">{company.userEquityPercentage}%</div>
                               </td>
                               <td className="py-3 text-center hidden xl:table-cell w-1/6">
                                 <div className="text-center">
@@ -366,7 +366,7 @@ const UserDashboard = () => {
                               </td>
                               <td className="py-3 text-right w-1/6">
                                 <Link href={`/company/${company.id}/dashboard`}>
-                                  <button className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center justify-end">
+                                  <button className="text-[#F4A261] hover:text-[#FFD166] text-sm flex items-center justify-end">
                                     View Details
                                   </button>
                                 </Link>
