@@ -19,23 +19,23 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 shadow">
+    <div className="bg-[#1C1F2B] rounded-lg p-4 sm:p-6 shadow border border-[#2A3441]">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-3 sm:space-y-0">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <h3 className="text-lg font-semibold text-[#E0E1DD]">
           Monthly Total Compensation
         </h3>
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <span className="text-gray-600 dark:text-gray-400">Total</span>
+            <div className="w-3 h-3 bg-[#F4A261] rounded-full"></div>
+            <span className="text-[#A0A3A8]">Total</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span className="text-gray-600 dark:text-gray-400">Cash</span>
+            <div className="w-3 h-3 bg-[#2A9D8F] rounded-full"></div>
+            <span className="text-[#A0A3A8]">Cash</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-            <span className="text-gray-600 dark:text-gray-400">Equity</span>
+            <div className="w-3 h-3 bg-[#FFD166] rounded-full"></div>
+            <span className="text-[#A0A3A8]">Equity</span>
           </div>
         </div>
       </div>
@@ -68,25 +68,25 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
             <Line 
               type="monotone" 
               dataKey="totalCompensation" 
-              stroke="#3b82f6" 
+              stroke="#F4A261" 
               strokeWidth={2}
-              dot={{ fill: '#3b82f6', strokeWidth: 1, r: 3 }}
+              dot={{ fill: '#F4A261', strokeWidth: 1, r: 3 }}
               name="Total Compensation"
             />
             <Line 
               type="monotone" 
               dataKey="cashCompensation" 
-              stroke="#10b981" 
+              stroke="#2A9D8F" 
               strokeWidth={2}
-              dot={{ fill: '#10b981', strokeWidth: 1, r: 2 }}
+              dot={{ fill: '#2A9D8F', strokeWidth: 1, r: 2 }}
               name="Cash Compensation"
             />
             <Line 
               type="monotone" 
               dataKey="equityCompensation" 
-              stroke="#8b5cf6" 
+              stroke="#FFD166" 
               strokeWidth={2}
-              dot={{ fill: '#8b5cf6', strokeWidth: 1, r: 2 }}
+              dot={{ fill: '#FFD166', strokeWidth: 1, r: 2 }}
               name="Equity Compensation"
             />
           </LineChart>
@@ -95,22 +95,22 @@ const CompensationChart = ({ data }: CompensationChartProps) => {
 
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="text-center">
-          <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <div className="text-xl sm:text-2xl font-bold text-[#F4A261]">
             {formatCurrency(data[data.length - 1]?.totalCompensation || 0)}
           </div>
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Latest Month Total</div>
+          <div className="text-xs sm:text-sm text-[#A0A3A8]">Latest Month Total</div>
         </div>
         <div className="text-center">
-          <div className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">
+          <div className="text-xl sm:text-2xl font-bold text-[#2A9D8F]">
             {formatCurrency(data[data.length - 1]?.cashCompensation || 0)}
           </div>
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Latest Month Cash</div>
+          <div className="text-xs sm:text-sm text-[#A0A3A8]">Latest Month Cash</div>
         </div>
         <div className="text-center">
-          <div className="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">
+          <div className="text-xl sm:text-2xl font-bold text-[#FFD166]">
             {formatCurrency(data[data.length - 1]?.equityCompensation || 0)}
           </div>
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Latest Month Equity</div>
+          <div className="text-xs sm:text-sm text-[#A0A3A8]">Latest Month Equity</div>
         </div>
       </div>
     </div>
