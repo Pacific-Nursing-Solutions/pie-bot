@@ -338,8 +338,16 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
       terminalInput.value = question;
       terminalInput.focus();
       // Trigger input event to update the terminal
-      const event = new Event('input', { bubbles: true });
-      terminalInput.dispatchEvent(event);
+      const inputEvent = new Event('input', { bubbles: true });
+      terminalInput.dispatchEvent(inputEvent);
+      // Automatically submit the question by triggering Enter key
+      const enterEvent = new KeyboardEvent('keydown', { 
+        key: 'Enter', 
+        code: 'Enter', 
+        keyCode: 13,
+        bubbles: true 
+      });
+      terminalInput.dispatchEvent(enterEvent);
     }
   };
 
