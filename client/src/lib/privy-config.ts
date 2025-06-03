@@ -1,18 +1,14 @@
 export const privyConfig = {
   appId: import.meta.env.VITE_PRIVY_APP_ID || 'demo-app-id',
   config: {
-    loginMethods: ['wallet', 'email'],
+    loginMethods: ['email' as const],
     appearance: {
-      theme: 'light' as const,
-      accentColor: '#F4A261' as `#${string}`, // warm gold brand color
+      theme: 'dark' as const,
+      accentColor: '#F4A261' as `#${string}`,
       logo: undefined,
     },
     embeddedWallets: {
-      createOnLogin: 'users-without-wallets' as const,
-    },
-    externalWallets: {
-      metamask: {},
-      coinbaseWallet: {},
+      createOnLogin: 'off' as const,
     },
   },
 };

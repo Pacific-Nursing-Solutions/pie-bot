@@ -3,9 +3,8 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { PrivyProvider } from '@privy-io/react-auth';
-import { privyConfig } from './lib/privy-config';
 import PieTerminal from "@/components/PersistentPieBot";
+// Error handling removed for now - focusing on core functionality
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
 import CompanyPositions from "@/pages/CompanyPositions";
@@ -45,36 +44,31 @@ function Router() {
 
 function App() {
   return (
-    <PrivyProvider
-      appId={privyConfig.appId}
-      config={privyConfig.config}
-    >
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-            {/* Command Center Layout */}
-            <div className="max-w-7xl mx-auto px-4 py-8">
-              {/* Pie Bot Terminal - The Star */}
-              <div className="mb-8">
-                <a href="/" className="block hover:opacity-80 transition-opacity">
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
-                    🥧 Pie Bot
-                  </h1>
-                </a>
-                <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
-                  Your terminal for equity management, financial operations, and business control
-                </p>
-                <PieTerminal />
-              </div>
-              
-              {/* Page Content Around Terminal */}
-              <Router />
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <div className="min-h-screen bg-[#0D1B2A]">
+          {/* Command Center Layout */}
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            {/* Pie Bot Terminal - The Star */}
+            <div className="mb-8">
+              <a href="/" className="block hover:opacity-80 transition-opacity">
+                <h1 className="text-3xl font-bold text-[#E0E1DD] mb-4 text-center">
+                  🥧 Pie Bot
+                </h1>
+              </a>
+              <p className="text-[#A0A3A8] text-center mb-6">
+                Your terminal for equity management, financial operations, and business control
+              </p>
+              <PieTerminal />
             </div>
+            
+            {/* Page Content Around Terminal */}
+            <Router />
           </div>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </PrivyProvider>
+        </div>
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 }
 
