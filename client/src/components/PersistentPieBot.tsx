@@ -419,12 +419,12 @@ const PieTerminal = () => {
   };
 
   return (
-    <div className="bg-slate-800 text-emerald-300 font-mono text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
+    <div className="bg-[#1C1F2B] text-[#E0E1DD] font-mono text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
       {/* Terminal Header */}
-      <div className="bg-slate-700 px-3 sm:px-4 py-2 flex items-center justify-between">
+      <div className="bg-[#0D1B2A] px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-slate-300" />
-          <span className="text-slate-200 text-xs sm:text-sm">Pie Bot Terminal v0.0.1</span>
+          <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-[#F4A261]" />
+          <span className="text-[#E0E1DD] text-xs sm:text-sm">Pie Bot Terminal v0.0.1</span>
         </div>
         <div className="flex space-x-1"></div>
       </div>
@@ -442,10 +442,10 @@ const PieTerminal = () => {
             <div key={index} className="flex">
               <span className="text-slate-400 text-xs w-20 shrink-0">{entry.timestamp}</span>
               <span className={`${
-                entry.type === 'command' ? 'text-sky-300' :
-                entry.type === 'success' ? 'text-emerald-300' :
-                entry.type === 'error' ? 'text-rose-300' :
-                'text-slate-200'
+                entry.type === 'command' ? 'text-[#00FFD1]' :
+                entry.type === 'success' ? 'text-[#FFD166]' :
+                entry.type === 'error' ? 'text-[#E76F51]' :
+                'text-[#E0E1DD]'
               }`}>
                 {entry.content}
               </span>
@@ -455,7 +455,7 @@ const PieTerminal = () => {
 
         {/* Current Input Line */}
         <form onSubmit={handleSubmit} className="flex items-center mt-2">
-          <span className="text-orange-500 mr-2">pie.bot:~$</span>
+          <span className="text-[#00FFD1] mr-2">pie.bot:~$</span>
           <input
             ref={(input) => {
               if (input) {
@@ -474,7 +474,7 @@ const PieTerminal = () => {
             value={currentInput}
             onChange={(e) => setCurrentInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent text-orange-500 border-none outline-none font-mono placeholder-slate-500"
+            className="flex-1 bg-transparent text-[#F9DC5C] border-none outline-none font-mono placeholder-slate-500"
             placeholder="Enter command..."
             autoFocus
           />
