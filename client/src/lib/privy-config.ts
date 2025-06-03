@@ -4,7 +4,7 @@ export const privyConfig = {
     loginMethods: ['wallet', 'email'],
     appearance: {
       theme: 'light' as const,
-      accentColor: '#f97316' as `#${string}`, // orange-500 brand color
+      accentColor: '#F4A261' as `#${string}`, // warm gold brand color
       logo: undefined,
     },
     embeddedWallets: {

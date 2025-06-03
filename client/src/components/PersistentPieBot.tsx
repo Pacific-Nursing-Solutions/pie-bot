@@ -440,7 +440,7 @@ const PieTerminal = () => {
         <div className="space-y-1">
           {commandHistory.map((entry, index) => (
             <div key={index} className="flex">
-              <span className="text-slate-400 text-xs w-20 shrink-0">{entry.timestamp}</span>
+              <span className="text-[#A0A3A8] text-xs w-20 shrink-0">{entry.timestamp}</span>
               <span className={`${
                 entry.type === 'command' ? 'text-[#00FFD1]' :
                 entry.type === 'success' ? 'text-[#FFD166]' :
