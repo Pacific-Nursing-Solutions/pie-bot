@@ -419,7 +419,7 @@ const PieTerminal = () => {
   };
 
   return (
-    <div className="bg-[#1C1F2B] text-[#E0E1DD] font-mono text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
+    <div className="bg-slate-800 text-emerald-300 font-mono text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
       {/* Terminal Header */}
       <div className="bg-[#0D1B2A] px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">

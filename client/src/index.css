@@ -4,94 +4,80 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Navy and Gold (Modern Finance) Color Palette */
+/* Standard Light/Dark Theme Color Palette */
 :root {
-  /* Navy and Gold backgrounds */
-  --dashboard-bg: #0D1B2A;     /* Deep navy */
-  --card-bg: #1C1F2B;         /* Slightly lighter dark */
-  --subtle-border: #2A3441;    /* Navy border */
-  --text-primary: #FFFFFF;     /* White text */
-  --text-secondary: #E0E1DD;   /* Light gray text */
-  --text-muted: #A0A3A8;      /* Muted text */
+  /* Light theme backgrounds */
+  --dashboard-bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --subtle-border: #e1e5e9;
+  --text-primary: #2c3e50;
+  --text-secondary: #546e7a;
+  --text-muted: #78909c;
   
-  /* Gold/Orange accent colors */
-  --data-primary: #F4A261;     /* Warm gold */
-  --data-success: #FFD166;     /* Vibrant gold */
-  --data-warning: #F9DC5C;     /* Bright yellow */
-  --data-danger: #E76F51;      /* Coral red */
-  --data-purple: #9D84B7;      /* Muted purple */
-  --data-teal: #2A9D8F;        /* Teal accent */
-  --data-orange: #F4A261;      /* Primary gold */
-  
-  /* Terminal colors */
-  --terminal-bg: #1C1F2B;      /* Terminal background */
-  --terminal-text: #00FFD1;    /* Bright cyan */
-  --terminal-accent: #F9DC5C;   /* Vibrant yellow */
+  /* Standard data colors */
+  --data-primary: #5c7cfa;    /* Soft blue */
+  --data-success: #51cf66;    /* Soft green */
+  --data-warning: #ffd43b;    /* Soft yellow */
+  --data-danger: #ff6b6b;     /* Soft red */
+  --data-purple: #9775fa;     /* Soft purple */
+  --data-teal: #20c997;       /* Soft teal */
+  --data-orange: #fd7e14;     /* Soft orange */
   
   /* Grid and dividers */
-  --grid-line: #2A3441;
-  --divider: #3A4B5C;
+  --grid-line: #ecf0f1;
+  --divider: #dee2e6;
 }
 
 .dark {
-  /* Navy and Gold theme for dark mode */
-  --dashboard-bg: #0D1B2A;     /* Deep navy */
-  --card-bg: #1C1F2B;         /* Slightly lighter dark */
-  --subtle-border: #2A3441;    /* Navy border */
-  --text-primary: #FFFFFF;     /* White text */
-  --text-secondary: #E0E1DD;   /* Light gray text */
-  --text-muted: #A0A3A8;      /* Muted text */
+  /* Dark theme */
+  --dashboard-bg: #1a1d23;
+  --card-bg: #2d3748;
+  --subtle-border: #4a5568;
+  --text-primary: #e2e8f0;
+  --text-secondary: #cbd5e0;
+  --text-muted: #a0aec0;
   
-  --data-primary: #F4A261;     /* Warm gold */
-  --data-success: #FFD166;     /* Vibrant gold */
-  --data-warning: #F9DC5C;     /* Bright yellow */
-  --data-danger: #E76F51;      /* Coral red */
-  --data-purple: #9D84B7;      /* Muted purple */
-  --data-teal: #2A9D8F;        /* Teal accent */
-  --data-orange: #F4A261;      /* Primary gold */
+  --data-primary: #7c3aed;
+  --data-success: #10b981;
+  --data-warning: #f59e0b;
+  --data-danger: #ef4444;
+  --data-purple: #8b5cf6;
+  --data-teal: #14b8a6;
+  --data-orange: #f97316;
   
-  --bullet-poor: #E76F51;
-  --bullet-satisfactory: #F4A261;
-  --bullet-good: #FFD166;
-  --bullet-excellent: #F9DC5C;
-  --bullet-target: #FFFFFF;
+  --bullet-poor: #dc2626;
+  --bullet-satisfactory: #d97706;
+  --bullet-good: #059669;
+  --bullet-excellent: #047857;
+  --bullet-target: #f8fafc;
   
-  --grid-line: #2A3441;
-  --divider: #3A4B5C;
+  --grid-line: #374151;
+  --divider: #4b5563;
 }
 
 @layer base {
   :root {
-    /* Navy and Gold (Modern Finance) Brand Colors */
-    --primary: 34 89% 74%;            /* Warm gold #F4A261 */
-    --primary-foreground: 210 40% 8%;
-    --secondary: 210 40% 15%;         /* Navy #1C1F2B */
-    --secondary-foreground: 0 0% 98%;
-    --muted: 210 40% 10%;
-    --muted-foreground: 210 5% 75%;
-    --accent: 54 90% 68%;             /* Vibrant yellow #FFD166 */
-    --accent-foreground: 210 40% 8%;
-    --destructive: 9 75% 62%;         /* Coral red #E76F51 */
-    --destructive-foreground: 0 0% 98%;
-    --border: 210 30% 20%;
-    --input: 210 30% 20%;
-    --ring: 34 89% 74%;
-    --background: 210 40% 8%;         /* Deep navy #0D1B2A */
-    --foreground: 0 0% 100%;
-    --chart-1: 34 89% 74%;            /* Warm gold */
-    --chart-2: 54 90% 68%;            /* Vibrant yellow */
-    --chart-3: 182 25% 50%;           /* Teal accent */
-    --chart-4: 255 20% 62%;           /* Muted purple */
-    --chart-5: 9 75% 62%;             /* Coral red */
-    
-    /* Custom Navy and Gold Brand Variables */
-    --brand-primary: 34 89% 74%;       /* Warm gold */
-    --brand-secondary: 210 40% 15%;    /* Navy */
-    --brand-accent: 54 90% 68%;        /* Vibrant yellow */
-    --brand-neutral: 210 5% 75%;       /* Light gray */
-    --brand-success: 182 25% 50%;      /* Teal */
-    --brand-warning: 54 90% 68%;       /* Vibrant yellow */
-    --brand-danger: 9 75% 62%;         /* Coral red */
+    /* Standard Theme Colors */
+    --primary: 262 90% 50%;           /* Purple */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 210 40% 98%;         /* Light gray */
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;            /* Light accent */
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;     /* Red */
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 262 90% 50%;
+    --background: 0 0% 100%;          /* White background */
+    --foreground: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;            /* Orange */
+    --chart-2: 173 58% 39%;           /* Teal */
+    --chart-3: 197 37% 24%;           /* Dark blue */
+    --chart-4: 43 74% 66%;            /* Yellow */
+    --chart-5: 27 87% 67%;            /* Light orange */
   }
   
   * {

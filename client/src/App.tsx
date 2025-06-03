@@ -47,17 +47,17 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <div className="min-h-screen bg-[#0D1B2A]">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
           {/* Command Center Layout */}
           <div className="max-w-7xl mx-auto px-4 py-8">
             {/* Pie Bot Terminal - The Star */}
             <div className="mb-8">
               <a href="/" className="block hover:opacity-80 transition-opacity">
-                <h1 className="text-3xl font-bold text-[#E0E1DD] mb-4 text-center">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
                   🥧 Pie Bot
                 </h1>
               </a>
-              <p className="text-[#A0A3A8] text-center mb-6">
+              <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
                 Your terminal for equity management, financial operations, and business control
               </p>
               <PieTerminal />
