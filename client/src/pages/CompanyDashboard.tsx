@@ -341,11 +341,11 @@ const CompanyDashboard = () => {
                       )}
 
                       <div className="grid grid-cols-2 gap-3">
-                        <button className="flex items-center justify-center p-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                        <button className="flex items-center justify-center p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
                           <Send className="w-4 h-4 mr-2" />
                           Send Tokens
                         </button>
-                        <button className="flex items-center justify-center p-3 border border-orange-600 text-orange-600 dark:text-orange-400 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-950 transition-colors">
+                        <button className="flex items-center justify-center p-3 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-950 transition-colors">
                           <Plus className="w-4 h-4 mr-2" />
                           Mint Equity
                         </button>
