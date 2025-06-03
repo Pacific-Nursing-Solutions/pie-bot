@@ -562,7 +562,7 @@ const UserDashboard = () => {
                                   type="text"
                                   value={editingWalletName}
                                   onChange={(e) => setEditingWalletName(e.target.value)}
-                                  className="flex-1 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-violet-500 dark:bg-gray-700 dark:text-gray-100"
+                                  className="flex-1 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
                                   autoFocus
                                 />
                                 <button
@@ -583,7 +583,7 @@ const UserDashboard = () => {
                                 <div className="flex items-center space-x-2">
                                   <span className="font-medium text-gray-900 dark:text-gray-100">{wallet.name}</span>
                                   {wallet.id === activeWalletId && (
-                                    <span className="px-2 py-0.5 text-xs bg-violet-100 dark:bg-violet-900 text-violet-700 dark:text-violet-300 rounded-full">Active</span>
+                                    <span className="px-2 py-0.5 text-xs bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded-full">Active</span>
                                   )}
                                 </div>
                                 <div className="flex items-center space-x-2 mt-1">
@@ -610,7 +610,7 @@ const UserDashboard = () => {
                   </div>
                   
                   <div className="p-3 border-t border-gray-200 dark:border-gray-700">
-                    <button className="w-full flex items-center justify-center space-x-2 py-2 text-sm text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors">
+                    <button className="w-full flex items-center justify-center space-x-2 py-2 text-sm text-orange-500 hover:text-orange-600 transition-colors">
                       <Plus className="w-4 h-4" />
                       <span>Add New Wallet</span>
                     </button>

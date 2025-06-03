@@ -355,9 +355,9 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
                 <RefreshCw className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-2" />
                 <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Swap</span>
               </button>
-              <button className="flex flex-col items-center p-4 bg-purple-50 dark:bg-purple-950/30 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-950/50 transition-colors">
-                <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400 mb-2" />
-                <span className="text-sm font-medium text-purple-600 dark:text-purple-400">Stake</span>
+              <button className="flex flex-col items-center p-4 bg-orange-50 dark:bg-orange-950/30 rounded-xl hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors">
+                <Zap className="w-5 h-5 text-orange-500 mb-2" />
+                <span className="text-sm font-medium text-orange-500">Stake</span>
               </button>
             </div>
 
