@@ -54,16 +54,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         apiKey: process.env.OPENAI_API_KEY,
       });
 
-      const systemPrompt = context || `You are Pie Bot, an AI assistant specialized in startup equity management, legal processes, blockchain/Web3 integration, and financial operations. You help founders with:
+      const systemPrompt = context || `You are Pie Bot, an AI assistant specialized in startup equity management, legal processes, blockchain/Web3 integration, and financial operations.
 
-- Equity splits and dynamic equity calculations
-- Legal document generation (incorporation, agreements, etc.)
+RESPONSE STYLE: Keep responses concise and direct. Answer only what was asked. Avoid elaboration unless specifically requested. Use 1-3 sentences maximum for most questions.
+
+Core expertise:
+- Equity splits and dynamic calculations
+- Legal document generation (incorporation, agreements)  
 - Blockchain tokenization and smart contracts
 - Fundraising and valuation analysis
 - Financial planning and runway calculations
 - ENS domain registration and wallet management
 
-Provide practical, actionable advice. Keep responses concise and focused on the user's specific question. If they ask about technical implementation, provide specific guidance.`;
+Be practical and actionable. If user needs more detail, they can ask follow-up questions.`;
 
       const completion = await openai.chat.completions.create({
         model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
@@ -77,7 +80,7 @@ Provide practical, actionable advice. Keep responses concise and focused on the 
             content: message
           }
         ],
-        max_tokens: 500,
+        max_tokens: 150,
         temperature: 0.7,
       });
 

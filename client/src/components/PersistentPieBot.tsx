@@ -8,20 +8,42 @@ interface CommandOutput {
 }
 
 const PieTerminal = () => {
-  const [commandHistory, setCommandHistory] = useState<CommandOutput[]>([
-    {
-      type: 'output',
-      content: '🥧 Pie Bot Terminal v0.0.1',
-      timestamp: new Date().toLocaleTimeString()
-    },
-    {
-      type: 'output',
-      content: 'Type "help" for available commands or start typing...',
-      timestamp: new Date().toLocaleTimeString()
+  // Load command history from localStorage
+  const loadHistory = (): CommandOutput[] => {
+    try {
+      const saved = localStorage.getItem('pie-bot-history');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (error) {
+      console.error('Failed to load chat history:', error);
     }
-  ]);
+    return [
+      {
+        type: 'output',
+        content: '🥧 Pie Bot Terminal v0.0.1',
+        timestamp: new Date().toLocaleTimeString()
+      },
+      {
+        type: 'output',
+        content: 'Type "help" for available commands or start typing...',
+        timestamp: new Date().toLocaleTimeString()
+      }
+    ];
+  };
+
+  const [commandHistory, setCommandHistory] = useState<CommandOutput[]>(loadHistory());
   const [currentInput, setCurrentInput] = useState('');
   const [historyIndex, setHistoryIndex] = useState(-1);
+
+  // Save command history to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('pie-bot-history', JSON.stringify(commandHistory));
+    } catch (error) {
+      console.error('Failed to save chat history:', error);
+    }
+  }, [commandHistory]);
 
   const commands = {
     'help': () => [
@@ -308,7 +330,7 @@ const PieTerminal = () => {
           },
           body: JSON.stringify({
             message: command,
-            context: 'You are Pie Bot, an AI assistant specialized in startup equity management, legal processes, blockchain/Web3 integration, and financial operations. You help founders with equity splits, legal document generation, tokenization, fundraising, and business management. Provide practical, actionable advice.'
+            context: 'You are Pie Bot, an AI assistant specialized in startup equity management, legal processes, blockchain/Web3 integration, and financial operations. RESPONSE STYLE: Keep responses concise and direct. Answer only what was asked. Use 1-3 sentences maximum for most questions. Be practical and actionable.'
           }),
         });
 
