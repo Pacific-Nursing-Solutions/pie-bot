@@ -545,11 +545,11 @@ const UserDashboard = () => {
                         >
                           <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
                             wallet.type === 'personal' 
-                              ? 'bg-violet-100 dark:bg-violet-900' 
+                              ? 'bg-orange-100 dark:bg-orange-900' 
                               : 'bg-orange-100 dark:bg-orange-900'
                           }`}>
                             {wallet.type === 'personal' ? (
-                              <Wallet className={`w-4 h-4 ${wallet.type === 'personal' ? 'text-violet-600 dark:text-violet-400' : 'text-orange-600 dark:text-orange-400'}`} />
+                              <Wallet className={`w-4 h-4 ${wallet.type === 'personal' ? 'text-orange-500' : 'text-orange-600 dark:text-orange-400'}`} />
                             ) : (
                               <Building2 className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                             )}

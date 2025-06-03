@@ -272,7 +272,7 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
                 onClick={() => setSelectedWallet(wallet.id)}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg border whitespace-nowrap transition-colors ${
                   selectedWallet === wallet.id
-                    ? 'bg-violet-50 dark:bg-violet-950/30 border-violet-200 dark:border-violet-800'
+                    ? 'bg-orange-50 dark:bg-orange-950/30 border-orange-200 dark:border-orange-800'
                     : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
