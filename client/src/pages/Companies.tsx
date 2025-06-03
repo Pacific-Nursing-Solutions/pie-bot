@@ -518,7 +518,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             <button
               type="button"
               onClick={() => askPieBot("What are the differences between LLC, C-Corp, and S-Corp? Which entity type is best for crypto and tech startups?")}
-              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              className="p-1 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
               title="Ask Pie Bot about entity types"
             >
               <Bot className="w-4 h-4" />
@@ -561,7 +561,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             <button
               type="button"
               onClick={() => askPieBot("What is a registered agent and why do I need one? What are the pros and cons of using a professional service vs acting as my own registered agent?")}
-              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              className="p-1 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
               title="Ask Pie Bot about registered agents"
             >
               <Bot className="w-4 h-4" />
@@ -624,7 +624,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
           <button
             type="button"
             onClick={() => askPieBot("What's the difference between member-managed and manager-managed LLCs? Which structure is better for startups and crypto companies?")}
-            className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+            className="p-1 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
             title="Ask Pie Bot about management structures"
           >
             <Bot className="w-4 h-4" />
