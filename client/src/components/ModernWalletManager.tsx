@@ -339,17 +339,17 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
             <div className="grid grid-cols-4 gap-3 mb-6">
               <button
                 onClick={() => setShowSendModal(true)}
-                className="flex flex-col items-center p-4 bg-red-50 dark:bg-red-950/30 rounded-xl hover:bg-red-100 dark:hover:bg-red-950/50 transition-colors"
+                className="flex flex-col items-center p-4 bg-orange-50 dark:bg-orange-950/30 rounded-xl hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors"
               >
-                <Send className="w-5 h-5 text-red-600 dark:text-red-400 mb-2" />
-                <span className="text-sm font-medium text-red-600 dark:text-red-400">Send</span>
+                <Send className="w-5 h-5 text-orange-500 mb-2" />
+                <span className="text-sm font-medium text-orange-500">Send</span>
               </button>
               <button
                 onClick={() => setShowReceiveModal(true)}
-                className="flex flex-col items-center p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-950/50 transition-colors"
+                className="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-950/50 transition-colors"
               >
-                <Receive className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mb-2" />
-                <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">Receive</span>
+                <Receive className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-2" />
+                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Receive</span>
               </button>
               <button className="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-950/50 transition-colors">
                 <RefreshCw className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-2" />
