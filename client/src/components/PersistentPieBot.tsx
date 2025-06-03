@@ -461,6 +461,13 @@ const PieTerminal = () => {
               if (input) {
                 // Store reference for clicking functionality
                 (window as any).pieTerminalInput = input;
+                // Store submit function globally
+                (window as any).pieTerminalSubmit = (command: string) => {
+                  setCurrentInput(command);
+                  executeCommand(command);
+                  setCurrentInput('');
+                  setHistoryIndex(-1);
+                };
               }
             }}
             type="text"
