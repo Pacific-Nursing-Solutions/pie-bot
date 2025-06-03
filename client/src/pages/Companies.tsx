@@ -40,7 +40,7 @@ const Companies = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showActiveOnly, setShowActiveOnly] = useState(true);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [showFormationModal, setShowFormationModal] = useState(false);
+  const [showFormationForm, setShowFormationForm] = useState(false);
   const [formationType, setFormationType] = useState<'form' | 'import'>('form');
   
   const [companies] = useState<Company[]>([
@@ -132,7 +132,7 @@ const Companies = () => {
         </div>
         
         <button 
-          onClick={() => setShowFormationModal(true)}
+          onClick={() => setShowFormationForm(!showFormationForm)}
           className="flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -290,59 +290,57 @@ const Companies = () => {
         )}
       </div>
 
-      {/* Company Formation Modal */}
-      {showFormationModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Company</h2>
-              <button 
-                onClick={() => setShowFormationModal(false)}
-                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-              >
-                <ChevronUp className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <div className="p-6">
-              {/* Formation Type Selection */}
-              <div className="mb-6">
-                <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-                  <button
-                    onClick={() => setFormationType('form')}
-                    className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                      formationType === 'form'
-                        ? 'bg-orange-600 text-white shadow-sm'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
-                    }`}
-                  >
-                    <div className="flex items-center justify-center space-x-2">
-                      <Plus className="w-4 h-4" />
-                      <span>Form New Company</span>
-                    </div>
-                  </button>
-                  <button
-                    onClick={() => setFormationType('import')}
-                    className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                      formationType === 'import'
-                        ? 'bg-orange-600 text-white shadow-sm'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
-                    }`}
-                  >
-                    <div className="flex items-center justify-center space-x-2">
-                      <ExternalLink className="w-4 h-4" />
-                      <span>Import Existing</span>
-                    </div>
-                  </button>
-                </div>
+      {/* Company Formation Inline Form */}
+      {showFormationForm && (
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Company</h2>
+            <button 
+              onClick={() => setShowFormationForm(false)}
+              className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            >
+              <ChevronUp className="w-5 h-5" />
+            </button>
+          </div>
+          
+          <div className="p-6">
+            {/* Formation Type Selection */}
+            <div className="mb-6">
+              <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                <button
+                  onClick={() => setFormationType('form')}
+                  className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                    formationType === 'form'
+                      ? 'bg-orange-600 text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <Plus className="w-4 h-4" />
+                    <span>Form New Company</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setFormationType('import')}
+                  className={`flex-1 px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                    formationType === 'import'
+                      ? 'bg-orange-600 text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Import Existing</span>
+                  </div>
+                </button>
               </div>
-
-              {formationType === 'form' ? (
-                <WyomingLLCForm onClose={() => setShowFormationModal(false)} />
-              ) : (
-                <ImportCompanyForm onClose={() => setShowFormationModal(false)} />
-              )}
             </div>
+
+            {formationType === 'form' ? (
+              <WyomingLLCForm onClose={() => setShowFormationForm(false)} />
+            ) : (
+              <ImportCompanyForm onClose={() => setShowFormationForm(false)} />
+            )}
           </div>
         </div>
       )}
