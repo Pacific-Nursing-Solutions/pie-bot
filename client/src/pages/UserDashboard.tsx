@@ -510,16 +510,16 @@ const UserDashboard = () => {
       </div>
 
       {/* Wallets Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+      <div className="bg-[#1C1F2B] rounded-lg shadow border border-[#2A3441]">
+        <div className="px-6 py-4 border-b border-[#2A3441] flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallets</h2>
+            <h2 className="text-xl font-semibold text-[#E0E1DD]">Wallets</h2>
             
             {/* Wallet Account Switcher */}
             <div className="relative">
               <button
                 onClick={() => setShowWalletDropdown(!showWalletDropdown)}
-                className="flex items-center space-x-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all"
+                className="flex items-center space-x-2 px-4 py-2 bg-[#F4A261] text-[#0D1B2A] rounded-lg hover:bg-[#FFD166] transition-all"
               >
                 <Wallet className="w-4 h-4" />
                 <span className="font-medium">{activeWallet?.name}</span>
