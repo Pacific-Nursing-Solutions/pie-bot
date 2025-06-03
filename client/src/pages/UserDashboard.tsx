@@ -519,7 +519,7 @@ const UserDashboard = () => {
             <div className="relative">
               <button
                 onClick={() => setShowWalletDropdown(!showWalletDropdown)}
-                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-lg hover:from-violet-700 hover:to-purple-700 transition-all"
+                className="flex items-center space-x-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all"
               >
                 <Wallet className="w-4 h-4" />
                 <span className="font-medium">{activeWallet?.name}</span>
