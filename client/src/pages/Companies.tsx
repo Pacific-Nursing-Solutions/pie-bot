@@ -9,7 +9,8 @@ import {
   ChevronRight,
   ChevronDown,
   ChevronUp,
-  ExternalLink
+  ExternalLink,
+  Bot
 } from 'lucide-react';
 
 interface Company {
@@ -339,6 +340,18 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
     totalCost: 241 // $100 state fee + $2 processing + $139 registered agent
   });
 
+  const askPieBot = (question: string) => {
+    // Post message to the terminal/command interface
+    const terminalInput = document.querySelector('input[type="text"][placeholder*="Type"]') as HTMLInputElement;
+    if (terminalInput) {
+      terminalInput.value = question;
+      terminalInput.focus();
+      // Trigger input event to update the terminal
+      const event = new Event('input', { bubbles: true });
+      terminalInput.dispatchEvent(event);
+    }
+  };
+
   const [identityVerification, setIdentityVerification] = useState({
     isVerifying: false,
     isVerified: false,
@@ -484,9 +497,19 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
       {/* Jurisdiction and Entity Type */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Jurisdiction
-          </label>
+          <div className="flex items-center gap-2 mb-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Jurisdiction
+            </label>
+            <button
+              type="button"
+              onClick={() => askPieBot("Why is Wyoming such a favored jurisdiction for crypto companies and LLCs? What are the advantages compared to Delaware?")}
+              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              title="Ask Pie Bot about jurisdiction choice"
+            >
+              <Bot className="w-4 h-4" />
+            </button>
+          </div>
           <select 
             value={formData.jurisdiction}
             onChange={(e) => setFormData(prev => ({ ...prev, jurisdiction: e.target.value }))}
@@ -499,9 +522,19 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Entity Type
-          </label>
+          <div className="flex items-center gap-2 mb-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Entity Type
+            </label>
+            <button
+              type="button"
+              onClick={() => askPieBot("What are the differences between LLC, C-Corp, and S-Corp? Which entity type is best for crypto and tech startups?")}
+              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              title="Ask Pie Bot about entity types"
+            >
+              <Bot className="w-4 h-4" />
+            </button>
+          </div>
           <select 
             value={formData.entityType}
             onChange={(e) => setFormData(prev => ({ ...prev, entityType: e.target.value }))}
@@ -532,9 +565,19 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Registered Agent Service
-          </label>
+          <div className="flex items-center gap-2 mb-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Registered Agent Service
+            </label>
+            <button
+              type="button"
+              onClick={() => askPieBot("What is a registered agent and why do I need one? What are the pros and cons of using a professional service vs acting as my own registered agent?")}
+              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              title="Ask Pie Bot about registered agents"
+            >
+              <Bot className="w-4 h-4" />
+            </button>
+          </div>
           <select 
             value={formData.registeredAgent}
             onChange={(e) => {
@@ -585,9 +628,19 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
 
       {/* Management Structure */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Management Structure
-        </label>
+        <div className="flex items-center gap-2 mb-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Management Structure
+          </label>
+          <button
+            type="button"
+            onClick={() => askPieBot("What's the difference between member-managed and manager-managed LLCs? Which structure is better for startups and crypto companies?")}
+            className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+            title="Ask Pie Bot about management structures"
+          >
+            <Bot className="w-4 h-4" />
+          </button>
+        </div>
         <select 
           value={formData.managementStructure}
           onChange={(e) => setFormData(prev => ({ ...prev, managementStructure: e.target.value }))}
