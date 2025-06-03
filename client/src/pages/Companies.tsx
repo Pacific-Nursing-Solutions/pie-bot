@@ -341,8 +341,8 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
   });
 
   const askPieBot = (question: string) => {
-    // Post message to the terminal/command interface
-    const terminalInput = document.querySelector('input[type="text"][placeholder*="Type"]') as HTMLInputElement;
+    // Access the Pie Bot terminal input using the global reference
+    const terminalInput = (window as any).pieTerminalInput;
     if (terminalInput) {
       terminalInput.value = question;
       terminalInput.focus();
