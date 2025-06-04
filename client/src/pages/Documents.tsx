@@ -176,12 +176,7 @@ const Documents = () => {
     }
   };
 
-  const totalDocuments = documents.length;
-  const pendingSignatures = documents.reduce((sum, doc) => 
-    sum + doc.signatories.filter(s => s.status === 'Pending').length, 0
-  );
-  const completedDocuments = documents.filter(d => d.status === 'Signed' || d.status === 'Executed').length;
-  const expiredDocuments = documents.filter(d => d.status === 'Expired').length;
+
 
   return (
     <div className="space-y-6">
@@ -203,25 +198,7 @@ const Documents = () => {
         </button>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Documents</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{totalDocuments}</p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Pending Signatures</h3>
-          <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{pendingSignatures}</p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Completed</h3>
-          <p className="text-2xl font-bold text-green-600 dark:text-green-400">{completedDocuments}</p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Expired</h3>
-          <p className="text-2xl font-bold text-red-600 dark:text-red-400">{expiredDocuments}</p>
-        </div>
-      </div>
+
 
       {/* Documents List */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
