@@ -25,15 +25,15 @@ const BlockchainIntegration = ({ tokenInfo, recentTransfers }: BlockchainIntegra
 
   return (
     <section className="mb-8">
-      <div className="bg-[#1C1F2B] rounded-lg shadow-md p-5 border border-[#2A3441]">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-5 border border-gray-200 dark:border-gray-700">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold text-lg text-[#E0E1DD]">Blockchain Integration</h3>
+          <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">Blockchain Integration</h3>
           <div className="flex items-center space-x-2">
-            <span className="flex items-center text-xs px-2 py-0.5 rounded-full bg-[#2A9D8F]/20 text-[#2A9D8F]">
+            <span className="flex items-center text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400">
               <span className="material-icons text-xs mr-1">check_circle</span>
               Connected
             </span>
-            <button className="text-[#F4A261] text-sm">
+            <button className="text-blue-600 dark:text-blue-400 text-sm">
               <span className="material-icons text-sm">settings</span>
             </button>
           </div>
@@ -42,11 +42,11 @@ const BlockchainIntegration = ({ tokenInfo, recentTransfers }: BlockchainIntegra
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <div className="mb-4">
-              <p className="text-sm text-[#A0A3A8] mb-1">Ethereum Contract Address</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Ethereum Contract Address</p>
               <div className="flex items-center">
-                <code className="bg-[#0D1B2A] px-3 py-2 rounded font-mono text-sm flex-grow text-[#E0E1DD]">{tokenInfo.contractAddress}</code>
+                <code className="bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded font-mono text-sm flex-grow text-gray-900 dark:text-gray-100">{tokenInfo.contractAddress}</code>
                 <button 
-                  className="ml-2 text-[#A0A3A8] hover:text-[#F4A261]" 
+                  className="ml-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400" 
                   title="Copy address"
                   onClick={() => navigator.clipboard.writeText(tokenInfo.contractAddress)}
                 >

@@ -32,15 +32,15 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       }
 
       return (
-        <div className="min-h-screen bg-[#0D1B2A] flex items-center justify-center">
-          <div className="bg-[#1C1F2B] border border-[#2A3441] rounded-lg p-8 max-w-md mx-auto">
-            <h2 className="text-xl font-bold text-[#E0E1DD] mb-4">Something went wrong</h2>
-            <p className="text-[#A0A3A8] mb-4">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 max-w-md mx-auto">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Something went wrong</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
               There was an error loading the application. Please refresh the page to try again.
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="bg-[#F4A261] hover:bg-[#E76F51] text-[#0D1B2A] px-4 py-2 rounded font-medium transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium transition-colors"
             >
               Refresh Page
             </button>

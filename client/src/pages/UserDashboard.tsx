@@ -132,7 +132,7 @@ const UserDashboard = () => {
       {/* Quick Navigation */}
       <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
         <Link href="/companies">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-[#F4A261]/20 text-[#F4A261] rounded-lg hover:bg-[#F4A261]/30 transition-colors text-sm">
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/30 transition-colors text-sm">
             <Building2 className="w-4 h-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Companies</span>
             <span className="sm:hidden">Co.</span>
@@ -140,14 +140,14 @@ const UserDashboard = () => {
         </Link>
 
         <Link href="/documents">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-[#FFD166]/20 text-[#FFD166] rounded-lg hover:bg-[#FFD166]/30 transition-colors text-sm">
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/30 transition-colors text-sm">
             <FileText className="w-4 h-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Documents</span>
             <span className="sm:hidden">Docs</span>
           </button>
         </Link>
         <Link href="/settings">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-[#2A9D8F]/20 text-[#2A9D8F] rounded-lg hover:bg-[#2A9D8F]/30 transition-colors text-sm">
+          <button className="flex items-center px-3 sm:px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm">
             <Settings className="w-4 h-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Settings</span>
             <span className="sm:hidden">Set</span>
@@ -156,14 +156,14 @@ const UserDashboard = () => {
       </div>
 
       {/* Holdings Overview */}
-      <div className="bg-[#1C1F2B] rounded-lg shadow border border-[#2A3441]">
-        <div className="px-4 sm:px-6 py-4 border-b border-[#2A3441] flex justify-between items-center">
-          <h2 className="text-lg sm:text-xl font-semibold text-[#E0E1DD]">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
             Portfolio
           </h2>
           <button 
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
-            className="p-2 text-[#A0A3A8] hover:text-[#F4A261] transition-colors"
+            className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           >
             {isPortfolioMinimized ? <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
@@ -175,27 +175,27 @@ const UserDashboard = () => {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#2A3441]">
-                    <th className="text-left py-3 text-sm font-medium text-[#A0A3A8]">Company</th>
-                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8]">Value</th>
-                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden lg:table-cell"></th>
-                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden sm:table-cell"></th>
-                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden md:table-cell">% Equity</th>
-                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8] hidden xl:table-cell">Circulating Supply</th>
-                    <th className="text-right py-3 text-sm font-medium text-[#A0A3A8]">Actions</th>
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell"></th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden sm:table-cell"></th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden md:table-cell">% Equity</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden xl:table-cell">Circulating Supply</th>
+                    <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {/* Portfolio Summary Row - Always Visible */}
-                  <tr className="border-b border-[#2A3441] bg-[#0D1B2A]/50">
+                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-blue-50 dark:bg-blue-900/20">
                     <td className="py-4 w-1/4">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 bg-gradient-to-r from-[#F4A261] to-[#FFD166] rounded-full flex items-center justify-center mr-3">
-                          <span className="text-[#0D1B2A] text-xs font-bold">P</span>
+                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-3">
+                          <span className="text-white text-xs font-bold">P</span>
                         </div>
                         <div>
-                          <div className="font-semibold text-[#E0E1DD]">Total Portfolio</div>
-                          <div className="text-sm text-[#A0A3A8]">{companyPositions.length} companies</div>
+                          <div className="font-semibold text-gray-900 dark:text-gray-100">Total Portfolio</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">{companyPositions.length} companies</div>
                         </div>
                       </div>
                     </td>
