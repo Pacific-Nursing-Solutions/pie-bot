@@ -230,7 +230,7 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       {/* Header */}
-      <div className="bg-orange-500 px-6 py-4">
+      <div className="bg-gradient-to-r from-orange-500 to-blue-600 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
@@ -384,7 +384,7 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
                 {currentWallet.tokens.map((token, index) => (
                   <div key={index} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-blue-600 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-sm">{token.symbol.charAt(0)}</span>
                       </div>
                       <div>

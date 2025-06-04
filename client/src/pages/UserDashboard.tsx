@@ -222,7 +222,7 @@ const UserDashboard = () => {
                           {companyPositions.reduce((sum, c) => sum + Math.floor(c.marketCap / 1000), 0).toLocaleString()}M Tokens
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-1">
-                          <div className="bg-blue-500 h-2 rounded-full" style={{ width: '68%' }}></div>
+                          <div className="bg-orange-500 h-2 rounded-full" style={{ width: '68%' }}></div>
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">68% of max supply</div>
                       </div>
