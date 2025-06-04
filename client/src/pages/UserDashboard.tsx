@@ -129,6 +129,29 @@ const UserDashboard = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6 p-3 sm:p-0">
+      
+      {/* Quick Navigation */}
+      <div className="card-default p-4">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Access</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <Link href="/companies" className="flex items-center p-3 bg-orange-50 dark:bg-gray-700 rounded-lg hover:bg-orange-100 dark:hover:bg-gray-600 transition-colors">
+            <Building2 className="w-5 h-5 text-accessible-orange mr-2" />
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Companies</span>
+          </Link>
+          <Link href="/documents" className="flex items-center p-3 bg-blue-50 dark:bg-gray-700 rounded-lg hover:bg-blue-100 dark:hover:bg-gray-600 transition-colors">
+            <FileText className="w-5 h-5 text-accessible-blue mr-2" />
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Documents</span>
+          </Link>
+          <Link href="/settings" className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <Settings className="w-5 h-5 text-gray-600 dark:text-gray-400 mr-2" />
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Settings</span>
+          </Link>
+          <Link href="/company-positions" className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <BarChart3 className="w-5 h-5 text-gray-600 dark:text-gray-400 mr-2" />
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Positions</span>
+          </Link>
+        </div>
+      </div>
 
 
       {/* Holdings Overview */}
