@@ -339,7 +339,7 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
             <div className="grid grid-cols-4 gap-3 mb-6">
               <button
                 onClick={() => setShowSendModal(true)}
-                className="flex flex-col items-center p-4 bg-orange-50 dark:bg-orange-950/30 rounded-xl hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors"
+                className="card-primary flex flex-col items-center p-4 hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors"
               >
                 <Send className="w-5 h-5 text-orange-500 mb-2" />
                 <span className="text-sm font-medium text-orange-500">Send</span>

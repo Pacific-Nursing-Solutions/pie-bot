@@ -132,7 +132,7 @@ const UserDashboard = () => {
 
 
       {/* Holdings Overview */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+      <div className="card-default">
         <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
             Portfolio
@@ -486,7 +486,7 @@ const UserDashboard = () => {
       </div>
 
       {/* Wallets Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+      <div className="card-default">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallets</h2>
@@ -495,7 +495,7 @@ const UserDashboard = () => {
             <div className="relative">
               <button
                 onClick={() => setShowWalletDropdown(!showWalletDropdown)}
-                className="flex items-center space-x-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-500 transition-all"
+                className="btn-primary flex items-center space-x-2"
               >
                 <Wallet className="w-4 h-4" />
                 <span className="font-medium">{activeWallet?.name}</span>
@@ -543,13 +543,13 @@ const UserDashboard = () => {
                                 />
                                 <button
                                   onClick={saveWalletName}
-                                  className="p-1 text-green-600 hover:text-green-700"
+                                  className="p-1 status-positive hover:text-green-800 dark:hover:text-green-300"
                                 >
                                   <Check className="w-4 h-4" />
                                 </button>
                                 <button
                                   onClick={cancelEditingWallet}
-                                  className="p-1 text-red-600 hover:text-red-700"
+                                  className="p-1 status-negative hover:text-red-800 dark:hover:text-red-300"
                                 >
                                   <X className="w-4 h-4" />
                                 </button>
