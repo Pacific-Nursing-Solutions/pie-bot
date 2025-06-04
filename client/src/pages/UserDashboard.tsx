@@ -230,7 +230,7 @@ const UserDashboard = () => {
                     <td className="py-4 text-right w-1/6">
                       <button 
                         onClick={() => setShowPoolSection(!showPoolSection)}
-                        className="text-blue-600 hover:text-blue-600 text-sm flex items-center justify-end"
+                        className="text-blue-600 hover:text-blue-700 text-sm flex items-center justify-end transition-colors duration-200"
                       >
                         {showPoolSection ? 'Collapse' : 'Expand'}
                         {showPoolSection ? <ChevronUp className="w-4 h-4 ml-1" /> : <ChevronDown className="w-4 h-4 ml-1" />}
