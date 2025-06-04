@@ -230,7 +230,7 @@ const UserDashboard = () => {
                     <td className="py-4 text-right w-1/6">
                       <button 
                         onClick={() => setShowPoolSection(!showPoolSection)}
-                        className="text-blue-600 hover:text-blue-700 text-sm flex items-center justify-end transition-colors duration-200"
+                        className="text-accessible-blue hover:text-blue-800 dark:hover:text-blue-300 text-sm flex items-center justify-end transition-colors duration-200"
                       >
                         {showPoolSection ? 'Collapse' : 'Expand'}
                         {showPoolSection ? <ChevronUp className="w-4 h-4 ml-1" /> : <ChevronDown className="w-4 h-4 ml-1" />}
@@ -276,13 +276,13 @@ const UserDashboard = () => {
                               <td className="py-3 text-right font-medium w-1/6">${company.userEquityValue.toLocaleString()}</td>
                               <td className="py-3 text-center hidden lg:table-cell w-1/3">
                                 <div className="text-xs flex flex-row justify-center space-x-6">
-                                  <div className={valuePerformance.daily >= 0 ? 'text-orange-500' : 'text-orange-500'}>
+                                  <div className={valuePerformance.daily >= 0 ? 'text-accessible-orange font-medium' : 'text-red-600 dark:text-red-400 font-medium'}>
                                     1D: {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
                                   </div>
-                                  <div className={valuePerformance.weekly >= 0 ? 'text-orange-500' : 'text-orange-500'}>
+                                  <div className={valuePerformance.weekly >= 0 ? 'text-accessible-orange font-medium' : 'text-red-600 dark:text-red-400 font-medium'}>
                                     7D: {valuePerformance.weekly >= 0 ? '+' : ''}{valuePerformance.weekly.toFixed(1)}%
                                   </div>
-                                  <div className={valuePerformance.monthly >= 0 ? 'text-orange-500' : 'text-orange-500'}>
+                                  <div className={valuePerformance.monthly >= 0 ? 'text-accessible-orange font-medium' : 'text-red-600 dark:text-red-400 font-medium'}>
                                     30D: {valuePerformance.monthly >= 0 ? '+' : ''}{valuePerformance.monthly.toFixed(1)}%
                                   </div>
                                 </div>

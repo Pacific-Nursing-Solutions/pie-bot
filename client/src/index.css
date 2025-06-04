@@ -6,17 +6,26 @@
 
 /* Standardized UI Components */
 @layer components {
-  /* Button styles */
+  /* Button styles with enhanced contrast */
   .btn-primary {
-    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2;
   }
 
   .btn-secondary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2;
   }
 
   .btn-outline {
-    @apply border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2;
+  }
+
+  /* Accessible text colors */
+  .text-accessible-orange {
+    @apply text-orange-600 dark:text-orange-400;
+  }
+
+  .text-accessible-blue {
+    @apply text-blue-700 dark:text-blue-400;
   }
 
   /* Card styles */
@@ -38,7 +47,44 @@
   }
 
   .terminal-prompt {
-    @apply text-orange-500 terminal-font;
+    @apply text-orange-600 terminal-font font-semibold;
+  }
+
+  /* Accessibility helpers */
+  .focus-visible {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .btn-primary {
+      @apply border-2 border-white;
+    }
+    
+    .btn-secondary {
+      @apply border-2 border-white;
+    }
+    
+    .text-accessible-orange {
+      @apply text-orange-700 dark:text-orange-300;
+    }
+    
+    .text-accessible-blue {
+      @apply text-blue-800 dark:text-blue-300;
+    }
+  }
+
+  /* Color blindness-friendly enhancements */
+  .status-positive {
+    @apply text-green-700 dark:text-green-400 font-semibold;
+  }
+  
+  .status-negative {
+    @apply text-red-700 dark:text-red-400 font-semibold;
+  }
+  
+  .status-neutral {
+    @apply text-gray-700 dark:text-gray-300 font-medium;
   }
 }
 

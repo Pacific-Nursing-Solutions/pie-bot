@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import PieTerminal from "@/components/PersistentPieBot";
+import AccessibilityTest from "@/components/AccessibilityTest";
 // Error handling removed for now - focusing on core functionality
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
