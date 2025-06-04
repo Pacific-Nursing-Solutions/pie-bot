@@ -460,17 +460,17 @@ const PieTerminal = () => {
   };
 
   return (
-    <div className="bg-slate-800 text-emerald-300 font-mono text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
+    <div className="bg-gray-800 text-white font-mono text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
       {/* Terminal Header */}
-      <div className="bg-slate-700 px-3 sm:px-4 py-2 flex items-center justify-between">
+      <div className="bg-gray-800 px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400" />
-          <span className="text-slate-200 text-xs sm:text-sm">Pie Bot Terminal v0.0.1</span>
+          <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500" />
+          <span className="text-white text-xs sm:text-sm">Pie Bot Terminal v0.0.1</span>
         </div>
         <div className="flex space-x-1">
-          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500"></div>
-          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500"></div>
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-orange-500"></div>
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-blue-600"></div>
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-orange-500"></div>
         </div>
       </div>
 
@@ -485,12 +485,12 @@ const PieTerminal = () => {
         <div className="space-y-1">
           {commandHistory.map((entry, index) => (
             <div key={index} className="flex">
-              <span className="text-slate-400 text-xs w-20 shrink-0">{entry.timestamp}</span>
+              <span className="text-gray-100 text-xs w-20 shrink-0">{entry.timestamp}</span>
               <span className={`${
-                entry.type === 'command' ? 'text-cyan-400' :
-                entry.type === 'success' ? 'text-green-400' :
-                entry.type === 'error' ? 'text-red-400' :
-                'text-slate-200'
+                entry.type === 'command' ? 'text-blue-600' :
+                entry.type === 'success' ? 'text-orange-500' :
+                entry.type === 'error' ? 'text-orange-500' :
+                'text-white'
               }`}>
                 {entry.content}
               </span>
@@ -500,7 +500,7 @@ const PieTerminal = () => {
 
         {/* Current Input Line */}
         <form onSubmit={handleSubmit} className="flex items-center mt-2">
-          <span className="text-cyan-400 mr-2">pie.bot:~$</span>
+          <span className="text-orange-500 mr-2">pie.bot:~$</span>
           <input
             ref={(input) => {
               if (input) {
@@ -519,7 +519,7 @@ const PieTerminal = () => {
             value={currentInput}
             onChange={(e) => setCurrentInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent text-emerald-300 border-none outline-none font-mono placeholder-slate-500"
+            className="flex-1 bg-transparent text-white border-none outline-none font-mono placeholder-gray-100"
             placeholder="Enter command..."
             autoFocus
           />
