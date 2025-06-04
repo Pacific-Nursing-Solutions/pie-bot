@@ -237,20 +237,28 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Connect your wallet to access {walletType === 'personal' ? 'personal' : 'company'} financial tools
           </p>
-          <button
-            onClick={handleConnect}
-            disabled={isLoading}
-            className="btn-primary"
-          >
-            {isLoading ? (
-              <div className="flex items-center space-x-2">
-                <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Connecting...</span>
-              </div>
-            ) : (
-              'Connect Wallet'
-            )}
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={handleConnect}
+              disabled={isLoading}
+              className="btn-primary w-full"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <span>Connecting...</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center space-x-2">
+                  <Wallet className="w-4 h-4" />
+                  <span>Connect Wallet</span>
+                </div>
+              )}
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              MetaMask, WalletConnect, or any Web3 wallet
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -286,6 +294,13 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
             </button>
             <button className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
               <Settings className="w-4 h-4 text-white" />
+            </button>
+            <button
+              onClick={handleDisconnect}
+              className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
+              title="Disconnect Wallet"
+            >
+              <Unlock className="w-4 h-4 text-white" />
             </button>
           </div>
         </div>
