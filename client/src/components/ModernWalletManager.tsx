@@ -228,9 +228,9 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
   }
 
   return (
-    <div className="bg-[#1C1F2B] rounded-2xl shadow-xl border border-[#2A3441] overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#F4A261] to-[#FFD166] px-6 py-4">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
