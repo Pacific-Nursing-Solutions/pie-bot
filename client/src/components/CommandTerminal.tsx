@@ -158,42 +158,7 @@ const CommandTerminal = () => {
           </form>
         </div>
         
-        {/* Command suggestions */}
-        <div className="bg-[#1c2333] border-t border-gray-700 px-4 py-2 text-sm">
-          <div className="text-gray-400 mb-1">Suggested commands:</div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              className="suggestion px-2 py-1 rounded text-yellow-400 hover:bg-gray-800"
-              onClick={() => setCommandInput('create company')}
-            >
-              create company
-            </button>
-            <button
-              className="suggestion px-2 py-1 rounded text-yellow-400 hover:bg-gray-800"
-              onClick={() => setCommandInput('show equity')}
-            >
-              show equity
-            </button>
-            <button
-              className="suggestion px-2 py-1 rounded text-yellow-400 hover:bg-gray-800"
-              onClick={() => setCommandInput('add founder')}
-            >
-              add founder
-            </button>
-            <button
-              className="suggestion px-2 py-1 rounded text-yellow-400 hover:bg-gray-800"
-              onClick={() => setCommandInput('calculate runway')}
-            >
-              calculate runway
-            </button>
-            <button
-              className="suggestion px-2 py-1 rounded text-yellow-400 hover:bg-gray-800"
-              onClick={() => setCommandInput('help')}
-            >
-              help
-            </button>
-          </div>
-        </div>
+
       </div>
 
       {/* Modals */}
