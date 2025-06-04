@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'wouter';
 import { 
   Plus, 
@@ -14,7 +14,8 @@ import {
   CheckCircle,
   AlertCircle,
   XCircle,
-  Clock
+  Clock,
+  Check
 } from 'lucide-react';
 
 interface Document {
@@ -42,7 +43,10 @@ const Documents = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+  const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const companyDropdownRef = useRef<HTMLDivElement>(null);
   
   const [documents] = useState<Document[]>([
     {
@@ -139,6 +143,31 @@ const Documents = () => {
 
   const categories = ['All', 'Legal', 'Financial', 'Compliance', 'Equity', 'Fundraising'];
   const statuses = ['All', 'Draft', 'Review', 'Signed', 'Executed', 'Expired'];
+  
+  // Get unique companies from documents
+  const companiesSet = new Set(documents.map(doc => doc.companyName));
+  const allCompanies: string[] = [];
+  companiesSet.forEach(company => allCompanies.push(company));
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (companyDropdownRef.current && !companyDropdownRef.current.contains(event.target as Node)) {
+        setIsCompanyDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleCompanyToggle = (company: string) => {
+    setSelectedCompanies(prev => 
+      prev.includes(company) 
+        ? prev.filter(c => c !== company)
+        : [...prev, company]
+    );
+  };
 
   const filteredDocuments = documents.filter(doc => {
     const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -146,7 +175,8 @@ const Documents = () => {
                          doc.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || doc.category === selectedCategory;
     const matchesStatus = selectedStatus === 'All' || doc.status === selectedStatus;
-    return matchesSearch && matchesCategory && matchesStatus;
+    const matchesCompany = selectedCompanies.length === 0 || selectedCompanies.includes(doc.companyName);
+    return matchesSearch && matchesCategory && matchesStatus && matchesCompany;
   });
 
   const getStatusIcon = (status: string) => {
@@ -243,6 +273,61 @@ const Documents = () => {
                   <option key={status} value={status}>{status}</option>
                 ))}
               </select>
+
+              {/* Company Selection Dropdown */}
+              <div className="relative" ref={companyDropdownRef}>
+                <button
+                  onClick={() => setIsCompanyDropdownOpen(!isCompanyDropdownOpen)}
+                  className="flex items-center justify-between px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 min-w-[140px]"
+                >
+                  <span className="text-sm">
+                    {selectedCompanies.length === 0 
+                      ? 'All Companies' 
+                      : selectedCompanies.length === 1 
+                        ? selectedCompanies[0]
+                        : `${selectedCompanies.length} Companies`
+                    }
+                  </span>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isCompanyDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isCompanyDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-1 w-full min-w-[200px] bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg z-50">
+                    <div className="p-2 space-y-1">
+                      {selectedCompanies.length > 0 && (
+                        <>
+                          <button
+                            onClick={() => setSelectedCompanies([])}
+                            className="w-full text-left px-2 py-1 text-sm text-accessible-blue hover:bg-blue-50 dark:hover:bg-blue-950 rounded"
+                          >
+                            Clear All
+                          </button>
+                          <div className="border-t border-gray-200 dark:border-gray-600 my-1"></div>
+                        </>
+                      )}
+                      {allCompanies.map((company) => (
+                        <label
+                          key={company}
+                          className="flex items-center px-2 py-1 hover:bg-gray-50 dark:hover:bg-gray-600 rounded cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedCompanies.includes(company)}
+                            onChange={() => handleCompanyToggle(company)}
+                            className="mr-2 h-4 w-4 text-accessible-blue border-gray-300 dark:border-gray-600 rounded focus:ring-accessible-blue"
+                          />
+                          <span className="text-sm text-gray-900 dark:text-gray-100 flex-1">
+                            {company}
+                          </span>
+                          {selectedCompanies.includes(company) && (
+                            <Check className="w-4 h-4 text-accessible-blue ml-2" />
+                          )}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Documents Grid */}
