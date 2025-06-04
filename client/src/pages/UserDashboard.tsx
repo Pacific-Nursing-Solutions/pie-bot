@@ -163,10 +163,10 @@ const UserDashboard = () => {
                 </thead>
                 <tbody>
                   {/* Portfolio Summary Row - Always Visible */}
-                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-blue-50 dark:bg-blue-900/20">
+                  <tr className="border-b border-gray-200 dark:border-gray-700 bg-orange-50 dark:bg-gray-800">
                     <td className="py-4 w-1/4">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-3">
+                        <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
                           <span className="text-white text-xs font-bold">P</span>
                         </div>
                         <div>
@@ -230,7 +230,7 @@ const UserDashboard = () => {
                     <td className="py-4 text-right w-1/6">
                       <button 
                         onClick={() => setShowPoolSection(!showPoolSection)}
-                        className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm flex items-center justify-end"
+                        className="text-blue-600 hover:text-blue-600 text-sm flex items-center justify-end"
                       >
                         {showPoolSection ? 'Collapse' : 'Expand'}
                         {showPoolSection ? <ChevronUp className="w-4 h-4 ml-1" /> : <ChevronDown className="w-4 h-4 ml-1" />}
@@ -264,7 +264,7 @@ const UserDashboard = () => {
                             <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                               <td className="py-3 w-1/4">
                                 <div className="flex items-center">
-                                  <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
+                                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
                                     <span className="text-white text-xs font-bold">{company.name.charAt(0)}</span>
                                   </div>
                                   <div>
@@ -276,13 +276,13 @@ const UserDashboard = () => {
                               <td className="py-3 text-right font-medium w-1/6">${company.userEquityValue.toLocaleString()}</td>
                               <td className="py-3 text-center hidden lg:table-cell w-1/3">
                                 <div className="text-xs flex flex-row justify-center space-x-6">
-                                  <div className={valuePerformance.daily >= 0 ? 'text-[#2A9D8F]' : 'text-[#E76F51]'}>
+                                  <div className={valuePerformance.daily >= 0 ? 'text-orange-500' : 'text-orange-500'}>
                                     1D: {valuePerformance.daily >= 0 ? '+' : ''}{valuePerformance.daily.toFixed(1)}%
                                   </div>
-                                  <div className={valuePerformance.weekly >= 0 ? 'text-[#2A9D8F]' : 'text-[#E76F51]'}>
+                                  <div className={valuePerformance.weekly >= 0 ? 'text-orange-500' : 'text-orange-500'}>
                                     7D: {valuePerformance.weekly >= 0 ? '+' : ''}{valuePerformance.weekly.toFixed(1)}%
                                   </div>
-                                  <div className={valuePerformance.monthly >= 0 ? 'text-[#2A9D8F]' : 'text-[#E76F51]'}>
+                                  <div className={valuePerformance.monthly >= 0 ? 'text-orange-500' : 'text-orange-500'}>
                                     30D: {valuePerformance.monthly >= 0 ? '+' : ''}{valuePerformance.monthly.toFixed(1)}%
                                   </div>
                                 </div>
@@ -495,7 +495,7 @@ const UserDashboard = () => {
             <div className="relative">
               <button
                 onClick={() => setShowWalletDropdown(!showWalletDropdown)}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+                className="flex items-center space-x-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-500 transition-all"
               >
                 <Wallet className="w-4 h-4" />
                 <span className="font-medium">{activeWallet?.name}</span>
