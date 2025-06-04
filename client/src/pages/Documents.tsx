@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { 
-  FileText, 
   Plus, 
-  Search,
-  ChevronDown,
+  Search, 
+  ChevronDown, 
   ChevronUp,
-  ExternalLink,
+  FileText,
   Download,
   Eye,
   Edit3,
-  Clock,
+  ExternalLink,
   User,
   CheckCircle,
   AlertCircle,
-  XCircle
+  XCircle,
+  Clock
 } from 'lucide-react';
 
 interface Document {
@@ -128,12 +128,12 @@ const Documents = () => {
       lastModified: "2023-12-15",
       signedDate: "2023-12-15",
       signatories: [
-        { name: "Green CEO", role: "CEO", status: 'Signed', signedDate: "2023-12-15" },
-        { name: "Regulatory Body", role: "Regulator", status: 'Signed', signedDate: "2023-12-15" }
+        { name: "Alex CEO", role: "CEO", status: 'Signed', signedDate: "2023-12-10" },
+        { name: "Compliance Officer", role: "Compliance", status: 'Signed', signedDate: "2023-12-15" }
       ],
       size: "1.2 MB",
-      description: "Annual compliance certification - needs renewal",
-      priority: 'Critical'
+      description: "Annual compliance certification document",
+      priority: 'Low'
     }
   ]);
 
@@ -176,11 +176,8 @@ const Documents = () => {
     }
   };
 
-
-
   return (
-    <div className="space-y-6">
-
+    <div className="space-y-4 sm:space-y-6 p-3 sm:p-0">
       {/* Quick Actions */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
@@ -198,98 +195,94 @@ const Documents = () => {
         </button>
       </div>
 
-
-
       {/* Documents List */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Document Library</h2>
-            <button 
-              onClick={() => setIsMinimized(!isMinimized)}
-              className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              {isMinimized ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
-            </button>
-          </div>
-          
-          <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4">
-            <div className="relative flex-1">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search documents, companies, or descriptions..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-              />
-            </div>
-            
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-            
-            <select
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-            >
-              {statuses.map(status => (
-                <option key={status} value={status}>{status}</option>
-              ))}
-            </select>
-          </div>
+      <div className="card-default">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+            Document Library
+          </h2>
+          <button 
+            onClick={() => setIsMinimized(!isMinimized)}
+            className="p-2 text-gray-600 dark:text-gray-400 hover:text-accessible-blue transition-colors"
+          >
+            {isMinimized ? <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />}
+          </button>
         </div>
 
         {!isMinimized && (
           <div className="p-6">
-            <div className="space-y-4">
+            {/* Search and Filters */}
+            <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4 mb-6">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search documents, companies, or descriptions..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                />
+              </div>
+              
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              >
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+              
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              >
+                {statuses.map(status => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Documents Grid */}
+            <div className="grid gap-4 md:gap-6">
               {filteredDocuments.map((document) => (
-                <div key={document.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div key={document.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
                   <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <div className="flex items-start space-x-3 flex-1">
+                      <div className="w-10 h-10 bg-accessible-blue rounded-lg flex items-center justify-center">
                         <FileText className="w-5 h-5 text-white" />
                       </div>
                       
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-1">
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{document.name}</h3>
-                          {getStatusIcon(document.status)}
-                          <span className={`px-2 py-1 text-xs rounded-full ${getPriorityColor(document.priority)}`}>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">{document.name}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{document.description}</p>
+                        
+                        <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                          <span>{document.companyName}</span>
+                          <span>{document.size}</span>
+                          <span className={`px-2 py-1 rounded-full ${getPriorityColor(document.priority)}`}>
                             {document.priority}
                           </span>
                         </div>
-                        <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
-                          <span>{document.companyName}</span>
-                          <span>•</span>
-                          <span>{document.category}</span>
-                          <span>•</span>
-                          <span>{document.size}</span>
-                          <span>•</span>
-                          <span>Modified {new Date(document.lastModified).toLocaleDateString()}</span>
-                        </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{document.description}</p>
                       </div>
                     </div>
 
-                    <div className="text-right">
-                      <div className={`text-sm font-medium ${
-                        document.status === 'Signed' || document.status === 'Executed' ? 'text-accessible-orange' :
-                        document.status === 'Expired' ? 'text-red-600 dark:text-red-400' :
-                        document.status === 'Review' ? 'text-accessible-blue' :
-                        'text-gray-600 dark:text-gray-400'
-                      }`}>
-                        {document.status}
+                    <div className="text-right ml-4">
+                      <div className="flex items-center space-x-2 mb-1">
+                        {getStatusIcon(document.status)}
+                        <div className={`text-sm font-medium ${
+                          document.status === 'Signed' || document.status === 'Executed' ? 'text-accessible-orange' :
+                          document.status === 'Expired' ? 'text-red-600 dark:text-red-400' :
+                          document.status === 'Review' ? 'text-accessible-blue' :
+                          'text-gray-600 dark:text-gray-400'
+                        }`}>
+                          {document.status}
+                        </div>
                       </div>
                       {document.signedDate && (
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
                           Signed: {new Date(document.signedDate).toLocaleDateString()}
                         </div>
                       )}
