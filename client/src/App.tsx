@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import PieTerminal from "@/components/PersistentPieBot";
 import AccessibilityTest from "@/components/AccessibilityTest";
+import { PieBotLogo } from "@/components/PieBotLogo";
 // Error handling removed for now - focusing on core functionality
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
@@ -52,8 +53,9 @@ function App() {
             {/* Pie Bot Terminal - The Star */}
             <div className="mb-8">
               <a href="/" className="block hover:opacity-80 transition-opacity">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
-                  🥧 Pie Bot
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center flex items-center justify-center gap-3">
+                  <PieBotLogo size={32} />
+                  Pie Bot
                 </h1>
               </a>
               <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
