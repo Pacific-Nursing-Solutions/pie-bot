@@ -153,9 +153,9 @@ const Documents = () => {
     switch (status) {
       case 'Signed':
       case 'Executed':
-        return <CheckCircle className="w-4 h-4 text-green-600" />;
+        return <CheckCircle className="w-4 h-4 text-accessible-orange" />;
       case 'Review':
-        return <AlertCircle className="w-4 h-4 text-yellow-600" />;
+        return <AlertCircle className="w-4 h-4 text-accessible-blue" />;
       case 'Expired':
         return <XCircle className="w-4 h-4 text-red-600" />;
       default:
@@ -168,9 +168,9 @@ const Documents = () => {
       case 'Critical':
         return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
       case 'High':
-        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+        return 'bg-orange-100 text-accessible-orange dark:bg-orange-900 dark:text-orange-200';
       case 'Medium':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+        return 'bg-blue-100 text-accessible-blue dark:bg-blue-900 dark:text-blue-200';
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
@@ -185,14 +185,14 @@ const Documents = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Link href="/">
-            <button className="flex items-center px-3 py-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950 rounded-lg transition-colors">
+            <button className="flex items-center px-3 py-2 text-accessible-blue hover:bg-blue-50 dark:hover:bg-blue-950 rounded-lg transition-colors">
               ← Back to Dashboard
             </button>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Documents</h1>
         </div>
         
-        <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <button className="btn-primary">
           <Plus className="w-4 h-4 mr-2" />
           Upload Document
         </button>
@@ -281,9 +281,9 @@ const Documents = () => {
 
                     <div className="text-right">
                       <div className={`text-sm font-medium ${
-                        document.status === 'Signed' || document.status === 'Executed' ? 'text-green-600 dark:text-green-400' :
+                        document.status === 'Signed' || document.status === 'Executed' ? 'text-accessible-orange' :
                         document.status === 'Expired' ? 'text-red-600 dark:text-red-400' :
-                        document.status === 'Review' ? 'text-yellow-600 dark:text-yellow-400' :
+                        document.status === 'Review' ? 'text-accessible-blue' :
                         'text-gray-600 dark:text-gray-400'
                       }`}>
                         {document.status}
@@ -302,9 +302,9 @@ const Documents = () => {
                     <div className="flex flex-wrap gap-2">
                       {document.signatories.map((signatory, index) => (
                         <div key={index} className={`flex items-center space-x-2 px-3 py-1 rounded-full text-xs ${
-                          signatory.status === 'Signed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                          signatory.status === 'Signed' ? 'bg-orange-100 text-accessible-orange dark:bg-orange-900 dark:text-orange-200' :
                           signatory.status === 'Declined' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
-                          'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+                          'bg-blue-100 text-accessible-blue dark:bg-blue-900 dark:text-blue-200'
                         }`}>
                           <User className="w-3 h-3" />
                           <span>{signatory.name} ({signatory.role})</span>
@@ -322,16 +322,16 @@ const Documents = () => {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                      <button className="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="View">
+                      <button className="p-1 text-gray-400 hover:text-accessible-orange transition-colors" title="View">
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="Edit">
+                      <button className="p-1 text-gray-400 hover:text-accessible-blue transition-colors" title="Edit">
                         <Edit3 className="w-4 h-4" />
                       </button>
-                      <button className="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="Download">
+                      <button className="p-1 text-gray-400 hover:text-accessible-orange transition-colors" title="Download">
                         <Download className="w-4 h-4" />
                       </button>
-                      <button className="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="External Link">
+                      <button className="p-1 text-gray-400 hover:text-accessible-blue transition-colors" title="External Link">
                         <ExternalLink className="w-4 h-4" />
                       </button>
                     </div>
