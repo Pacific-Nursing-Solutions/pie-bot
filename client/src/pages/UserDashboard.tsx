@@ -153,7 +153,7 @@ const UserDashboard = () => {
 
       {/* Holdings Overview */}
       <div className="card-default">
-        <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="px-4 sm:px-6 py-4 flex justify-between items-center">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
             Portfolio
           </h2>
@@ -381,7 +381,7 @@ const UserDashboard = () => {
 
       {/* Compensation Tracking */}
       <div className="card-default">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Compensation & Contributions
@@ -483,7 +483,7 @@ const UserDashboard = () => {
 
       {/* Analytics Dashboard */}
       <div className="card-default">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="px-6 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mr-3">
               Holdings Dashboard
@@ -507,7 +507,7 @@ const UserDashboard = () => {
 
       {/* Wallets Section */}
       <div className="card-default">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallets</h2>
             
