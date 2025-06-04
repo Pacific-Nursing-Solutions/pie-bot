@@ -8,7 +8,6 @@ import AccessibilityTest from "@/components/AccessibilityTest";
 // Error handling removed for now - focusing on core functionality
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
-import CompanyPositions from "@/pages/CompanyPositions";
 
 import Settings from "@/pages/Settings";
 import Pools from "@/pages/Pools";
@@ -34,7 +33,6 @@ function Router() {
 
       <Route path="/documents" component={Documents} />
       <Route path="/settings" component={Settings} />
-      <Route path="/company-positions" component={CompanyPositions} />
 
       <Route path="/company/:id/pie-bot" component={CompanyPieBot} />
       <Route path="/pie-bot" component={SimplePage} />

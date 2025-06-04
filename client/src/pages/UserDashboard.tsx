@@ -146,10 +146,7 @@ const UserDashboard = () => {
             <Settings className="w-5 h-5 text-gray-600 dark:text-gray-400 mr-2" />
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Settings</span>
           </Link>
-          <Link href="/company-positions" className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-            <BarChart3 className="w-5 h-5 text-gray-600 dark:text-gray-400 mr-2" />
-            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Positions</span>
-          </Link>
+
         </div>
       </div>
 
