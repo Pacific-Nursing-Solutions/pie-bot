@@ -519,7 +519,7 @@ const PieTerminal = () => {
             value={currentInput}
             onChange={(e) => setCurrentInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent text-white border-none outline-none font-mono placeholder-gray-100"
+            className="flex-1 bg-transparent text-white border-none outline-none terminal-font placeholder-gray-100"
             placeholder="Enter command..."
             autoFocus
           />

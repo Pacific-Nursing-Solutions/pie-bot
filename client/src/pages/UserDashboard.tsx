@@ -139,7 +139,7 @@ const UserDashboard = () => {
           </h2>
           <button 
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
-            className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="p-2 text-gray-600 dark:text-gray-400 hover:text-accessible-blue transition-colors"
           >
             {isPortfolioMinimized ? <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
@@ -178,9 +178,9 @@ const UserDashboard = () => {
                     <td className="py-4 text-right font-semibold w-1/6">${companyPositions.reduce((sum, c) => sum + c.userEquityValue, 0).toLocaleString()}</td>
                     <td className="py-4 text-center hidden lg:table-cell w-1/3">
                       <div className="text-xs flex flex-row justify-center space-x-6">
-                        <div className="text-green-400">1D: +2.1%</div>
-                        <div className="text-green-400">7D: +5.8%</div>
-                        <div className="text-red-400">30D: -1.2%</div>
+                        <div className="status-positive">1D: +2.1%</div>
+                        <div className="status-positive">7D: +5.8%</div>
+                        <div className="status-negative">30D: -1.2%</div>
                       </div>
                     </td>
                     <td className="py-4 text-center hidden sm:table-cell w-1/8">
