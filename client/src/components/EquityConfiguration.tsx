@@ -574,7 +574,7 @@ const EquityConfigurationPanel: React.FC<EquityConfigurationProps> = ({
       <div className="mt-6 flex justify-end space-x-3">
         <button
           onClick={() => setIsConfiguring(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="btn-secondary"
         >
           Edit Configuration
         </button>
