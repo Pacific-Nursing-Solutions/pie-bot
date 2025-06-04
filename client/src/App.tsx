@@ -68,6 +68,9 @@ function App() {
             <Router />
           </div>
         </div>
+        
+        {/* Accessibility Test Component */}
+        <AccessibilityTest />
       </TooltipProvider>
     </QueryClientProvider>
   );
