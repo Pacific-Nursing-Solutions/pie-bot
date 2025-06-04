@@ -341,23 +341,23 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
                 onClick={() => setShowSendModal(true)}
                 className="card-primary flex flex-col items-center p-4 hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors"
               >
-                <Send className="w-5 h-5 text-orange-500 mb-2" />
-                <span className="text-sm font-medium text-orange-500">Send</span>
+                <Send className="w-5 h-5 text-accessible-orange mb-2" />
+                <span className="text-sm font-medium text-accessible-orange">Send</span>
               </button>
               <button
                 onClick={() => setShowReceiveModal(true)}
-                className="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-950/50 transition-colors"
+                className="card-secondary flex flex-col items-center p-4 hover:bg-blue-100 dark:hover:bg-blue-950/50 transition-colors"
               >
-                <Receive className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-2" />
-                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Receive</span>
+                <Receive className="w-5 h-5 text-accessible-blue mb-2" />
+                <span className="text-sm font-medium text-accessible-blue">Receive</span>
               </button>
-              <button className="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-950/30 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-950/50 transition-colors">
-                <RefreshCw className="w-5 h-5 text-blue-600 dark:text-blue-400 mb-2" />
-                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Swap</span>
+              <button className="card-secondary flex flex-col items-center p-4 hover:bg-blue-100 dark:hover:bg-blue-950/50 transition-colors">
+                <RefreshCw className="w-5 h-5 text-accessible-blue mb-2" />
+                <span className="text-sm font-medium text-accessible-blue">Swap</span>
               </button>
-              <button className="flex flex-col items-center p-4 bg-orange-50 dark:bg-orange-950/30 rounded-xl hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors">
-                <Zap className="w-5 h-5 text-orange-500 mb-2" />
-                <span className="text-sm font-medium text-orange-500">Stake</span>
+              <button className="card-primary flex flex-col items-center p-4 hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-colors">
+                <Zap className="w-5 h-5 text-accessible-orange mb-2" />
+                <span className="text-sm font-medium text-accessible-orange">Stake</span>
               </button>
             </div>
 
