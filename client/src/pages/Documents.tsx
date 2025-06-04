@@ -41,7 +41,6 @@ interface Document {
 
 const Documents = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');
   const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
   const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
@@ -141,7 +140,6 @@ const Documents = () => {
     }
   ]);
 
-  const categories = ['All', 'Legal', 'Financial', 'Compliance', 'Equity', 'Fundraising'];
   const statuses = ['All', 'Draft', 'Review', 'Signed', 'Executed', 'Expired'];
   
   // Get unique companies from documents
@@ -173,10 +171,9 @@ const Documents = () => {
     const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doc.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doc.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || doc.category === selectedCategory;
     const matchesStatus = selectedStatus === 'All' || doc.status === selectedStatus;
     const matchesCompany = selectedCompanies.length === 0 || selectedCompanies.includes(doc.companyName);
-    return matchesSearch && matchesCategory && matchesStatus && matchesCompany;
+    return matchesSearch && matchesStatus && matchesCompany;
   });
 
   const getStatusIcon = (status: string) => {
@@ -253,16 +250,6 @@ const Documents = () => {
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 />
               </div>
-              
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
               
               <select
                 value={selectedStatus}
