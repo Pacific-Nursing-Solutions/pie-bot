@@ -129,31 +129,7 @@ const UserDashboard = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6 p-3 sm:p-0">
-      {/* Quick Navigation */}
-      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
-        <Link href="/companies">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/30 transition-colors text-sm">
-            <Building2 className="w-4 h-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Companies</span>
-            <span className="sm:hidden">Co.</span>
-          </button>
-        </Link>
 
-        <Link href="/documents">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/30 transition-colors text-sm">
-            <FileText className="w-4 h-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Documents</span>
-            <span className="sm:hidden">Docs</span>
-          </button>
-        </Link>
-        <Link href="/settings">
-          <button className="flex items-center px-3 sm:px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm">
-            <Settings className="w-4 h-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Settings</span>
-            <span className="sm:hidden">Set</span>
-          </button>
-        </Link>
-      </div>
 
       {/* Holdings Overview */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">

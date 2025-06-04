@@ -65,6 +65,11 @@ const PieTerminal = () => {
       '  pool create <name>         - Set up investment pools',
       '  generate report <type>     - Create financial reports',
       '',
+      'NAVIGATION:',
+      '  companies                  - View and manage companies',
+      '  documents                  - Access document management',
+      '  settings                   - Open application settings',
+      '',
       'SYSTEM:',
       '  clear                      - Clear terminal history',
       '  help                       - Show this command list',
@@ -85,6 +90,42 @@ const PieTerminal = () => {
         timestamp: new Date().toLocaleTimeString()
       }]);
       return [];
+    },
+    'companies': () => {
+      // Navigate to companies page
+      if (typeof window !== 'undefined') {
+        window.location.href = '/companies';
+      }
+      return [
+        '🥧 Opening Companies Management...',
+        '✓ Redirecting to company dashboard',
+        '✓ Loading cap table data',
+        '✓ Fetching equity structures'
+      ];
+    },
+    'documents': () => {
+      // Navigate to documents page
+      if (typeof window !== 'undefined') {
+        window.location.href = '/documents';
+      }
+      return [
+        '🥧 Opening Document Center...',
+        '✓ Accessing legal documents',
+        '✓ Loading agreement templates',
+        '✓ Connecting to DocuSign workflow'
+      ];
+    },
+    'settings': () => {
+      // Navigate to settings page
+      if (typeof window !== 'undefined') {
+        window.location.href = '/settings';
+      }
+      return [
+        '🥧 Opening Application Settings...',
+        '✓ Loading user preferences',
+        '✓ Checking security settings',
+        '✓ Initializing configuration panel'
+      ];
     },
     'equity': (args: string[]) => {
       if (args[0] === 'split') {
