@@ -226,7 +226,7 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
   // Show connection interface if not connected
   if (!isConnected) {
     return (
-      <div className="card-default p-8">
+      <div className="p-8">
         <div className="text-center">
           <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Wallet className="w-8 h-8 text-white" />

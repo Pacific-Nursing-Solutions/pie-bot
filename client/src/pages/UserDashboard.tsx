@@ -171,7 +171,7 @@ const UserDashboard = () => {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <tr>
                     <th className="text-left py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Company</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400">Value</th>
                     <th className="text-right py-3 text-sm font-medium text-gray-600 dark:text-gray-400 hidden lg:table-cell"></th>
@@ -380,7 +380,7 @@ const UserDashboard = () => {
       </div>
 
       {/* Compensation Tracking */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+      <div className="card-default">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -415,7 +415,7 @@ const UserDashboard = () => {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <tr>
                     <th className="text-left py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/5">Company</th>
                     <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/6">Time Contributed</th>
                     <th className="text-right py-3 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 w-1/6">Capital Contributed</th>
