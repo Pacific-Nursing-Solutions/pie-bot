@@ -24,7 +24,7 @@ interface Document {
   name: string;
   type: string;
   companyName: string;
-  status: 'Draft' | 'Review' | 'Signed' | 'Executed' | 'Expired';
+  status: 'Draft' | 'Review' | 'Partially Signed' | 'Signed' | 'Executed' | 'Expired';
   category: 'Legal' | 'Financial' | 'Compliance' | 'Equity' | 'Fundraising';
   createdDate: string;
   lastModified: string;
@@ -73,7 +73,7 @@ const Documents = () => {
       name: "Equity Distribution Agreement",
       type: "PDF",
       companyName: "TechStart Inc.",
-      status: 'Review',
+      status: 'Partially Signed',
       category: 'Equity',
       createdDate: "2024-02-10",
       lastModified: "2024-02-15",
@@ -141,7 +141,7 @@ const Documents = () => {
     }
   ]);
 
-  const statuses = ['All', 'Draft', 'Review', 'Signed', 'Executed', 'Expired'];
+  const statuses = ['All', 'Draft', 'Review', 'Partially Signed', 'Signed', 'Executed', 'Expired'];
   
   // Get unique companies from documents
   const companiesSet = new Set(documents.map(doc => doc.companyName));
@@ -181,11 +181,14 @@ const Documents = () => {
     switch (status) {
       case 'Signed':
       case 'Executed':
-        return <CheckCircle className="w-4 h-4 text-accessible-orange" />;
+        return <CheckCircle className="w-4 h-4 text-accessible-blue" />;
+      case 'Partially Signed':
+        return <AlertCircle className="w-4 h-4 text-accessible-orange" />;
+      case 'Draft':
       case 'Review':
-        return <AlertCircle className="w-4 h-4 text-accessible-blue" />;
+        return <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />;
       case 'Expired':
-        return <XCircle className="w-4 h-4 text-red-600" />;
+        return <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" />;
       default:
         return <Clock className="w-4 h-4 text-gray-600" />;
     }
@@ -353,9 +356,10 @@ const Documents = () => {
                       <div className="flex items-center space-x-2 mb-1">
                         {getStatusIcon(document.status)}
                         <div className={`text-sm font-medium ${
-                          document.status === 'Signed' || document.status === 'Executed' ? 'text-accessible-orange' :
+                          document.status === 'Signed' || document.status === 'Executed' ? 'text-accessible-blue' :
+                          document.status === 'Partially Signed' ? 'text-accessible-orange' :
+                          document.status === 'Draft' || document.status === 'Review' ? 'text-red-600 dark:text-red-400' :
                           document.status === 'Expired' ? 'text-red-600 dark:text-red-400' :
-                          document.status === 'Review' ? 'text-accessible-blue' :
                           'text-gray-600 dark:text-gray-400'
                         }`}>
                           {document.status}
