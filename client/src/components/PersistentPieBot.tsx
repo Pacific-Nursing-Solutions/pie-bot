@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Terminal, ChevronRight, ArrowUp } from 'lucide-react';
+import { PieBotLogo } from './PieBotLogo';
 
 interface CommandOutput {
   type: 'command' | 'output' | 'success' | 'error';
@@ -21,7 +22,7 @@ const PieTerminal = () => {
     return [
       {
         type: 'output',
-        content: '🥧 Pie Bot Terminal v0.0.1',
+        content: '💼 Pie Bot Terminal v0.0.1',
         timestamp: new Date().toLocaleTimeString()
       },
       {
@@ -47,7 +48,7 @@ const PieTerminal = () => {
 
   const commands = {
     'help': () => [
-      '🥧 PIE BOT COMMAND CENTER - Available Operations:',
+      '💼 PIE BOT COMMAND CENTER - Available Operations:',
       '',
       'EQUITY & LEGAL:',
       '  equity split <company>     - Calculate equity distribution',

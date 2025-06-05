@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { Briefcase } from 'lucide-react';
 import { useDarkMode } from '@/hooks/use-dark-mode';
 import { Button } from '@/components/ui/button';
 
@@ -17,8 +16,8 @@ const Header = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
           {/* Logo */}
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-500 to-blue-600 flex items-center justify-center">
-            <Briefcase className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+            <span className="material-icons text-white">pie_chart</span>
           </div>
           <h1 className="text-2xl font-bold text-primary dark:text-white">Pie Bot</h1>
         </Link>

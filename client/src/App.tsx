@@ -1,11 +1,11 @@
 import { Switch, Route, Link } from "wouter";
-import { Briefcase } from "lucide-react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import PieTerminal from "@/components/PersistentPieBot";
 import AccessibilityTest from "@/components/AccessibilityTest";
+import { PieBotLogo } from "@/components/PieBotLogo";
 // Error handling removed for now - focusing on core functionality
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
@@ -54,9 +54,7 @@ function App() {
             <div className="mb-8">
               <a href="/" className="block hover:opacity-80 transition-opacity">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center flex items-center justify-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-500 to-blue-600 flex items-center justify-center">
-                    <Briefcase className="w-4 h-4 text-white" />
-                  </div>
+                  <PieBotLogo size={32} />
                   Pie Bot
                 </h1>
               </a>
