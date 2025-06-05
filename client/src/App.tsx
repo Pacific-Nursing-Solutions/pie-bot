@@ -53,7 +53,7 @@ function App() {
             <div className="mb-8">
               <a href="/" className="block hover:opacity-80 transition-opacity">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
-                  🤖 Pie Bot
+                  💼 Pie Bot
                 </h1>
               </a>
               <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
