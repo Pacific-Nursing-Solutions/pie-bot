@@ -55,7 +55,7 @@ const Home = () => {
             <div className="bg-white dark:bg-[#293145] p-6 rounded-lg shadow-md">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-500 to-blue-600 flex items-center justify-center mr-2">
-                  <span className="text-xl">🥧</span>
+                  <span className="text-xl">🤖</span>
                 </div>
                 <h3 className="text-xl font-medium dark:text-white">Equity Visualization</h3>
               </div>

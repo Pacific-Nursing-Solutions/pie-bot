@@ -359,7 +359,7 @@ const CompanyDashboard = () => {
 
                     <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
                       <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
-                        🥧 Pie Bot Control
+                        🤖 Pie Bot Control
                       </h4>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                         Allow Pie Bot to manage company wallet for automated equity distribution and token operations
