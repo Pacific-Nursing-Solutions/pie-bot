@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useRoute } from 'wouter';
 import { ArrowLeft, Bot, Users, Calculator, FileText, TrendingUp, Wallet, Copy, ExternalLink, Download, Shield, Send, ChevronRight, Settings, Zap, Plus } from 'lucide-react';
+import { PieBotLogo } from '../components/PieBotLogo';
 
 interface Company {
   id: number;
@@ -41,7 +42,7 @@ const CompanyDashboard = () => {
     {
       title: "Pie Bot",
       description: "Manage equity splits and tokenization",
-      icon: Bot,
+      icon: PieBotLogo,
       href: `/company/${companyId}/pie-bot`,
       color: "bg-green-600 hover:bg-green-700"
     },

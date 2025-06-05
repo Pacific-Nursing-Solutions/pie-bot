@@ -48,7 +48,7 @@ const PieTerminal = () => {
 
   const commands = {
     'help': () => [
-      '💼 PIE BOT COMMAND CENTER - Available Operations:',
+      '[PIEBOT_LOGO] PIE BOT COMMAND CENTER - Available Operations:',
       '',
       'EQUITY & LEGAL:',
       '  equity split <company>     - Calculate equity distribution',
