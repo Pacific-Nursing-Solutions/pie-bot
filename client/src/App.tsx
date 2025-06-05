@@ -53,8 +53,11 @@ function App() {
             {/* Pie Bot Terminal - The Star */}
             <div className="mb-8">
               <a href="/" className="block hover:opacity-80 transition-opacity">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center">
-                  💼 Pie Bot
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center flex items-center justify-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-500 to-blue-600 flex items-center justify-center">
+                    <Briefcase className="w-4 h-4 text-white" />
+                  </div>
+                  Pie Bot
                 </h1>
               </a>
               <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
