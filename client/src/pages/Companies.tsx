@@ -10,8 +10,10 @@ import {
   ChevronDown,
   ChevronUp,
   ExternalLink,
-  Bot
+  Bot,
+  HelpCircle
 } from 'lucide-react';
+import { PieBotLogo } from '../components/PieBotLogo';
 
 interface Company {
   id: number;
@@ -318,7 +320,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
     businessPurpose: 'any lawful business purpose',
     initialMembers: [{ name: '', address: '', ownershipPercent: 100 }],
     expediteProcessing: false,
-    totalCost: 241 // $100 state fee + $2 processing + $139 registered agent
+    totalCost: 389 // $100 state fee + $50 convenience fee + $139 registered agent + $100 mailing service
   });
 
   const askPieBot = (question: string) => {
@@ -486,7 +488,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
               className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
               title="Ask Pie Bot about jurisdiction choice"
             >
-              <Bot className="w-4 h-4" />
+              <PieBotLogo size={16} />
             </button>
           </div>
           <select 
@@ -511,7 +513,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
               className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
               title="Ask Pie Bot about entity types"
             >
-              <Bot className="w-4 h-4" />
+              <PieBotLogo size={16} />
             </button>
           </div>
           <select 
@@ -554,7 +556,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
               className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
               title="Ask Pie Bot about registered agents"
             >
-              <Bot className="w-4 h-4" />
+              <PieBotLogo size={16} />
             </button>
           </div>
           <select 
