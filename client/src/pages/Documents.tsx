@@ -54,7 +54,7 @@ const Documents = () => {
       name: "Series A Term Sheet",
       type: "PDF",
       companyName: "TechStart Inc.",
-      status: 'Signed',
+      status: 'Executed',
       category: 'Fundraising',
       createdDate: "2024-01-15",
       lastModified: "2024-02-01",
@@ -183,12 +183,11 @@ const Documents = () => {
       case 'Executed':
         return <CheckCircle className="w-4 h-4 text-accessible-blue" />;
       case 'Partially Signed':
-        return <AlertCircle className="w-4 h-4 text-accessible-orange" />;
       case 'Draft':
+      case 'Expired':
+        return <AlertCircle className="w-4 h-4 text-accessible-orange" />;
       case 'Review':
         return <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />;
-      case 'Expired':
-        return <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" />;
       default:
         return <Clock className="w-4 h-4 text-gray-600" />;
     }
@@ -197,13 +196,13 @@ const Documents = () => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'Critical':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+        return 'text-red-600 dark:text-red-400';
       case 'High':
-        return 'bg-orange-100 text-accessible-orange dark:bg-orange-900 dark:text-orange-200';
+        return 'text-accessible-orange';
       case 'Medium':
-        return 'bg-blue-100 text-accessible-blue dark:bg-blue-900 dark:text-blue-200';
+        return 'text-accessible-blue';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+        return 'text-gray-600 dark:text-gray-400';
     }
   };
 
@@ -345,7 +344,7 @@ const Documents = () => {
                         
                         <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
                           <span>{document.companyName}</span>
-                          <span className={`px-2 py-1 rounded-full ${getPriorityColor(document.priority)}`}>
+                          <span className={`font-medium ${getPriorityColor(document.priority)}`}>
                             {document.priority}
                           </span>
                         </div>
@@ -357,9 +356,8 @@ const Documents = () => {
                         {getStatusIcon(document.status)}
                         <div className={`text-sm font-medium ${
                           document.status === 'Signed' || document.status === 'Executed' ? 'text-accessible-blue' :
-                          document.status === 'Partially Signed' ? 'text-accessible-orange' :
-                          document.status === 'Draft' || document.status === 'Review' ? 'text-red-600 dark:text-red-400' :
-                          document.status === 'Expired' ? 'text-red-600 dark:text-red-400' :
+                          document.status === 'Partially Signed' || document.status === 'Draft' || document.status === 'Expired' ? 'text-accessible-orange' :
+                          document.status === 'Review' ? 'text-red-600 dark:text-red-400' :
                           'text-gray-600 dark:text-gray-400'
                         }`}>
                           {document.status}
@@ -378,10 +376,10 @@ const Documents = () => {
                     <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Signatories</h4>
                     <div className="flex flex-wrap gap-2">
                       {document.signatories.map((signatory, index) => (
-                        <div key={index} className={`flex items-center space-x-2 px-3 py-1 rounded-full text-xs ${
-                          signatory.status === 'Signed' ? 'bg-orange-100 text-accessible-orange dark:bg-orange-900 dark:text-orange-200' :
-                          signatory.status === 'Declined' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
-                          'bg-blue-100 text-accessible-blue dark:bg-blue-900 dark:text-blue-200'
+                        <div key={index} className={`flex items-center space-x-2 text-xs ${
+                          signatory.status === 'Signed' ? 'text-accessible-blue' :
+                          signatory.status === 'Declined' ? 'text-red-600 dark:text-red-400' :
+                          'text-red-600 dark:text-red-400'
                         }`}>
                           <User className="w-3 h-3" />
                           <span>{signatory.name} ({signatory.role})</span>
