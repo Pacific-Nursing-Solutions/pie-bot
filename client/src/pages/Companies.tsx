@@ -241,20 +241,17 @@ const Companies = () => {
                       <div>
                         <div className="flex items-center space-x-3">
                           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{company.name}</h3>
-                          <span className={`px-2 py-1 text-xs rounded-full ${
-                            company.status === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                            company.status === 'Exited' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                            'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                          }`}>
-                            {company.status}
-                          </span>
+                          {company.status !== 'Active' && (
+                            <span className={`px-2 py-1 text-xs rounded-full ${
+                              company.status === 'Exited' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                              'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                            }`}>
+                              {company.status}
+                            </span>
+                          )}
                         </div>
                         <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 mt-1">
                           <span>{company.entityType}</span>
-                          <span>•</span>
-                          <span>{company.industry}</span>
-                          <span>•</span>
-                          <span>Founded {company.founded}</span>
                         </div>
                       </div>
                     </div>
@@ -266,9 +263,6 @@ const Companies = () => {
                       <div className="text-sm text-gray-600 dark:text-gray-400">
                         {company.userEquityPercentage}% equity
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        Last activity: {company.lastActivity}
-                      </div>
                     </div>
                   </div>
 
@@ -277,10 +271,6 @@ const Companies = () => {
                       <div>
                         <span className="text-gray-600 dark:text-gray-400">Market Cap:</span>
                         <span className="font-medium ml-1">${company.marketCap.toLocaleString()}</span>
-                      </div>
-                      <div>
-                        <span className="text-gray-600 dark:text-gray-400">Stock Classes:</span>
-                        <span className="font-medium ml-1">{company.stockClasses.length}</span>
                       </div>
                       {company.userDebtPosition > 0 && (
                         <div>

@@ -235,7 +235,7 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
             Connect Your Wallet
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Connect your wallet to access {walletType === 'personal' ? 'personal' : 'company'} financial tools
+            Access {walletType === 'personal' ? 'personal' : 'company'} financial tools
           </p>
           <div className="space-y-3">
             <button
@@ -255,9 +255,7 @@ const ModernWalletManager = ({ walletType, companyId, companyName }: ModernWalle
                 </div>
               )}
             </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              MetaMask, WalletConnect, or any Web3 wallet
-            </p>
+
           </div>
         </div>
       </div>
