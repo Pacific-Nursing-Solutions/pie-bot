@@ -465,7 +465,7 @@ const PieTerminal = () => {
       {/* Terminal Header */}
       <div className="bg-gray-800 px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500" />
+          <PieBotLogo size={16} className="text-orange-500" />
           <span className="text-white text-xs sm:text-sm">Pie Bot Terminal v0.0.1</span>
         </div>
         <div className="flex space-x-1">
