@@ -192,7 +192,7 @@ const CleanPieTerminal = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white terminal-font text-xs sm:text-sm rounded-lg overflow-hidden shadow-xl">
+    <div className="bg-gray-800 text-white terminal-font text-xs sm:text-sm overflow-hidden">
       {/* Terminal Header */}
       <div className="bg-gray-800 px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
