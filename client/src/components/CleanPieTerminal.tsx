@@ -216,8 +216,8 @@ const CleanPieTerminal = () => {
       >
         <div className="space-y-1">
           {commandHistory.map((entry, index) => (
-            <div key={index} className="flex">
-              <span className="text-gray-600 dark:text-gray-100 text-xs w-20 shrink-0">{entry.timestamp} </span>
+            <div key={index} className="flex gap-2">
+              <span className="text-gray-600 dark:text-gray-100 text-xs w-20 shrink-0">{entry.timestamp}</span>
               <span className={`flex items-center gap-1 ${
                 entry.type === 'command' ? 'text-blue-600' :
                 entry.type === 'success' ? 'text-orange-500' :
