@@ -532,9 +532,19 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
       {/* Basic Information */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Company Name *
-          </label>
+          <div className="flex items-center gap-2 mb-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Company Name *
+            </label>
+            <button
+              type="button"
+              onClick={() => askPieBot("How do I perform a trademark search for my company name? What are the requirements for LLC names in Wyoming? Should I check for domain availability?")}
+              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              title="Ask Pie Bot about company name requirements and trademark search"
+            >
+              <PieBotLogo size={16} />
+            </button>
+          </div>
           <input 
             type="text" 
             required
@@ -564,10 +574,13 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             onChange={(e) => {
               const agent = e.target.value;
               const agentCost = agent === 'self' ? 0 : 139;
+              const baseCost = 100; // Wyoming state fee
+              const convenienceFee = 50; // Our convenience fee
+              const mailingFee = 100; // Mailing service fee
               setFormData(prev => ({ 
                 ...prev, 
                 registeredAgent: agent,
-                totalCost: 102 + agentCost
+                totalCost: baseCost + convenienceFee + mailingFee + agentCost
               }));
             }}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-gray-100"
@@ -579,9 +592,19 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Organizer Name *
-          </label>
+          <div className="flex items-center gap-2 mb-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Organizer Name *
+            </label>
+            <button
+              type="button"
+              onClick={() => askPieBot("What is an organizer in LLC formation? What are the organizer's responsibilities and duties? Can the organizer be the same person as a member?")}
+              className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
+              title="Ask Pie Bot about organizer definition and purpose"
+            >
+              <PieBotLogo size={16} />
+            </button>
+          </div>
           <input 
             type="text" 
             required
@@ -619,7 +642,7 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950 rounded transition-colors"
             title="Ask Pie Bot about management structures"
           >
-            <Bot className="w-4 h-4" />
+            <PieBotLogo size={16} />
           </button>
         </div>
         <select 
@@ -704,8 +727,12 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
             <span>$100.00</span>
           </div>
           <div className="flex justify-between">
-            <span>Processing Fee:</span>
-            <span>$2.00</span>
+            <span>Convenience Fee:</span>
+            <span>$50.00</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Mailing Service:</span>
+            <span>$100.00</span>
           </div>
           <div className="flex justify-between">
             <span>Registered Agent (first year):</span>
@@ -717,8 +744,8 @@ const WyomingLLCForm = ({ onClose }: { onClose: () => void }) => {
           <div className="border-t border-gray-300 dark:border-gray-600 pt-2 flex justify-between font-medium">
             <span>Total:</span>
             <span>
-              ${formData.registeredAgent === 'self' ? '102.00' : 
-                formData.registeredAgent === 'northwest-registered-agent' ? '241.00' : '102.00'}
+              ${formData.registeredAgent === 'self' ? '250.00' : 
+                formData.registeredAgent === 'northwest-registered-agent' ? '389.00' : '250.00'}
             </span>
           </div>
         </div>
