@@ -150,7 +150,7 @@ const PieTerminal = () => {
     'deploy': (args: string[]) => {
       if (args[0] === 'token') {
         return [
-          `🥧 Deploying ERC-20 token ${args[1] || 'TOKEN'}...`,
+          `[PIEBOT_LOGO] Deploying ERC-20 token ${args[1] || 'TOKEN'}...`,
           '✓ Compiling smart contract',
           '✓ Deploying to Base network',
           '✓ Verifying contract on Basescan',
@@ -167,7 +167,7 @@ const PieTerminal = () => {
     'create': (args: string[]) => {
       if (args[0] === 'agreement') {
         return [
-          `🥧 Generating ${args[1] || 'founders'} agreement...`,
+          `[PIEBOT_LOGO] Generating ${args[1] || 'founders'} agreement...`,
           '✓ Fetching company data',
           '✓ Applying Delaware corporate law',
           '✓ Generating document templates',
@@ -185,7 +185,7 @@ const PieTerminal = () => {
     },
     'valuation': (args: string[]) => {
       return [
-        `🥧 Running ${args[0] || 'DCF'} valuation analysis...`,
+        `[PIEBOT_LOGO] Running ${args[0] || 'DCF'} valuation analysis...`,
         '✓ Gathering financial data',
         '✓ Analyzing market comparables',
         '✓ Calculating risk factors',
@@ -201,7 +201,7 @@ const PieTerminal = () => {
     'mint': (args: string[]) => {
       if (args[0] === 'nft') {
         return [
-          `🥧 Minting NFT for ${args[1] || 'collection'}...`,
+          `[PIEBOT_LOGO] Minting NFT for ${args[1] || 'collection'}...`,
           '✓ Uploading metadata to IPFS',
           '✓ Deploying ERC-721 contract',
           '✓ Configuring royalties (2.5%)',
@@ -219,7 +219,7 @@ const PieTerminal = () => {
     'pool': (args: string[]) => {
       if (args[0] === 'create') {
         return [
-          `🥧 Creating investment pool "${args[1] || 'pool'}"...`,
+          `[PIEBOT_LOGO] Creating investment pool "${args[1] || 'pool'}"...`,
           '✓ Setting up pool smart contract',
           '✓ Configuring governance rules',
           '✓ Establishing fee structure (2/20)',
@@ -238,7 +238,7 @@ const PieTerminal = () => {
     'debt': (args: string[]) => {
       if (args[0] === 'analyze') {
         return [
-          '🥧 Analyzing debt positions...',
+          '[PIEBOT_LOGO] Analyzing debt positions...',
           '✓ Scanning personal wallet',
           '✓ Reviewing company positions',
           '✓ Checking DeFi protocols',
@@ -261,7 +261,7 @@ const PieTerminal = () => {
     'ens': (args: string[]) => {
       if (args[0] === 'register') {
         return [
-          `🥧 Registering ENS domain "${args[1] || 'subdomain'}.founder.eth"...`,
+          `[PIEBOT_LOGO] Registering ENS domain "${args[1] || 'subdomain'}.founder.eth"...`,
           '✓ Checking domain availability',
           '✓ Calculating registration fees',
           '✓ Submitting ENS transaction',
@@ -278,7 +278,7 @@ const PieTerminal = () => {
     },
     'fund': (args: string[]) => {
       return [
-        `🥧 Initiating fundraising for ${args[0] || 'company'}...`,
+        `[PIEBOT_LOGO] Initiating fundraising for ${args[0] || 'company'}...`,
         '✓ Preparing pitch deck',
         '✓ Updating cap table',
         '✓ Generating legal documents',
@@ -296,7 +296,7 @@ const PieTerminal = () => {
     'generate': (args: string[]) => {
       if (args[0] === 'report') {
         return [
-          `🥧 Generating ${args[1] || 'financial'} report...`,
+          `[PIEBOT_LOGO] Generating ${args[1] || 'financial'} report...`,
           '✓ Compiling portfolio data',
           '✓ Calculating performance metrics',
           '✓ Creating visualizations',
@@ -332,7 +332,7 @@ const PieTerminal = () => {
       setCommandHistory([
         {
           type: 'output',
-          content: '🥧 Pie Bot Terminal v0.0.1',
+          content: '[PIEBOT_LOGO] Pie Bot Terminal v0.0.1',
           timestamp: new Date().toLocaleTimeString()
         },
         {
@@ -360,7 +360,7 @@ const PieTerminal = () => {
       try {
         newHistory.push({
           type: 'output',
-          content: '🥧 Thinking...',
+          content: '[PIEBOT_LOGO] Thinking...',
           timestamp
         });
         setCommandHistory([...newHistory]);
@@ -487,13 +487,20 @@ const PieTerminal = () => {
           {commandHistory.map((entry, index) => (
             <div key={index} className="flex">
               <span className="text-gray-100 text-xs w-20 shrink-0">{entry.timestamp}</span>
-              <span className={`${
+              <span className={`flex items-center gap-1 ${
                 entry.type === 'command' ? 'text-blue-600' :
                 entry.type === 'success' ? 'text-orange-500' :
                 entry.type === 'error' ? 'text-orange-500' :
                 'text-white'
               }`}>
-                {entry.content}
+                {entry.content.includes('[PIEBOT_LOGO]') ? (
+                  <>
+                    <PieBotLogo size={12} className="inline" />
+                    {entry.content.replace('[PIEBOT_LOGO]', '')}
+                  </>
+                ) : (
+                  entry.content
+                )}
               </span>
             </div>
           ))}
