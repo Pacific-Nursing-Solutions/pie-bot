@@ -87,7 +87,7 @@ const PieTerminal = () => {
     'clear': () => {
       setCommandHistory([{
         type: 'output',
-        content: '🥧 Pie Bot Terminal v2.1.0 - Equity Command Center',
+        content: '[PIEBOT_LOGO] Pie Bot Terminal v2.1.0 - Equity Command Center',
         timestamp: new Date().toLocaleTimeString()
       }]);
       return [];
@@ -98,7 +98,7 @@ const PieTerminal = () => {
         window.location.href = '/companies';
       }
       return [
-        '🥧 Opening Companies Management...',
+        '[PIEBOT_LOGO] Opening Companies Management...',
         '✓ Redirecting to company dashboard',
         '✓ Loading cap table data',
         '✓ Fetching equity structures'
@@ -110,7 +110,7 @@ const PieTerminal = () => {
         window.location.href = '/documents';
       }
       return [
-        '🥧 Opening Document Center...',
+        '[PIEBOT_LOGO] Opening Document Center...',
         '✓ Accessing legal documents',
         '✓ Loading agreement templates',
         '✓ Connecting to DocuSign workflow'
@@ -122,7 +122,7 @@ const PieTerminal = () => {
         window.location.href = '/settings';
       }
       return [
-        '🥧 Opening Application Settings...',
+        '[PIEBOT_LOGO] Opening Application Settings...',
         '✓ Loading user preferences',
         '✓ Checking security settings',
         '✓ Initializing configuration panel'
@@ -131,7 +131,7 @@ const PieTerminal = () => {
     'equity': (args: string[]) => {
       if (args[0] === 'split') {
         return [
-          `🥧 Analyzing equity split for ${args[1] || 'company'}...`,
+          `[PIEBOT_LOGO] Analyzing equity split for ${args[1] || 'company'}...`,
           '✓ Processing cap table data',
           '✓ Calculating vesting schedules',
           '✓ Applying contribution multipliers',
@@ -465,7 +465,7 @@ const PieTerminal = () => {
       {/* Terminal Header */}
       <div className="bg-gray-800 px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <PieBotLogo size={16} className="text-orange-500" />
+          <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500" />
           <span className="text-white text-xs sm:text-sm">Pie Bot Terminal v0.0.1</span>
         </div>
         <div className="flex space-x-1">
