@@ -22,7 +22,7 @@ const PieTerminal = () => {
     return [
       {
         type: 'output',
-        content: '💼 Pie Bot Terminal v0.0.1',
+        content: '[PIEBOT_LOGO] Pie Bot Terminal v0.0.1',
         timestamp: new Date().toLocaleTimeString()
       },
       {
