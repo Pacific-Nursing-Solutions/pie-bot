@@ -141,7 +141,7 @@ const Documents = () => {
     }
   ]);
 
-  const statuses = ['All', 'Draft', 'Review', 'Partially Signed', 'Signed', 'Executed', 'Expired'];
+  const statuses = ['All', 'Draft', 'Review', 'Partially Signed', 'Executed', 'Expired'];
   
   // Get unique companies from documents
   const companiesSet = new Set(documents.map(doc => doc.companyName));
