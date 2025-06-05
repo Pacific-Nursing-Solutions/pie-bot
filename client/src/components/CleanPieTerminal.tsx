@@ -10,14 +10,9 @@ interface CommandOutput {
 
 const CleanPieTerminal = () => {
   const loadHistory = (): CommandOutput[] => {
-    try {
-      const saved = localStorage.getItem('pie-bot-history');
-      if (saved) {
-        return JSON.parse(saved);
-      }
-    } catch (error) {
-      console.error('Failed to load chat history:', error);
-    }
+    // Clear any old cached data with pie emojis
+    localStorage.removeItem('pie-bot-history');
+    
     return [
       {
         type: 'output',
