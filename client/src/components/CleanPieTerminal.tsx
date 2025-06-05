@@ -16,7 +16,7 @@ const CleanPieTerminal = () => {
     return [
       {
         type: 'output',
-        content: '[PIEBOT_LOGO] Pie Bot Terminal v1.0',
+        content: '[PIEBOT_LOGO] Pie Bot Terminal v1.0.0',
         timestamp: new Date().toLocaleTimeString()
       },
       {
@@ -197,7 +197,7 @@ const CleanPieTerminal = () => {
       <div className="bg-gray-50 dark:bg-gray-800 px-3 sm:px-4 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Terminal className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500" />
-          <span className="text-gray-900 dark:text-white text-xs sm:text-sm">Pie Bot Terminal v1.0</span>
+          <span className="text-gray-900 dark:text-white text-xs sm:text-sm">Pie Bot Terminal v1.0.0</span>
         </div>
         <div className="flex space-x-1">
           <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-orange-500"></div>
@@ -217,7 +217,7 @@ const CleanPieTerminal = () => {
         <div className="space-y-1">
           {commandHistory.map((entry, index) => (
             <div key={index} className="flex">
-              <span className="text-gray-600 dark:text-gray-100 text-xs w-20 shrink-0">{entry.timestamp}</span>
+              <span className="text-gray-600 dark:text-gray-100 text-xs w-20 shrink-0">{entry.timestamp} </span>
               <span className={`flex items-center gap-1 ${
                 entry.type === 'command' ? 'text-blue-600' :
                 entry.type === 'success' ? 'text-orange-500' :
