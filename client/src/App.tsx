@@ -9,6 +9,7 @@ import { PieBotLogo } from "@/components/PieBotLogo";
 // Error handling removed for now - focusing on core functionality
 import UserDashboard from "@/pages/UserDashboard";
 import Companies from "@/pages/Companies";
+import LoanCalculator from "@/pages/LoanCalculator";
 
 import Settings from "@/pages/Settings";
 import Pools from "@/pages/Pools";
@@ -33,6 +34,7 @@ function Router() {
       <Route path="/company/:id/wallets" component={CompanyWallets} />
 
       <Route path="/documents" component={Documents} />
+      <Route path="/loan-calculator" component={LoanCalculator} />
       <Route path="/settings" component={Settings} />
 
       <Route path="/company/:id/pie-bot" component={CompanyPieBot} />

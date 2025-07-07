@@ -17,7 +17,8 @@ import {
   Wallet,
   Edit3,
   Check,
-  X
+  X,
+  Calculator
 } from 'lucide-react';
 import AnalyticsDashboard from '../components/AnalyticsDashboard';
 import ModernWalletManager from '../components/ModernWalletManager';
@@ -145,6 +146,10 @@ const UserDashboard = () => {
           <Link href="/settings" className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
             <Settings className="w-5 h-5 text-gray-600 dark:text-gray-400 mr-2" />
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Settings</span>
+          </Link>
+          <Link href="/loan-calculator" className="flex items-center p-3 bg-green-50 dark:bg-gray-700 rounded-lg hover:bg-green-100 dark:hover:bg-gray-600 transition-colors">
+            <Calculator className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Loan Calculator</span>
           </Link>
 
         </div>
