@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 import OpenAI from "openai";
+import 'dotenv/config';
 
 // Add userId to session
 declare module "express-session" {

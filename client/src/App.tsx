@@ -21,6 +21,7 @@ import CompanyPieBot from "@/pages/CompanyPieBot";
 import CompanyWallets from "@/pages/CompanyWallets";
 import SimplePage from "@/components/SimplePage";
 import NotFound from "@/pages/not-found";
+import CalculatorPage from "./pages/amort_calculator/calculator";
 
 function Router() {
   return (
@@ -39,6 +40,8 @@ function Router() {
 
       <Route path="/company/:id/pie-bot" component={CompanyPieBot} />
       <Route path="/pie-bot" component={SimplePage} />
+
+      <Route path="/calculator" component={CalculatorPage} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -65,12 +68,12 @@ function App() {
               </p>
               <PieTerminal />
             </div>
-            
+
             {/* Page Content Around Terminal */}
             <Router />
           </div>
         </div>
-        
+
         {/* Accessibility Test Component */}
         <AccessibilityTest />
       </TooltipProvider>

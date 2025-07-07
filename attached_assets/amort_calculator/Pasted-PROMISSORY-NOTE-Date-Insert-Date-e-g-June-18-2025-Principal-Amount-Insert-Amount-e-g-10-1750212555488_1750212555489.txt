@@ -1,0 +1,77 @@
+PROMISSORY NOTE
+Date: [Insert Date, e.g., June 18, 2025]
+Principal Amount: [Insert Amount, e.g., $10,000.00]
+Currency: [Insert Currency, e.g., USD]
+
+1. Parties
+Borrower:
+[Full Legal Name]
+[Full Address]
+[Contact Information, e.g., Email or Phone, optional]
+
+Lender:
+[Full Legal Name]
+[Full Address]
+[Contact Information, e.g., Email or Phone, optional]
+
+2. Promise to Pay
+For value received, the Borrower unconditionally promises to pay the Lender the principal sum of [Insert Amount in Words and Figures, e.g., Ten Thousand Dollars ($10,000.00)], together with interest on the unpaid principal balance at an annual rate of [Insert Interest Rate, e.g., 5%], calculated [e.g., on a simple interest basis / compounded monthly], in accordance with the terms set forth below.
+
+3. Payment Terms
+The Borrower agrees to repay the loan as follows:
+
+Installment Frequency: [e.g., Monthly / Quarterly / Annually]
+
+Installment Amount: [Insert Amount per Payment, e.g., $500.00]
+
+First Payment Due Date: [Insert Start Date, e.g., July 18, 2025]
+
+Final Payment Due Date: [Insert End Date, e.g., June 18, 2030]
+
+Payments shall be made to the Lender at [Insert Payment Method/Address, e.g., bank transfer to specified account or physical address] on or before the due date for each installment.
+
+Early repayment, in whole or in part, is permitted at any time without prepayment penalty. All prepayments shall first be applied to accrued interest, then to the outstanding principal.
+
+4. Default and Late Payment
+If any payment is not made within [Insert Grace Period, e.g., 10 calendar days] of its due date, the Borrower shall incur a late fee of [Insert Amount, e.g., $50.00] per occurrence and/or the unpaid principal balance shall accrue interest at a default rate of [Insert Default Rate, e.g., 10%] per annum until paid in full.
+
+5. Collateral (if applicable)
+☐ Unsecured: This Note is unsecured.
+☐ Secured: This Note is secured by the following collateral:
+[Insert Description of Collateral, e.g., “One (1) Toyota Vios 2018, VIN: ABC123456789” or “Real property located at [Legal Description]”]
+
+In the event of default, the Lender may take possession of the collateral or initiate legal proceedings to enforce a lien or claim on the collateral in accordance with applicable law.
+
+6. Acceleration Clause
+If the Borrower fails to make any payment when due, becomes insolvent, files for bankruptcy, or breaches any terms of this Note, the Lender may declare the entire outstanding principal and accrued interest immediately due and payable.
+
+7. Waiver
+The Borrower waives presentment, demand for payment, notice of dishonor, and protest.
+
+8. Governing Law
+This Promissory Note shall be governed by and construed in accordance with the laws of [Insert Jurisdiction, e.g., State of California, USA].
+
+9. Severability
+If any provision of this Note is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+
+10. Dispute Resolution
+Any disputes arising under this Note shall be resolved through [e.g., binding arbitration / mediation / litigation] in [Insert Jurisdiction].
+
+11. Entire Agreement
+This Note constitutes the entire agreement between the parties and supersedes all prior agreements or understandings, whether written or oral.
+
+12. Signatures
+IN WITNESS WHEREOF, the parties have executed this Promissory Note as of the date first written above.
+
+<br>
+Borrower
+Signature: _______________________________
+Printed Name: [Insert Name]
+Date: [Insert Date]
+
+<br>
+Lender
+Signature: _______________________________
+Printed Name: [Insert Name]
+Date: [Insert Date]
+

@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 
 // Initialize OpenAI with API key
-const openai = new OpenAI({ 
-  apiKey: "***REMOVED***",
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true // Allowing browser usage for this demo
 });
 
@@ -17,8 +17,8 @@ export async function generateEquityAgreement(companyInfo: any, stakeholderInfo:
     const response = await openai.chat.completions.create({
       model: DEFAULT_MODEL,
       messages: [
-        { 
-          role: "system", 
+        {
+          role: "system",
           content: "You are a legal expert specializing in equity agreements. Generate a professional equity agreement based on the provided information. The agreement should be legally sound but presented in plain language."
         },
         {
@@ -57,8 +57,8 @@ export async function analyzeCompanyValuation(companyInfo: any, financialData: a
     const response = await openai.chat.completions.create({
       model: DEFAULT_MODEL,
       messages: [
-        { 
-          role: "system", 
+        {
+          role: "system",
           content: "You are a financial analyst specializing in startup valuations. Provide a detailed analysis of the company's potential valuation based on the provided information."
         },
         {
@@ -98,8 +98,8 @@ export async function generateLiquidationSchedule(companyInfo: any, financialDat
     const response = await openai.chat.completions.create({
       model: DEFAULT_MODEL,
       messages: [
-        { 
-          role: "system", 
+        {
+          role: "system",
           content: "You are a financial expert specializing in company liquidation schedules. Generate a detailed liquidation schedule based on the provided information."
         },
         {
