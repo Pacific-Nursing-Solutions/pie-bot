@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
-import { loadStripe } from '@stripe/stripe-js';
-import { Calculator, User, LogOut, Crown, Download, RotateCcw } from "lucide-react";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Calculator,
+  User,
+  LogOut,
+  Crown,
+  Download,
+  RotateCcw,
+  ArrowLeft,
+} from "lucide-react";
 import amortLogo from "@assets/amort_calculator/Amort_1751377575673.png";
-
 
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 import LoanForm from "@/components/amort_calculator/loan-form";
 import PaymentSummary from "@/components/amort_calculator/payment-summary";
@@ -20,11 +28,20 @@ import SavedCalculationsDialog from "@/components/amort_calculator/saved-calcula
 import PremiumUpgradeDialog from "@/components/amort_calculator/premium-upgrade-dialog";
 import PremiumFeaturesPanel from "@/components/amort_calculator/premium-features-panel";
 import DigitalPromissoryNote from "@/components/amort_calculator/digital-promissory-note";
-import { calculateAmortizationSchedule, calculatePaymentSummary } from "@/lib/amort_calculator/amortization";
-import type { LoanInput, PaymentEntry, ExtraPayment } from "@shared/amort_calculator/schema";
+import {
+  calculateAmortizationSchedule,
+  calculatePaymentSummary,
+} from "@/lib/amort_calculator/amortization";
+import type {
+  LoanInput,
+  PaymentEntry,
+  ExtraPayment,
+} from "@shared/amort_calculator/schema";
 
 // Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || 'pk_test_...');
+const stripePromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLIC_KEY || "pk_test_...",
+);
 
 export default function CalculatorPage() {
   const [loanData, setLoanData] = useState<LoanInput>({
@@ -72,7 +89,9 @@ export default function CalculatorPage() {
 
   const handlePaymentEdit = (paymentNumber: number, newAmount: number) => {
     const updatedSchedule = [...schedule];
-    const paymentIndex = updatedSchedule.findIndex(p => p.paymentNumber === paymentNumber);
+    const paymentIndex = updatedSchedule.findIndex(
+      (p) => p.paymentNumber === paymentNumber,
+    );
 
     if (paymentIndex !== -1) {
       // Recalculate schedule from this payment forward
@@ -80,7 +99,7 @@ export default function CalculatorPage() {
         loanData,
         extraPayments,
         paymentNumber,
-        newAmount
+        newAmount,
       );
       setSchedule(recalculatedSchedule);
     }
@@ -91,7 +110,10 @@ export default function CalculatorPage() {
     setExtraPayments(newExtraPayments);
 
     // Recalculate schedule with extra payments
-    const newSchedule = calculateAmortizationSchedule(loanData, newExtraPayments);
+    const newSchedule = calculateAmortizationSchedule(
+      loanData,
+      newExtraPayments,
+    );
     setSchedule(newSchedule);
   };
 
@@ -211,11 +233,27 @@ export default function CalculatorPage() {
         <div className="max-w-7xl mx-auto px-4 py-2">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => window.history.back()}
+                      className="p-2 mr-3 rounded-full bg-muted/60 hover:bg-muted transition-colors shadow border border-muted-foreground/10"
+                      aria-label="Go back"
+                    >
+                      <ArrowLeft className="h-5 w-5 text-foreground" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">Go back</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <div>
                 <h1 className="text-base font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   Loan Calculator
                 </h1>
-                <p className="text-xs text-muted-foreground leading-tight">Advanced amortization analysis</p>
+                <p className="text-xs text-muted-foreground leading-tight">
+                  Advanced amortization analysis
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -223,7 +261,9 @@ export default function CalculatorPage() {
                 <>
                   <div className="flex items-center space-x-3 px-3 py-2 rounded-lg bg-muted/30">
                     <User className="h-4 w-4 text-primary" />
-                    <span className="text-sm font-medium text-foreground">{user.name}</span>
+                    <span className="text-sm font-medium text-foreground">
+                      {user.name}
+                    </span>
                     {user.isPremium && (
                       <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
                         <Crown className="h-3 w-3 mr-1" />
@@ -241,16 +281,7 @@ export default function CalculatorPage() {
                     Sign Out
                   </Button>
                 </>
-              ) : (
-                <Button
-                  variant="outline"
-                  onClick={() => setAuthDialogOpen(true)}
-                  className="border-primary/20 text-primary hover:bg-primary/10 rounded-lg"
-                >
-                  <User className="h-4 w-4 mr-2" />
-                  Sign In
-                </Button>
-              )}
+              ) : null}
               <Button
                 variant="ghost"
                 onClick={handleReset}
@@ -282,27 +313,34 @@ export default function CalculatorPage() {
             Loan Amortization Calculator
           </h1>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
-            Calculate loan payments with precision. Break down principal and interest components while tracking remaining balance throughout your loan term.
+            Calculate loan payments with precision. Break down principal and
+            interest components while tracking remaining balance throughout your
+            loan term.
           </p>
           <div className="flex justify-center items-center space-x-8 text-sm">
             <div className="flex items-center space-x-2 px-4 py-2 rounded-full bg-accent/10">
               <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-              <span className="text-accent font-medium">Bank-grade accuracy</span>
+              <span className="text-accent font-medium">
+                Bank-grade accuracy
+              </span>
             </div>
             <div className="flex items-center space-x-2 px-4 py-2 rounded-full bg-primary/10">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <span className="text-primary font-medium">Professional exports</span>
+              <span className="text-primary font-medium">
+                Professional exports
+              </span>
             </div>
             <div className="flex items-center space-x-2 px-4 py-2 rounded-full bg-muted/10">
               <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse"></div>
-              <span className="text-muted-foreground font-medium">Real-time calculations</span>
+              <span className="text-muted-foreground font-medium">
+                Real-time calculations
+              </span>
             </div>
           </div>
         </div>
 
         {/* Main Content Grid */}
         <div className="space-y-8">
-
           {/* Top Row: Loan Details (left) + Extra Payments (right) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* 1. Loan Details Form */}
@@ -322,7 +360,9 @@ export default function CalculatorPage() {
               ) : (
                 <Card className="p-8 text-center h-full flex flex-col justify-center">
                   <Calculator className="h-10 w-10 text-primary mx-auto mb-3 opacity-40" />
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Extra Payments</h3>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                    Extra Payments
+                  </h3>
                   <p className="text-gray-500 text-sm">
                     Calculate your loan schedule first to add extra payments
                   </p>
@@ -354,9 +394,12 @@ export default function CalculatorPage() {
           ) : (
             <Card className="p-12 text-center">
               <Calculator className="h-12 w-12 text-primary mx-auto mb-4 opacity-40" />
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Payment Visualization</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Payment Visualization
+              </h3>
               <p className="text-gray-500">
-                Fill out the loan details and click "Calculate Schedule" to see your payment charts and analysis.
+                Fill out the loan details and click "Calculate Schedule" to see
+                your payment charts and analysis.
               </p>
             </Card>
           )}

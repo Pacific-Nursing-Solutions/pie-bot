@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { 
-  ChevronDown, 
-  ChevronUp, 
+import {
+  ChevronDown,
+  ChevronUp,
   ChevronRight,
   Copy,
   Settings,
@@ -53,13 +53,13 @@ const UserDashboard = () => {
   const [showCompensationSection, setShowCompensationSection] = useState(false);
   const [showCompensationDetails, setShowCompensationDetails] = useState(false);
   const [compensationPeriod, setCompensationPeriod] = useState<'7d' | '30d' | '1y'>('30d');
-  
+
   // Wallet account management
   const [activeWalletId, setActiveWalletId] = useState('personal');
   const [showWalletDropdown, setShowWalletDropdown] = useState(false);
   const [editingWalletId, setEditingWalletId] = useState<string | null>(null);
   const [editingWalletName, setEditingWalletName] = useState('');
-  
+
   const [walletAccounts, setWalletAccounts] = useState([
     { id: 'personal', name: 'Personal Wallet', type: 'personal', connected: true },
     { id: 'acme-corp', name: 'ACME Corp', type: 'company', connected: true },
@@ -80,8 +80,8 @@ const UserDashboard = () => {
   };
 
   const saveWalletName = () => {
-    setWalletAccounts(prev => prev.map(wallet => 
-      wallet.id === editingWalletId 
+    setWalletAccounts(prev => prev.map(wallet =>
+      wallet.id === editingWalletId
         ? { ...wallet, name: editingWalletName }
         : wallet
     ));
@@ -93,7 +93,7 @@ const UserDashboard = () => {
     setEditingWalletId(null);
     setEditingWalletName('');
   };
-  
+
   // Portfolio data
   const [companyPositions] = useState<CompanyPosition[]>([
     {
@@ -130,7 +130,7 @@ const UserDashboard = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6 p-3 sm:p-0">
-      
+
       {/* Quick Navigation */}
       <div className="card-default p-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Access</h3>
@@ -147,7 +147,7 @@ const UserDashboard = () => {
             <Settings className="w-5 h-5 text-gray-600 dark:text-gray-400 mr-2" />
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Settings</span>
           </Link>
-          <Link href="/loan-calculator" className="flex items-center p-3 bg-green-50 dark:bg-gray-700 rounded-lg hover:bg-green-100 dark:hover:bg-gray-600 transition-colors">
+          <Link href="/calculator" className="flex items-center p-3 bg-green-50 dark:bg-gray-700 rounded-lg hover:bg-green-100 dark:hover:bg-gray-600 transition-colors">
             <Calculator className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
             <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Loan Calculator</span>
           </Link>
@@ -162,7 +162,7 @@ const UserDashboard = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
             Portfolio
           </h2>
-          <button 
+          <button
             onClick={() => setIsPortfolioMinimized(!isPortfolioMinimized)}
             className="p-2 text-gray-600 dark:text-gray-400 hover:text-accessible-blue transition-colors"
           >
@@ -211,12 +211,12 @@ const UserDashboard = () => {
                     <td className="py-4 text-center hidden sm:table-cell w-1/8">
                       <div className="w-20 h-12 mx-auto">
                         <svg viewBox="0 0 80 48" className="w-full h-full">
-                          <path 
+                          <path
                             d={(() => {
                               const seed = 12345; // Fixed seed for consistent but random-looking data
                               let lastPrice = 24;
                               const trend = 0.98 + Math.random() * 0.04; // Slight upward trend
-                              
+
                               return Array.from({ length: 40 }, (_, i) => {
                                 const x = i * 2;
                                 // Create realistic price movement
@@ -224,13 +224,13 @@ const UserDashboard = () => {
                                 const randomWalk = (Math.sin(seed + i * 1.7) + Math.sin(seed + i * 3.2) + Math.sin(seed + i * 0.8)) / 3;
                                 const priceChange = randomWalk * volatility * trend;
                                 lastPrice = Math.max(8, Math.min(40, lastPrice + priceChange));
-                                
+
                                 const scaledY = 48 - (lastPrice / 48) * 48;
                                 return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
                               }).join(' ');
                             })()}
-                            stroke="#22c55e" 
-                            strokeWidth="2" 
+                            stroke="#22c55e"
+                            strokeWidth="2"
                             fill="none"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -253,7 +253,7 @@ const UserDashboard = () => {
                       </div>
                     </td>
                     <td className="py-4 text-right w-1/6">
-                      <button 
+                      <button
                         onClick={() => setShowPoolSection(!showPoolSection)}
                         className="text-accessible-blue hover:text-blue-800 dark:hover:text-blue-300 text-sm flex items-center justify-end transition-colors duration-200"
                       >
@@ -284,7 +284,7 @@ const UserDashboard = () => {
                           // Calculate equity position display
                           const marketCapPercentage = (company.userEquityValue / company.marketCap) * 100;
                           const totalShares = Math.floor(company.userEquityValue / 10); // Mock shares calculation
-                          
+
                           return (
                             <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                               <td className="py-3 w-1/4">
@@ -315,32 +315,32 @@ const UserDashboard = () => {
                               <td className="py-3 text-center hidden sm:table-cell w-1/8">
                                 <div className="w-20 h-12 mx-auto">
                                   <svg viewBox="0 0 80 48" className="w-full h-full">
-                                    <path 
+                                    <path
                                       d={(() => {
                                         const companySeed = (company.id * 7919) + 54321; // Unique seed per company
                                         let lastPrice = 20 + (index * 4); // Different starting prices
                                         const trendDirection = valuePerformance.monthly >= 0 ? 1.02 : 0.98;
                                         const volatilityFactor = 0.6 + (index * 0.2); // Different volatility per company
-                                        
+
                                         return Array.from({ length: 40 }, (_, i) => {
                                           const x = i * 2;
-                                          
+
                                           // Create unique market behavior per company
                                           const marketCycle = Math.sin(companySeed + i * 0.15) * 0.7;
                                           const shortTermNoise = Math.sin(companySeed + i * 2.1) * 0.3;
                                           const momentum = Math.sin(companySeed + i * 0.05) * 0.4;
-                                          
+
                                           const combinedSignal = (marketCycle + shortTermNoise + momentum) / 3;
                                           const priceChange = combinedSignal * volatilityFactor * trendDirection;
-                                          
+
                                           lastPrice = Math.max(5, Math.min(43, lastPrice + priceChange));
-                                          
+
                                           const scaledY = 48 - (lastPrice / 48) * 48;
                                           return `${i === 0 ? 'M' : 'L'}${x},${scaledY}`;
                                         }).join(' ');
                                       })()}
-                                      stroke={valuePerformance.monthly >= 0 ? '#2A9D8F' : '#E76F51'} 
-                                      strokeWidth="2" 
+                                      stroke={valuePerformance.monthly >= 0 ? '#2A9D8F' : '#E76F51'}
+                                      strokeWidth="2"
                                       fill="none"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
@@ -357,8 +357,8 @@ const UserDashboard = () => {
                                     {Math.floor(company.marketCap / 1000).toLocaleString()}M {company.name.split(' ')[0].toUpperCase()}
                                   </div>
                                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-1">
-                                    <div 
-                                      className="bg-gradient-to-r from-emerald-500 to-blue-500 h-2 rounded-full" 
+                                    <div
+                                      className="bg-gradient-to-r from-emerald-500 to-blue-500 h-2 rounded-full"
                                       style={{ width: `${55 + (index * 10)}%` }}
                                     ></div>
                                   </div>
@@ -396,18 +396,17 @@ const UserDashboard = () => {
                 <button
                   key={period}
                   onClick={() => setCompensationPeriod(period)}
-                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                    compensationPeriod === period
-                      ? 'bg-slate-600 text-white'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-slate-600 dark:hover:text-slate-400'
-                  }`}
+                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${compensationPeriod === period
+                    ? 'bg-slate-600 text-white'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-slate-600 dark:hover:text-slate-400'
+                    }`}
                 >
                   {period === '7d' ? '7 Days' : period === '30d' ? '30 Days' : '1 Year'}
                 </button>
               ))}
             </div>
           </div>
-          <button 
+          <button
             onClick={() => setShowCompensationSection(!showCompensationSection)}
             className="p-2 text-gray-500 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
           >
@@ -444,7 +443,7 @@ const UserDashboard = () => {
                     <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$805K</td>
                     <td className="py-4 px-3 text-right font-semibold text-gray-900 dark:text-gray-100">$385K</td>
                     <td className="py-4 px-3 text-right">
-                      <button 
+                      <button
                         onClick={() => setShowCompensationDetails(!showCompensationDetails)}
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 cursor-pointer"
                       >
@@ -461,7 +460,7 @@ const UserDashboard = () => {
                     const totalEarned = Math.floor(Math.random() * 500000) + 100000; // $100K-$600K
                     const cashComp = Math.floor(totalEarned * (0.3 + Math.random() * 0.4)); // 30-70%
                     const equityComp = totalEarned - cashComp;
-                    
+
                     return (
                       <tr key={company.id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                         <td className="py-3 px-3">
@@ -495,7 +494,7 @@ const UserDashboard = () => {
             </h2>
 
           </div>
-          <button 
+          <button
             onClick={() => setIsAnalyticsMinimized(!isAnalyticsMinimized)}
             className="p-2 text-gray-500 hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
           >
@@ -515,7 +514,7 @@ const UserDashboard = () => {
         <div className="px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Wallets</h2>
-            
+
             {/* Wallet Account Switcher */}
             <div className="relative">
               <button
@@ -536,26 +535,25 @@ const UserDashboard = () => {
                   <div className="p-3 border-b border-gray-200 dark:border-gray-700">
                     <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Switch Account</p>
                   </div>
-                  
+
                   <div className="max-h-64 overflow-y-auto">
                     {walletAccounts.map((wallet) => (
                       <div key={wallet.id} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                        <div 
+                        <div
                           className="flex items-center space-x-3 flex-1 cursor-pointer"
                           onClick={() => handleWalletSwitch(wallet.id)}
                         >
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                            wallet.type === 'personal' 
-                              ? 'bg-orange-100 dark:bg-orange-900' 
-                              : 'bg-orange-100 dark:bg-orange-900'
-                          }`}>
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${wallet.type === 'personal'
+                            ? 'bg-orange-100 dark:bg-orange-900'
+                            : 'bg-orange-100 dark:bg-orange-900'
+                            }`}>
                             {wallet.type === 'personal' ? (
                               <Wallet className={`w-4 h-4 ${wallet.type === 'personal' ? 'text-orange-500' : 'text-orange-600 dark:text-orange-400'}`} />
                             ) : (
                               <Building2 className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                             )}
                           </div>
-                          
+
                           <div className="flex-1">
                             {editingWalletId === wallet.id ? (
                               <div className="flex items-center space-x-2">
@@ -597,7 +595,7 @@ const UserDashboard = () => {
                             )}
                           </div>
                         </div>
-                        
+
                         {editingWalletId !== wallet.id && (
                           <button
                             onClick={() => startEditingWallet(wallet.id, wallet.name)}
@@ -609,7 +607,7 @@ const UserDashboard = () => {
                       </div>
                     ))}
                   </div>
-                  
+
                   <div className="p-3 border-t border-gray-200 dark:border-gray-700">
                     <button className="w-full flex items-center justify-center space-x-2 py-2 text-sm text-orange-500 hover:text-orange-600 transition-colors">
                       <Plus className="w-4 h-4" />
@@ -620,8 +618,8 @@ const UserDashboard = () => {
               )}
             </div>
           </div>
-          
-          <button 
+
+          <button
             onClick={() => setIsWalletsMinimized(!isWalletsMinimized)}
             className="p-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           >
@@ -631,15 +629,15 @@ const UserDashboard = () => {
 
         {!isWalletsMinimized && (
           <div className="p-6">
-            <ModernWalletManager 
-              walletType={activeWallet?.type === 'personal' ? 'personal' : 'company'} 
+            <ModernWalletManager
+              walletType={activeWallet?.type === 'personal' ? 'personal' : 'company'}
               companyName={activeWallet?.type === 'company' ? activeWallet.name : undefined}
             />
           </div>
         )}
       </div>
 
-  
+
     </div>
   );
 };
